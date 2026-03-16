@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PPT HTML Básico</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111827;
+      color: #111827;
+      overflow: hidden;
+    }.deck {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+  padding: 56px 72px;
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+}
+
+.slide.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide h1 {
+  margin: 0 0 16px 0;
+  font-size: 44px;
+  line-height: 1.1;
+  color: #0f172a;
+}
+
+.slide h2 {
+  margin: 0 0 12px 0;
+  font-size: 34px;
+  color: #1e293b;
+}
+
+.slide p, .slide li {
+  font-size: 24px;
+  line-height: 1.5;
+  color: #334155;
+}
+
+.slide ul {
+  margin: 20px 0 0 24px;
+  padding: 0;
+}
+
+.tag {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.two-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.card {
+  background: rgba(255,255,255,0.85);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+}
+
+.footer {
+  position: absolute;
+  bottom: 24px;
+  left: 72px;
+  right: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.controls {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.controls button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+}
+
+.controls button:hover {
+  background: #1d4ed8;
+}
+
+.counter {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(15, 23, 42, 0.85);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  z-index: 10;
+}
+
+@media (max-width: 900px) {
+  .slide {
+    padding: 32px 24px;
+  }
+
+  .slide h1 { font-size: 32px; }
+  .slide h2 { font-size: 28px; }
+  .slide p, .slide li { font-size: 18px; }
+
+  .two-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    left: 24px;
+    right: 24px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <section class="slide active">
+      <span class="tag">Programa Piloto</span>
+      <h1>Plan de Capacitación Azure</h1>
+      <p>
+        Evolucionar el conocimiento del equipo de programación hacia un enfoque más integral,
+        orientado a soluciones cloud y uso más autónomo de servicios de Azure.
+      </p>
+      <div class="footer">
+        <span>CW · Equipo México / Perú</span>
+        <span>Introducción</span>
+      </div>
+    </section><section class="slide">
+  <span class="tag">Contexto</span>
+  <h2>¿Por qué nace este programa?</h2>
+  <ul>
+    <li>Gran parte del trabajo de la firma consiste en desarrollar soluciones para clientes empresariales.</li>
+    <li>Estas soluciones no se limitan al código; también requieren despliegue, operación y entendimiento del entorno cloud.</li>
+    <li>El equipo ya cuenta con bases sólidas de programación y ahora se busca ampliar ese alcance.</li>
+  </ul>
+  <div class="footer">
+    <span>CW · Capacitación interna</span>
+    <span>Contexto</span>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">Objetivo</span>
+  <h2>¿Qué buscamos lograr?</h2>
+  <div class="two-cols">
+    <div class="card">
+      <h2 style="font-size:28px;">Meta principal</h2>
+      <p>Fortalecer la autonomía del equipo para trabajar con servicios de Azure dentro de soluciones reales.</p>
+    </div>
+    <div class="card">
+      <h2 style="font-size:28px;">Resultado esperado</h2>
+      <p>Que el desarrollador tenga mayor visibilidad del ciclo completo de una solución, más allá del código.</p>
+    </div>
+  </div>
+  <div class="footer">
+    <span>CW · Programa piloto</span>
+    <span>Objetivo</span>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">Enfoque</span>
+  <h2>Modelo híbrido de capacitación</h2>
+  <ul>
+    <li><strong>Microsoft Learn:</strong> para cubrir el contenido oficial y cumplir con rutas asociadas a certificación.</li>
+    <li><strong>Sesiones prácticas:</strong> para aterrizar los conceptos en escenarios reales de proyectos.</li>
+    <li><strong>Discusión técnica:</strong> para conectar servicios, arquitectura y criterios de implementación.</li>
+  </ul>
+  <div class="footer">
+    <span>Learn + práctica</span>
+    <span>Modelo</span>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="tag">Certificaciones base</span>
+  <h2>Rutas iniciales del piloto</h2>
+  <div class="two-cols">
+    <div class="card">
+      <h2 style="font-size:28px;">AZ-900</h2>
+      <p>Fundamentos de Azure para comprender servicios cloud, arquitectura, seguridad, costos y operación.</p>
+    </div>
+    <div class="card">
+      <h2 style="font-size:28px;">AI-900</h2>
+      <p>Fundamentos de inteligencia artificial en Azure para entender cómo integrar servicios de IA en soluciones de negocio.</p>
+    </div>
+  </div>
+  <div class="footer">
+    <span>Fundamentals</span>
+    <span>Rutas</span>
+  </div>
+</section>
+
+  </div>  <div class="counter" id="counter">1 / 5</div>  <div class="controls">
+    <button onclick="prevSlide()">Anterior</button>
+    <button onclick="nextSlide()">Siguiente</button>
+  </div>  <script>
+    const slides = document.querySelectorAll('.slide');
+    const counter = document.getElementById('counter');
+    let current = 0;
+
+    function showSlide(index) {
+      slides[current].classList.remove('active');
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      counter.textContent = `${current + 1} / ${slides.length}`;
+    }
+
+    function nextSlide() {
+      showSlide(current + 1);
+    }
+
+    function prevSlide() {
+      showSlide(current - 1);
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === ' ') nextSlide();
+      if (event.key === 'ArrowLeft') prevSlide();
+    });
+  </script></body>
+</html>
