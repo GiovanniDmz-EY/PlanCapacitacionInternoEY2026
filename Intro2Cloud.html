@@ -291,6 +291,43 @@
       text-transform: uppercase;
     }
 
+    .comparison-wrap {
+      overflow-x: auto;
+      margin-top: 22px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--surface-strong);
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 16px 18px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.08);
+    }
+
+    th {
+      background: linear-gradient(135deg, #ecfeff, #eff6ff);
+      color: var(--ink);
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    td:first-child,
+    th:first-child {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
     .responsibility {
       margin-top: 20px;
       padding: 18px 20px;
@@ -454,8 +491,10 @@
           <h2>Modelos de Servicio y Responsabilidad Compartida</h2>
         </div>
         <p>
-          La responsabilidad compartida es un concepto crítico: el proveedor de la nube protege la infraestructura global, pero el cliente es responsable de lo que pone dentro de ella.
+          En un esquema tradicional, la responsabilidad de la infraestructura recaía completamente en el equipo interno. Al migrar a la nube, se introduce el concepto de <b>responsabilidad compartida</b>, ya que la infraestructura pertenece a un proveedor. Esto implica que hay componentes que son gestionados por el proveedor (como la infraestructura física y la plataforma), mientras que otros siguen siendo responsabilidad del usuario, como la configuración, la seguridad a nivel de aplicación y el uso correcto de los servicios.  
+        
         </p>
+        <img src="https://www.cloudflare.com/img/learning/serverless/glossary/platform-as-a-service-paas/saas-paas-iaas-diagram.svg" style="width: 100%; border-radius: 18px; margin-top: 18px;"> 
 
         <div class="service-grid">
           <article class="service-card">
@@ -490,6 +529,49 @@
               Es como ir a un restaurante: solo te sientas a comer.
             </p>
           </article>
+        </div>
+
+        <p style="margin-top: 22px;">
+          La siguiente tabla ayuda a comparar de forma pr&aacute;ctica el nivel de control, la gesti&oacute;n t&eacute;cnica y el tipo de usuario m&aacute;s com&uacute;n en cada modelo.
+        </p>
+
+        <div class="comparison-wrap">
+          <table aria-label="Tabla comparativa pr&aacute;ctica entre IaaS, PaaS y SaaS">
+            <thead>
+              <tr>
+                <th>Caracter&iacute;stica</th>
+                <th>IaaS</th>
+                <th>PaaS</th>
+                <th>SaaS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Control/Flexibilidad</td>
+                <td>Muy Alto</td>
+                <td>Medio</td>
+                <td>Bajo</td>
+              </tr>
+              <tr>
+                <td>Gesti&oacute;n t&eacute;cnica</td>
+                <td>Alta (SO, apps)</td>
+                <td>Media (Apps)</td>
+                <td>Nula (Solo uso)</td>
+              </tr>
+              <tr>
+                <td>P&uacute;blico Objetivo</td>
+                <td>Administradores de sistemas, DevOps</td>
+                <td>Desarrolladores de software</td>
+                <td>Usuario final, Empresas</td>
+              </tr>
+              <tr>
+                <td>Ejemplo</td>
+                <td>Azure Functions</td>
+                <td>Power Automate</td>
+                <td>Outlook</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <div class="responsibility">
@@ -600,21 +682,49 @@
           </article>
 
           <article class="benefit-card">
-            <small>Fiabilidad y Disponibilidad</small>
-            <h3>Continuidad operativa</h3>
+            <small>Fiabilidad</small>
+            <h3>Continuidad operativa y recuperación</h3>
             <p>
-              Los proveedores de nube operan con infraestructuras redundantes. Si un componente falla, otro puede asumir la carga, reduciendo el riesgo de interrupciones y pérdida de datos.
+              La confiabilidad es la capacidad de un sistema para recuperarse de errores y seguir funcionando. También es uno de los pilares de Microsoft Azure Well-Architected Framework.
             </p>
             <p>
-              Esto ayuda a mantener servicios accesibles casi el 100% del tiempo mediante acuerdos de nivel de servicio o SLA.
+              La nube, en virtud de su diseño descentralizado, admite naturalmente una infraestructura confiable y resistente. Con un diseño descentralizado, la nube le permite tener recursos implementados en regiones de todo el mundo. Con esta escala global, incluso si una región tiene un evento catastrófico, otras regiones siguen funcionando.
+            </p>
+            <p>
+              Puede diseñar las aplicaciones para aprovechar automáticamente esta mayor confiabilidad. En algunos casos, el propio entorno en la nube cambiará automáticamente a otra región, sin necesidad de realizar ninguna acción por su parte. Obtendrá más información sobre cómo Azure aprovecha la escala global para proporcionar confiabilidad más adelante en esta serie.
             </p>
           </article>
 
           <article class="benefit-card">
             <small>Previsibilidad</small>
-            <h3>Más control sobre costos y rendimiento</h3>
+            <h3>Confianza en costo y desempeño</h3>
             <p>
-              Las herramientas de monitoreo ayudan a estimar gasto, anticipar consumo y entender cómo responderá el sistema bajo distintas condiciones de carga.
+              La predicción en la nube le permite avanzar con confianza. La previsibilidad se puede centrar en la previsibilidad del rendimiento o en la previsibilidad de costos. Tanto el rendimiento como la previsibilidad de costos están muy influenciados por Microsoft Azure Well-Architected Framework.
+            </p>
+            <p>
+              Implemente una solución creada en torno a este marco y tenga una solución cuyo costo y rendimiento sean predecibles.
+            </p>
+          </article>
+
+          <article class="benefit-card">
+            <small>Rendimiento</small>
+            <h3>Capacidad para responder a la demanda</h3>
+            <p>
+              La predicción del rendimiento se centra en predecir los recursos necesarios para ofrecer una experiencia positiva para los clientes. El escalado automático, el equilibrio de carga y la alta disponibilidad son solo algunos de los conceptos de nube que admiten la predicción del rendimiento.
+            </p>
+            <p>
+              Si de repente necesita más recursos, el escalado automático puede implementar recursos adicionales para satisfacer la demanda y luego reducirlos cuando la demanda disminuya. O bien, si el tráfico se centra en un área, el equilibrio de carga ayudará a redirigir algunas de las sobrecargas a áreas menos estresadas.
+            </p>
+          </article>
+
+          <article class="benefit-card">
+            <small>Costo</small>
+            <h3>Previsión y optimización del gasto</h3>
+            <p>
+              La predicción de costos se centra en la predicción o previsión del costo del gasto en la nube. Con la nube, puede realizar un seguimiento del uso de recursos en tiempo real, supervisar los recursos para asegurarse de que los usa de la manera más eficaz y aplicar análisis de datos para buscar patrones y tendencias que ayuden a planear mejor las implementaciones de recursos.
+            </p>
+            <p>
+              Al operar en la nube y usar análisis e información en la nube, puede predecir costos futuros y ajustar los recursos según sea necesario. Incluso puede usar herramientas como el costo total de propiedad (TCO) o la calculadora de precios para obtener una estimación del gasto potencial en la nube.
             </p>
           </article>
         </div>
