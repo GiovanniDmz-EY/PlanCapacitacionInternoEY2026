@@ -1,0 +1,56 @@
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.env
+.env
+.venv
+venv/
+ENV/
+
+# VSCode
+.vscode/
+.history/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Misc
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Build
+/dist/
+/build/
+*.egg-info/
+
+# PDF/Office
+*.pdf
+*.docx
+*.xlsx
+
+# Coverage
+htmlcov/
+.coverage
+coverage.xml
+
+# Others
+.idea/
+*.iml
+*.sublime-workspace
+*.sublime-project
+settings.json
