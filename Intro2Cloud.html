@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introducción a la Nube</title>
+  <style>
+    :root {
+      --bg: #f5efe4;
+      --surface: rgba(255, 252, 246, 0.86);
+      --surface-strong: #fffaf2;
+      --ink: #1f2937;
+      --muted: #5f6b7a;
+      --primary: #0f766e;
+      --primary-soft: #ccfbf1;
+      --secondary: #b45309;
+      --accent: #1d4ed8;
+      --border: rgba(31, 41, 55, 0.1);
+      --shadow: 0 24px 60px rgba(31, 41, 55, 0.12);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(29, 78, 216, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.16), transparent 24%),
+        linear-gradient(180deg, #f7f1e7 0%, #efe6d6 100%);
+    }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 64px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 56px;
+      border-radius: 32px;
+      background:
+        linear-gradient(135deg, rgba(15, 118, 110, 0.95), rgba(29, 78, 216, 0.92)),
+        #0f766e;
+      color: #f8fafc;
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -120px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      filter: blur(8px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 20px 0 14px;
+      max-width: 12ch;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 760px;
+      font-size: 1.1rem;
+      line-height: 1.75;
+      color: rgba(248, 250, 252, 0.92);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.9fr;
+      gap: 28px;
+      margin-top: 34px;
+      align-items: end;
+    }
+
+    .hero-card,
+    .panel,
+    .service-card,
+    .type-card,
+    .benefit-card,
+    .finance-card {
+      backdrop-filter: blur(12px);
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 24px;
+      color: #e2e8f0;
+      background: rgba(15, 23, 42, 0.18);
+    }
+
+    .hero-card h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #bfdbfe;
+    }
+
+    .hero-card ul {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.7;
+    }
+
+    .hero-card li + li {
+      margin-top: 8px;
+    }
+
+    nav {
+      position: sticky;
+      top: 16px;
+      z-index: 20;
+      margin: 24px 0 32px;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255, 250, 242, 0.82);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      box-shadow: 0 18px 45px rgba(31, 41, 55, 0.08);
+    }
+
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(31, 41, 55, 0.08);
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    nav a:hover {
+      transform: translateY(-2px);
+      background: var(--primary);
+      color: #f8fafc;
+    }
+
+    main {
+      display: grid;
+      gap: 24px;
+    }
+
+    .panel {
+      padding: 30px;
+      border: 1px solid var(--border);
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .section-number {
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--primary-soft), #dbeafe);
+      color: var(--primary);
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 2.6vw, 2.5rem);
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .panel p + p {
+      margin-top: 16px;
+    }
+
+    .highlight {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--secondary);
+      border-radius: 18px;
+      background: #fff7ed;
+      color: #7c2d12;
+      font-weight: 600;
+    }
+
+    .service-grid,
+    .types-grid,
+    .benefits-grid,
+    .finance-grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .service-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .types-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .benefits-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .finance-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .service-card,
+    .type-card,
+    .benefit-card,
+    .finance-card {
+      padding: 22px;
+      border: 1px solid var(--border);
+      background: var(--surface-strong);
+    }
+
+    .service-card h3,
+    .type-card h3,
+    .benefit-card h3,
+    .finance-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+    }
+
+    .service-card small,
+    .type-card small,
+    .benefit-card small,
+    .finance-card small {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .responsibility {
+      margin-top: 20px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ecfeff, #eff6ff);
+      border: 1px solid rgba(29, 78, 216, 0.12);
+    }
+
+    .responsibility strong {
+      color: var(--ink);
+    }
+
+    .benefit-card ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    footer {
+      margin-top: 28px;
+      padding: 20px 8px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: reveal 700ms ease forwards;
+    }
+
+    .fade-in:nth-child(2) {
+      animation-delay: 120ms;
+    }
+
+    .fade-in:nth-child(3) {
+      animation-delay: 200ms;
+    }
+
+    .fade-in:nth-child(4) {
+      animation-delay: 280ms;
+    }
+
+    .fade-in:nth-child(5) {
+      animation-delay: 360ms;
+    }
+
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        padding: 36px 24px;
+      }
+
+      .hero-grid,
+      .service-grid,
+      .types-grid,
+      .benefits-grid,
+      .finance-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-shell {
+        width: min(100% - 20px, 1180px);
+      }
+    }
+
+    @media (max-width: 640px) {
+      nav {
+        position: static;
+      }
+
+      .panel {
+        padding: 22px;
+      }
+
+      h1 {
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero fade-in">
+      <span class="eyebrow">Fundamentos Cloud</span>
+      <h1>Introducción a la Nube</h1>
+      <p>
+        La nube cambió la forma en que las organizaciones almacenan información, ejecutan aplicaciones y escalan sus operaciones.
+        Esta guía resume los conceptos base para entender qué es, cómo se consume y por qué es clave para el negocio.
+      </p>
+
+      <div class="hero-grid">
+        <div class="hero-card">
+          <h2>Qué vas a encontrar</h2>
+          <ul>
+            <li>Definición de nube y su funcionamiento general.</li>
+            <li>Modelos de servicio y responsabilidad compartida.</li>
+            <li>Tipos de nube, costos y beneficios operativos.</li>
+          </ul>
+        </div>
+
+
+      </div>
+    </header>
+
+    <nav class="fade-in" aria-label="Navegación de secciones">
+      <ul>
+        <li><a href="#que-es">¿Qué es la Nube?</a></li>
+        <li><a href="#modelos">Modelos de Servicio</a></li>
+        <li><a href="#tipos">Tipos de Nube</a></li>
+        <li><a href="#finanzas">CAPEX vs. OPEX</a></li>
+        <li><a href="#ventajas">Ventajas</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="panel fade-in" id="que-es">
+        <div class="section-head">
+          <div class="section-number">1</div>
+          <h2>¿Qué es la Nube?</h2>
+        </div>
+        <p>
+          De forma formal, el cloud computing se define como:
+        </p>
+        <blockquote>
+          El cloud computing es la disponibilidad de recursos de computación bajo demanda (como almacenamiento e infraestructura) como servicios a través de Internet. Elimina la necesidad de que las personas y las empresas gestionen sus propios recursos físicos y paguen solo por lo que utilicen.
+          
+        </blockquote>
+        <p>
+          Esta definición describe el modelo general: acceso a recursos tecnológicos 
+          sin necesidad de poseerlos físicamente.
+        </p>
+
+        <p>
+          Sin embargo, llevado a un contexto práctico:
+        </p>
+
+        <blockquote>
+          La nube es la computadora de alguien más a la que puedes acceder a través de internet.
+        </blockquote>
+
+        <p>
+          Esto implica que los recursos que utilizamos, como servidores, almacenamiento 
+          y redes, no están en nuestras instalaciones, sino en centros de datos 
+          distribuidos globalmente y administrados por un proveedor.
+        </p>
+
+      </section>
+
+      <section class="panel fade-in" id="modelos">
+        <div class="section-head">
+          <div class="section-number">2</div>
+          <h2>Modelos de Servicio y Responsabilidad Compartida</h2>
+        </div>
+        <p>
+          La responsabilidad compartida es un concepto crítico: el proveedor de la nube protege la infraestructura global, pero el cliente es responsable de lo que pone dentro de ella.
+        </p>
+
+        <div class="service-grid">
+          <article class="service-card">
+            <small>IaaS</small>
+            <h3>Infraestructura como Servicio</h3>
+            <p>
+              El proveedor entrega recursos básicos como servidores virtuales, almacenamiento y redes. El cliente instala y mantiene el sistema operativo, las aplicaciones y los datos.
+            </p>
+            <p>
+              Es como alquilar un terreno vacío para construir tu casa.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <small>PaaS</small>
+            <h3>Plataforma como Servicio</h3>
+            <p>
+              El proveedor ofrece el hardware y una plataforma de software, como bases de datos y herramientas de desarrollo. El cliente solo se enfoca en las aplicaciones y los datos.
+            </p>
+            <p>
+              Es como alquilar una cocina totalmente equipada para solo llevar ingredientes y cocinar.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <small>SaaS</small>
+            <h3>Software como Servicio</h3>
+            <p>
+              El proveedor entrega una aplicación lista para usarse desde el navegador, como Gmail o Dropbox. El proveedor gestiona casi todo y el cliente administra sus datos y accesos.
+            </p>
+            <p>
+              Es como ir a un restaurante: solo te sientas a comer.
+            </p>
+          </article>
+        </div>
+
+        <div class="responsibility">
+          <strong>Resumen práctico:</strong> mientras más alto subes de IaaS a SaaS, menos operación técnica administra el cliente y más responsabilidades absorbe el proveedor.
+        </div>
+      </section>
+
+      <section class="panel fade-in" id="tipos">
+        <div class="section-head">
+          <div class="section-number">3</div>
+          <h2>Tipos de Nube</h2>
+        </div>
+
+        <div class="types-grid">
+          <article class="type-card">
+            <small>Pública</small>
+            <h3>Nube Pública</h3>
+            <p>
+              Los servicios se ofrecen a través de la red pública de Internet y se comparten entre diferentes organizaciones.
+              Ejemplos: AWS, Google Cloud y Microsoft Azure.
+            </p>
+          </article>
+
+          <article class="type-card">
+            <small>Privada</small>
+            <h3>Nube Privada</h3>
+            <p>
+              Los recursos se utilizan exclusivamente por una sola organización.
+              Puede residir en el centro de datos de la empresa o ser gestionada por un tercero, pero no se comparte con otras compañías.
+            </p>
+          </article>
+
+          <article class="type-card">
+            <small>Híbrida</small>
+            <h3>Nube Híbrida</h3>
+            <p>
+              Combina nubes públicas y privadas, permitiendo mover datos y aplicaciones entre ambas.
+              Es útil cuando se requiere seguridad adicional para información sensible y elasticidad para cargas de trabajo masivas.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel fade-in" id="finanzas">
+        <div class="section-head">
+          <div class="section-number">4</div>
+          <h2>Aspectos Financieros: CAPEX vs. OPEX</h2>
+        </div>
+        <p>
+          La migración a la nube transforma la estructura de costos de una empresa y cambia la forma en que se planifica la inversión tecnológica.
+        </p>
+
+        <div class="finance-grid">
+          <article class="finance-card">
+            <small>CAPEX</small>
+            <h3>Capital Expenditure</h3>
+            <p>
+              Son gastos de capital: inversiones en activos físicos que se deprecian con el tiempo, como comprar servidores o construir un centro de datos.
+            </p>
+            <p>
+              Este modelo exige una inversión inicial alta.
+            </p>
+          </article>
+
+          <article class="finance-card">
+            <small>OPEX</small>
+            <h3>Operating Expenditure</h3>
+            <p>
+              Son gastos operativos asociados al funcionamiento diario del negocio.
+              La nube usa este modelo bajo un esquema de pago por uso.
+            </p>
+            <p>
+              Las empresas pagan solo por lo que consumen, evitando grandes inversiones iniciales.
+            </p>
+          </article>
+        </div>
+
+        <div class="highlight">
+          Pasar de CAPEX a OPEX da más flexibilidad financiera y reduce la barrera de entrada para lanzar o escalar soluciones.
+        </div>
+      </section>
+
+      <section class="panel fade-in" id="ventajas">
+        <div class="section-head">
+          <div class="section-number">5</div>
+          <h2>Ventajas de la Nube</h2>
+        </div>
+        <p>
+          El uso de la nube ofrece beneficios estratégicos que mejoran la agilidad del negocio, aceleran la experimentación y facilitan la operación continua.
+        </p>
+
+        <div class="benefits-grid">
+          <article class="benefit-card">
+            <small>Escalabilidad</small>
+            <h3>Ajuste de recursos según la demanda</h3>
+            <ul>
+              <li><strong>Vertical:</strong> agregar más potencia, como CPU o RAM, a un servidor existente.</li>
+              <li><strong>Horizontal:</strong> agregar más servidores para repartir la carga de trabajo.</li>
+            </ul>
+          </article>
+
+          <article class="benefit-card">
+            <small>Flexibilidad</small>
+            <h3>Menor fricción para innovar</h3>
+            <p>
+              Permite probar nuevas tecnologías, validar ideas y descartar iniciativas que no funcionen sin haber comprado hardware costoso.
+            </p>
+          </article>
+
+          <article class="benefit-card">
+            <small>Fiabilidad y Disponibilidad</small>
+            <h3>Continuidad operativa</h3>
+            <p>
+              Los proveedores de nube operan con infraestructuras redundantes. Si un componente falla, otro puede asumir la carga, reduciendo el riesgo de interrupciones y pérdida de datos.
+            </p>
+            <p>
+              Esto ayuda a mantener servicios accesibles casi el 100% del tiempo mediante acuerdos de nivel de servicio o SLA.
+            </p>
+          </article>
+
+          <article class="benefit-card">
+            <small>Previsibilidad</small>
+            <h3>Más control sobre costos y rendimiento</h3>
+            <p>
+              Las herramientas de monitoreo ayudan a estimar gasto, anticipar consumo y entender cómo responderá el sistema bajo distintas condiciones de carga.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Introducción a la nube · Página de referencia visual para fundamentos cloud
+    </footer>
+  </div>
+</body>
+</html>
