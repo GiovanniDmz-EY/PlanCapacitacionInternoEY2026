@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introducci&oacute;n a Microsoft Azure</title>
+  <style>
+    :root {
+      --bg: #eef4ff;
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-strong: #ffffff;
+      --ink: #122033;
+      --muted: #526074;
+      --primary: #0a5bd3;
+      --primary-deep: #083b87;
+      --primary-soft: #dbeafe;
+      --accent: #0f766e;
+      --accent-soft: #d1fae5;
+      --border: rgba(18, 32, 51, 0.1);
+      --shadow: 0 24px 60px rgba(18, 32, 51, 0.12);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(10, 91, 211, 0.14), transparent 28%),
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.12), transparent 24%),
+        linear-gradient(180deg, #f3f8ff 0%, #eaf1fb 100%);
+    }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 64px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 56px;
+      border-radius: 34px;
+      background:
+        linear-gradient(135deg, rgba(8, 59, 135, 0.96), rgba(10, 91, 211, 0.92)),
+        #083b87;
+      color: #f8fbff;
+      box-shadow: var(--shadow);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -90px -120px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      filter: blur(8px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 20px 0 14px;
+      max-width: 12ch;
+      font-size: clamp(2.9rem, 5vw, 5.1rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 780px;
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: rgba(248, 251, 255, 0.92);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 24px;
+      margin-top: 32px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .panel,
+    .card,
+    .tile,
+    .pillars article {
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-card {
+      padding: 24px;
+      background: rgba(15, 23, 42, 0.2);
+      color: #e5efff;
+    }
+
+    .hero-card h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #bfdbfe;
+    }
+
+    .hero-card ul {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.75;
+    }
+
+    nav {
+      position: sticky;
+      top: 16px;
+      z-index: 20;
+      margin: 24px 0 32px;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      box-shadow: 0 18px 45px rgba(18, 32, 51, 0.08);
+    }
+
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid rgba(18, 32, 51, 0.08);
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    nav a:hover {
+      transform: translateY(-2px);
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    main {
+      display: grid;
+      gap: 24px;
+    }
+
+    .panel {
+      padding: 30px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .section-number {
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--primary-soft), #e0f2fe);
+      color: var(--primary);
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 2.6vw, 2.5rem);
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .panel p + p {
+      margin-top: 16px;
+    }
+
+    .highlight {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--accent);
+      border-radius: 18px;
+      background: #ecfdf5;
+      color: #115e59;
+      font-weight: 600;
+    }
+
+    .grid-2,
+    .grid-3,
+    .pillars {
+      display: grid;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3,
+    .pillars {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hierarchy-list {
+      display: grid;
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .hierarchy-item {
+      padding: 20px;
+      background: var(--surface-strong);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .hierarchy-item strong {
+      color: var(--ink);
+    }
+
+    .hierarchy-item p + p {
+      margin-top: 10px;
+    }
+
+    .image-frame {
+      padding: 18px;
+      background: var(--surface-strong);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .image-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+    }
+
+    .image-frame figcaption {
+      margin-top: 12px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .hierarchy-stack {
+      margin-top: 22px;
+      padding: 20px 22px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #eff6ff, #f0fdf4);
+      border: 1px solid rgba(10, 91, 211, 0.12);
+    }
+
+    .hierarchy-stack code {
+      display: block;
+      white-space: pre-wrap;
+      font-family: Consolas, "Courier New", monospace;
+      color: var(--primary-deep);
+      line-height: 1.7;
+    }
+
+    .region-groups {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .region-group {
+      padding: 22px;
+      background: var(--surface-strong);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .region-group p + p {
+      margin-top: 10px;
+    }
+
+    .card,
+    .tile,
+    .pillars article {
+      padding: 22px;
+      background: var(--surface-strong);
+      border: 1px solid var(--border);
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--primary);
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .tile ul,
+    .card ul,
+    .hero-card ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .tile li,
+    .card li {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .mini-note {
+      margin-top: 20px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #eff6ff, #ecfeff);
+      border: 1px solid rgba(10, 91, 211, 0.12);
+      color: var(--ink);
+    }
+
+    footer {
+      margin-top: 28px;
+      padding: 20px 8px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: reveal 700ms ease forwards;
+    }
+
+    .fade-in:nth-child(2) {
+      animation-delay: 120ms;
+    }
+
+    .fade-in:nth-child(3) {
+      animation-delay: 200ms;
+    }
+
+    .fade-in:nth-child(4) {
+      animation-delay: 280ms;
+    }
+
+    .fade-in:nth-child(5) {
+      animation-delay: 360ms;
+    }
+
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        padding: 36px 24px;
+      }
+
+      .hero-grid,
+      .grid-2,
+      .grid-3,
+      .pillars,
+      .region-groups {
+        grid-template-columns: 1fr;
+      }
+
+      .page-shell {
+        width: min(100% - 20px, 1180px);
+      }
+    }
+
+    @media (max-width: 640px) {
+      nav {
+        position: static;
+      }
+
+      .panel {
+        padding: 22px;
+      }
+
+      h1 {
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero fade-in">
+      <span class="eyebrow">Microsoft Learn Adaptado</span>
+      <h1>Introducci&oacute;n a Microsoft Azure</h1>
+      <p>
+        Azure es la plataforma de nube de Microsoft. Permite ejecutar aplicaciones, almacenar datos, crear redes,
+        automatizar procesos y consumir servicios avanzados desde centros de datos distribuidos globalmente.
+      </p>
+
+      <div class="hero-grid">
+        <div class="hero-card">
+          <h2>Idea Central</h2>
+          <ul>
+            <li>Azure ofrece recursos de TI como servicios bajo demanda.</li>
+            <li>Se paga por uso y se escala seg&uacute;n la necesidad del negocio.</li>
+            <li>La misma plataforma cubre infraestructura, plataforma y software administrado.</li>
+          </ul>
+        </div>
+
+        <div class="hero-card">
+          <h2>En Esta P&aacute;gina</h2>
+          <p>
+            Encontrar&aacute;s una visi&oacute;n base de qu&eacute; es Azure, qu&eacute; tipos de servicios ofrece, c&oacute;mo se consume y por qu&eacute; suele ser el punto de entrada a la arquitectura cloud en entornos Microsoft.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <nav class="fade-in" aria-label="Navegaci&oacute;n de secciones">
+      <ul>
+        <li><a href="#que-es">Qu&eacute; es Azure</a></li>
+        <li><a href="#que-ofrece">Qu&eacute; Ofrece</a></li>
+        <li><a href="#como-trabajar">C&oacute;mo se Usa</a></li>
+        <li><a href="#jerarquia">C&oacute;mo Opera</a></li>
+        <li><a href="#casos">Casos Comunes</a></li>
+        <li><a href="#valor">Valor para Negocio</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="panel fade-in" id="que-es">
+        <div class="section-head">
+          <div class="section-number">1</div>
+          <h2>&iquest;Qu&eacute; es Microsoft Azure?</h2>
+        </div>
+        <p>
+          Microsoft Azure es una plataforma de computaci&oacute;n en la nube que pone a disposici&oacute;n servicios de tecnolog&iacute;a a trav&eacute;s de Internet.
+          En lugar de comprar y operar toda la infraestructura localmente, una organizaci&oacute;n puede usar capacidad de c&oacute;mputo, almacenamiento,
+          bases de datos, redes, seguridad, anal&iacute;tica e inteligencia artificial dentro del ecosistema Azure.
+        </p>
+        <p>
+          Azure no es un solo producto. Es un conjunto amplio de servicios conectados entre s&iacute; que permite construir, hospedar, desplegar y administrar soluciones tecnol&oacute;gicas de distintos tama&ntilde;os.
+        </p>
+        <div class="highlight">
+          Azure convierte recursos tradicionales de TI en servicios consumibles bajo demanda, con alcance global y operaci&oacute;n flexible.
+        </div>
+      </section>
+
+      <section class="panel fade-in" id="que-ofrece">
+        <div class="section-head">
+          <div class="section-number">2</div>
+          <h2>&iquest;Qu&eacute; ofrece Azure?</h2>
+        </div>
+        <p>
+          Azure cubre necesidades b&aacute;sicas y avanzadas. Puede utilizarse tanto para escenarios simples, como hospedar una aplicaci&oacute;n web, como para arquitecturas empresariales con integraci&oacute;n, seguridad, monitoreo y alta disponibilidad.
+        </p>
+
+        <div class="pillars">
+          <article>
+            <span class="label">Infraestructura</span>
+            <h3>Recursos base</h3>
+            <p>
+              M&aacute;quinas virtuales, redes virtuales, balanceadores, discos y almacenamiento para levantar y operar entornos completos.
+            </p>
+          </article>
+
+          <article>
+            <span class="label">Plataforma</span>
+            <h3>Servicios administrados</h3>
+            <p>
+              Bases de datos, aplicaciones web, contenedores, integraci&oacute;n y automatizaci&oacute;n con menos carga operativa para el equipo.
+            </p>
+          </article>
+
+          <article>
+            <span class="label">Capacidades avanzadas</span>
+            <h3>Datos e inteligencia</h3>
+            <p>
+              Anal&iacute;tica, inteligencia artificial, monitoreo y gobierno para construir soluciones m&aacute;s completas y escalables.
+            </p>
+          </article>
+        </div>
+
+        <div class="mini-note">
+          Azure permite combinar estos servicios en una sola arquitectura. Un mismo proyecto puede usar red, almacenamiento, identidades, funciones, bases de datos y observabilidad dentro de la misma nube.
+        </div>
+      </section>
+
+      <section class="panel fade-in" id="como-trabajar">
+        <div class="section-head">
+          <div class="section-number">3</div>
+          <h2>&iquest;C&oacute;mo se trabaja con Azure?</h2>
+        </div>
+        <p>
+          Azure puede administrarse desde distintas interfaces seg&uacute;n el perfil del usuario y el nivel de automatizaci&oacute;n requerido.
+        </p>
+
+        <div class="grid-3">
+          <article class="tile">
+            <span class="label">Portal</span>
+            <h3>Azure Portal</h3>
+            <p>
+              Interfaz web visual para crear recursos, revisar configuraciones, monitorear servicios y explorar el estado general del entorno.
+            </p>
+          </article>
+
+          <article class="tile">
+            <span class="label">Comandos</span>
+            <h3>CLI y PowerShell</h3>
+            <p>
+              Alternativas orientadas a automatizaci&oacute;n, scripts y operaciones repetibles para administradores, ingenieros y equipos DevOps.
+            </p>
+          </article>
+
+          <article class="tile">
+            <span class="label">C&oacute;digo</span>
+            <h3>Infraestructura como c&oacute;digo</h3>
+            <p>
+              Permite definir entornos mediante plantillas y archivos declarativos para desplegar de forma consistente y controlada.
+            </p>
+          </article>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <span class="label">Modelo operativo</span>
+            <h3>Pago por consumo</h3>
+            <ul>
+              <li>Los recursos se crean cuando se necesitan.</li>
+              <li>Se ajustan conforme crece o baja la demanda.</li>
+              <li>El gasto depende del uso real del servicio.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="label">Escala</span>
+            <h3>Cobertura global</h3>
+            <ul>
+              <li>Los servicios se despliegan en regiones distribuidas.</li>
+              <li>Se puede acercar la carga a los usuarios o cumplir requerimientos de residencia de datos.</li>
+              <li>La redundancia regional mejora continuidad y resiliencia.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel fade-in" id="jerarquia">
+        <div class="section-head">
+          <div class="section-number">4</div>
+          <h2>&iquest;C&oacute;mo opera Azure? Modelo jer&aacute;rquico</h2>
+        </div>
+        <p>
+          Azure funciona bajo una estructura jer&aacute;rquica de organizaci&oacute;n y control. Cada nivel tiene una responsabilidad distinta y juntos permiten administrar acceso, facturaci&oacute;n, organizaci&oacute;n y despliegue.
+        </p>
+
+        <div class="hierarchy-list">
+          <article class="hierarchy-item">
+            <span class="label">1. Cuenta</span>
+            <h3>Account</h3>
+            <p>
+              Es el punto de entrada. Representa al usuario o empresa y define qui&eacute;n puede acceder a Azure.
+              Puede tener una o varias suscripciones.
+            </p>
+            <p><strong>Piensa en esto como:</strong> la identidad que paga y administra.</p>
+          </article>
+
+          <article class="hierarchy-item">
+            <span class="label">2. Suscripci&oacute;n</span>
+            <h3>Subscription</h3>
+            <p>
+              Es la unidad clave de operaci&oacute;n. Define facturaci&oacute;n, l&iacute;mites y control de acceso mediante RBAC.
+              Todos los recursos viven dentro de una suscripci&oacute;n.
+            </p>
+            <p><strong>Ejemplo:</strong> separar `Dev`, `QA` y `Prod` en suscripciones distintas.</p>
+            <p><strong>Piensa en esto como:</strong> la cuenta financiera m&aacute;s el control de acceso.</p>
+          </article>
+
+          <article class="hierarchy-item">
+            <span class="label">3. Regi&oacute;n</span>
+            <h3>Region</h3>
+            <p>
+              Es la ubicaci&oacute;n f&iacute;sica donde viven los recursos, por ejemplo `East US`, `West Europe` o `Mexico Central`.
+              Impacta latencia, cumplimiento y disponibilidad.
+            </p>
+            <p><strong>Piensa en esto como:</strong> d&oacute;nde corre f&iacute;sicamente tu soluci&oacute;n.</p>
+          </article>
+
+          <article class="hierarchy-item">
+            <span class="label">4. Grupo de recursos</span>
+            <h3>Resource Group</h3>
+            <p>
+              Es un contenedor l&oacute;gico para agrupar recursos relacionados. Facilita gesti&oacute;n conjunta, organizaci&oacute;n y lifecycle.
+            </p>
+            <p><strong>Ejemplos:</strong> `rg-app-web-prod`, `rg-data-analytics-dev`.</p>
+            <p><strong>Piensa en esto como:</strong> una carpeta l&oacute;gica de recursos.</p>
+          </article>
+
+          <article class="hierarchy-item">
+            <span class="label">5. Recurso</span>
+            <h3>Resource</h3>
+            <p>
+              Es el elemento operativo real: una VM, una base de datos, una Storage Account, una Function App o un Key Vault.
+            </p>
+            <p>
+              Cada recurso pertenece a un grupo de recursos, est&aacute; dentro de una suscripci&oacute;n y se despliega en una regi&oacute;n.
+            </p>
+            <p><strong>Piensa en esto como:</strong> el servicio que realmente usas.</p>
+          </article>
+        </div>
+
+
+
+        <div class="grid-2">
+          <article class="card">
+            <span class="label">Idea Clave</span>
+            <h3>Qu&eacute; gobierna cada nivel</h3>
+            <ul>
+              <li>La suscripci&oacute;n controla dinero y acceso.</li>
+              <li>El grupo de recursos organiza.</li>
+              <li>La regi&oacute;n define d&oacute;nde corre.</li>
+              <li>El recurso ejecuta.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="label">Ejemplo Pr&aacute;ctico</span>
+            <h3>Despliegue de una app</h3>
+            <ul>
+              <li>Cuenta: tu empresa.</li>
+              <li>Suscripci&oacute;n: `Producci&oacute;n`.</li>
+              <li>Regi&oacute;n: `Mexico Central`.</li>
+              <li>Grupo de recursos: `rg-app-prod`.</li>
+              <li>Recursos: App Service, base de datos y Storage.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="highlight">
+          Azure organiza sus servicios en una jerarqu&iacute;a donde la suscripci&oacute;n gobierna, los grupos organizan y los recursos ejecutan dentro de una regi&oacute;n espec&iacute;fica.
+        </div>
+
+        <div class="mini-note">
+          <strong>Regiones de Azure verificadas:</strong> Microsoft publica el inventario oficial de regiones en su p&aacute;gina de Global Infrastructure. Ese listado cambia con el tiempo, as&iacute; que esta referencia debe tomarse como una fotograf&iacute;a validada al 16 de marzo de 2026.
+        </div>
+
+        <div class="region-groups">
+          <article class="region-group">
+            <span class="label">Regiones Globales</span>
+            <h3>Nube p&uacute;blica principal</h3>
+            <p><strong>Estados Unidos:</strong> South Central US, West US, West US 2, West US 3, Central US, East US, East US 2, East US 3, West Central US, North Central US.</p>
+            <p><strong>Canad&aacute;, M&eacute;xico y Latinoam&eacute;rica:</strong> Canada Central, Canada East, Mexico Central, Brazil South, Brazil Southeast, Chile North Central.</p>
+            <p><strong>Europa:</strong> North Europe, West Europe, UK South, UK West, France Central, France South, Germany West Central, Germany North, Italy North, Spain Central, Poland Central, Norway East, Norway West, Sweden Central, Sweden South, Switzerland North, Switzerland West, Belgium Central, Denmark East, Finland Central, Austria East, Greece.</p>
+            <p><strong>Asia Pac&iacute;fico:</strong> East Asia, Southeast Asia, Japan East, Japan West, Korea Central, Korea South, Central India, South India, West India, Indonesia Central, Malaysia West, New Zealand North, Taiwan.</p>
+            <p><strong>Australia, Medio Oriente y &Aacute;frica:</strong> Australia East, Australia Southeast, Australia Central, Australia Central 2, Israel Central, Qatar Central, UAE North, UAE Central, Saudi Arabia East, South Africa North, South Africa West.</p>
+          </article>
+
+          <article class="region-group">
+            <span class="label">Regiones Aisladas</span>
+            <h3>Nubes soberanas o nacionales</h3>
+            <p>
+              Azure tambi&eacute;n tiene entornos aislados para requisitos especiales de soberan&iacute;a, cumplimiento y residencia de datos.
+              En la documentaci&oacute;n oficial se conocen como sovereign clouds o national clouds.
+            </p>
+            <p><strong>Azure Government (EE. UU.):</strong> US Gov Virginia, US Gov Arizona, US Gov Texas, US DoD Central, US DoD East, US Sec East, US Sec West, US Sec West Central.</p>
+            <p><strong>Azure operado por 21Vianet en China:</strong> China East, China East 2, China North, China North 2, China North 3.</p>
+            <p><strong>Regiones soberanas marcadas como tales en infraestructura global:</strong> Germany Northeast (Sovereign) y Germany Central (Sovereign).</p>
+            <p>
+              <strong>Idea clave:</strong> estas regiones no son simplemente otra ubicaci&oacute;n dentro de la nube global; son entornos separados o marcados para requisitos de soberan&iacute;a, gobierno, defensa, cumplimiento o residencia nacional de datos.
+            </p>
+            <p>
+              <strong>Nota:</strong> la documentaci&oacute;n de Microsoft Entra identifica hoy como national clouds a Azure Government y Microsoft Azure operated by 21Vianet, y adem&aacute;s indica que Azure Germany fue cerrado el 29 de octubre de 2021.
+            </p>
+          </article>
+        </div>
+
+        <figure class="image-frame" style="margin-top: 22px;">
+          <img
+            src="https://learn.microsoft.com/es-mx/training/wwl-azure/describe-core-architectural-components-of-azure/media/account-scope-levels-9ceb3abd-a2d45a13.png"
+            alt="Diagrama de niveles de alcance en Azure: cuenta, suscripci&oacute;n, grupo de recursos y recurso">
+          <figcaption>
+            Imagen oficial de Microsoft Learn que ilustra la relaci&oacute;n entre cuenta, suscripci&oacute;n, grupo de recursos y recurso dentro de Azure.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="panel fade-in" id="casos">
+        <div class="section-head">
+          <div class="section-number">5</div>
+          <h2>Casos de uso comunes en Azure</h2>
+        </div>
+        <p>
+          Azure se utiliza tanto en modernizaci&oacute;n de aplicaciones como en operaci&oacute;n diaria de plataformas empresariales.
+        </p>
+
+        <div class="region-groups">
+          <article class="card">
+            <span class="label">Aplicaciones</span>
+            <h3>Hospedaje y desarrollo</h3>
+            <ul>
+              <li>Aplicaciones web y APIs.</li>
+              <li>Servicios serverless y procesos automatizados.</li>
+              <li>Contenedores y microservicios.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="label">Datos</span>
+            <h3>Persistencia e integraci&oacute;n</h3>
+            <ul>
+              <li>Bases de datos relacionales y no relacionales.</li>
+              <li>Almacenamiento de archivos, objetos y respaldos.</li>
+              <li>Integraci&oacute;n entre sistemas y flujos empresariales.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="label">Operaci&oacute;n</span>
+            <h3>Gobierno y seguridad</h3>
+            <ul>
+              <li>Control de acceso e identidades.</li>
+              <li>Monitoreo, alertas y observabilidad.</li>
+              <li>Pol&iacute;ticas, cumplimiento y administraci&oacute;n centralizada.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="label">Innovaci&oacute;n</span>
+            <h3>Anal&iacute;tica e IA</h3>
+            <ul>
+              <li>Procesamiento de datos.</li>
+              <li>Servicios cognitivos e inteligencia artificial.</li>
+              <li>Escenarios de automatizaci&oacute;n avanzada.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel fade-in" id="valor">
+        <div class="section-head">
+          <div class="section-number">6</div>
+          <h2>Valor de Azure para las organizaciones</h2>
+        </div>
+        <p>
+          Azure aporta velocidad, elasticidad y estandarizaci&oacute;n. En vez de esperar la compra e instalaci&oacute;n de infraestructura, los equipos pueden aprovisionar servicios r&aacute;pidamente y concentrarse en entregar valor funcional.
+        </p>
+        <p>
+          Tambi&eacute;n facilita escenarios h&iacute;bridos y de modernizaci&oacute;n gradual, algo especialmente relevante en empresas que no pueden mover todo a la nube de una sola vez.
+        </p>
+
+        <div class="grid-3">
+          <article class="tile">
+            <span class="label">Agilidad</span>
+            <h3>Tiempo de salida</h3>
+            <p>
+              Menos tiempo en preparaci&oacute;n de infraestructura y m&aacute;s tiempo en construir soluciones.
+            </p>
+          </article>
+
+          <article class="tile">
+            <span class="label">Elasticidad</span>
+            <h3>Escala bajo demanda</h3>
+            <p>
+              Los recursos pueden crecer o reducirse seg&uacute;n la carga sin redise&ntilde;ar toda la plataforma.
+            </p>
+          </article>
+
+          <article class="tile">
+            <span class="label">Continuidad</span>
+            <h3>Operaci&oacute;n resiliente</h3>
+            <p>
+              La arquitectura global y la variedad de servicios favorecen disponibilidad, respaldo y recuperaci&oacute;n.
+            </p>
+          </article>
+        </div>
+
+        <div class="highlight">
+          Entender Azure no significa memorizar todos sus servicios, sino comprender que es una plataforma cloud completa para construir, operar y evolucionar soluciones tecnol&oacute;gicas.
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Basado en Microsoft Learn: “&iquest;Qu&eacute; es Microsoft Azure?” y el m&oacute;dulo de componentes arquitect&oacute;nicos principales de Azure.
+    </footer>
+  </div>
+</body>
+</html>

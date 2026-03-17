@@ -462,7 +462,6 @@
         </p>
         <blockquote>
           El cloud computing es la disponibilidad de recursos de computación bajo demanda (como almacenamiento e infraestructura) como servicios a través de Internet. Elimina la necesidad de que las personas y las empresas gestionen sus propios recursos físicos y paguen solo por lo que utilicen.
-          
         </blockquote>
         <p>
           Esta definición describe el modelo general: acceso a recursos tecnológicos 
@@ -494,7 +493,7 @@
           En un esquema tradicional, la responsabilidad de la infraestructura recaía completamente en el equipo interno. Al migrar a la nube, se introduce el concepto de <b>responsabilidad compartida</b>, ya que la infraestructura pertenece a un proveedor. Esto implica que hay componentes que son gestionados por el proveedor (como la infraestructura física y la plataforma), mientras que otros siguen siendo responsabilidad del usuario, como la configuración, la seguridad a nivel de aplicación y el uso correcto de los servicios.  
         
         </p>
-        <img src="https://www.cloudflare.com/img/learning/serverless/glossary/platform-as-a-service-paas/saas-paas-iaas-diagram.svg" style="width: 100%; border-radius: 18px; margin-top: 18px;"> 
+        <img src="https://www.cloudflare.com/img/learning/serverless/glossary/platform-as-a-service-paas/saas-paas-iaas-diagram.svg" style="width: 100%; border-radius: 18px; margin-top: 18px;" alt="Diagrama de responsabilidad compartida: IaaS, PaaS y SaaS" />
 
         <div class="service-grid">
           <article class="service-card">
@@ -534,6 +533,7 @@
         <p style="margin-top: 22px;">
           La siguiente tabla ayuda a comparar de forma pr&aacute;ctica el nivel de control, la gesti&oacute;n t&eacute;cnica y el tipo de usuario m&aacute;s com&uacute;n en cada modelo.
         </p>
+        
 
         <div class="comparison-wrap">
           <table aria-label="Tabla comparativa pr&aacute;ctica entre IaaS, PaaS y SaaS">
@@ -574,6 +574,13 @@
           </table>
         </div>
 
+        <p style="margin-top: 22px;">
+          La siguiente imagen ilustra cómo se distribuyen las responsabilidades entre el proveedor y el cliente en cada modelo:
+        </p>
+
+        <div style="margin-top: 22px; border-radius: 18px; overflow: hidden; background: var(--surface-strong); border: 1px solid var(--border);">
+          <img src="https://learn.microsoft.com/es-es/azure/security/fundamentals/media/shared-responsibility/shared-responsibility.svg" style="width: 100%; display: block;" alt="Diagrama de responsabilidades compartidas en IaaS, PaaS y SaaS" />
+        </div>
         <div class="responsibility">
           <strong>Resumen práctico:</strong> mientras más alto subes de IaaS a SaaS, menos operación técnica administra el cliente y más responsabilidades absorbe el proveedor.
         </div>
@@ -685,12 +692,10 @@
             <small>Fiabilidad</small>
             <h3>Continuidad operativa y recuperación</h3>
             <p>
-              La confiabilidad es la capacidad de un sistema para recuperarse de errores y seguir funcionando. También es uno de los pilares de Microsoft Azure Well-Architected Framework.
-            </p>
-            <p>
+              La confiabilidad es la capacidad de un sistema para recuperarse de errores y seguir funcionando.
+            <br>
               La nube, en virtud de su diseño descentralizado, admite naturalmente una infraestructura confiable y resistente. Con un diseño descentralizado, la nube le permite tener recursos implementados en regiones de todo el mundo. Con esta escala global, incluso si una región tiene un evento catastrófico, otras regiones siguen funcionando.
-            </p>
-            <p>
+            <br>
               Puede diseñar las aplicaciones para aprovechar automáticamente esta mayor confiabilidad. En algunos casos, el propio entorno en la nube cambiará automáticamente a otra región, sin necesidad de realizar ninguna acción por su parte. Obtendrá más información sobre cómo Azure aprovecha la escala global para proporcionar confiabilidad más adelante en esta serie.
             </p>
           </article>
