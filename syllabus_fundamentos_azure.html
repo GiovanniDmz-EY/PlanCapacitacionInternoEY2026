@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syllabus - Fundamentos de Azure</title>
+  <style>
+    :root {
+      --bg: #f3f7ff;
+      --panel: #ffffff;
+      --ink: #13233a;
+      --muted: #4a5b74;
+      --primary: #0a5bd3;
+      --primary-soft: #e5efff;
+      --accent: #0f766e;
+      --border: rgba(19, 35, 58, 0.12);
+      --shadow: 0 16px 36px rgba(19, 35, 58, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 5% 0%, rgba(10, 91, 211, 0.15), transparent 30%),
+        radial-gradient(circle at 95% 0%, rgba(15, 118, 110, 0.12), transparent 25%),
+        var(--bg);
+      line-height: 1.55;
+    }
+
+    .container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 52px;
+    }
+
+    .hero {
+      background: linear-gradient(130deg, #083b87, #0a5bd3);
+      color: #fff;
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.02em;
+    }
+
+    .hero p { margin: 0; max-width: 900px; }
+
+    .highlight {
+      margin-top: 16px;
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      font-weight: 700;
+    }
+
+    .toc {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 22px;
+    }
+
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+      columns: 2;
+      gap: 24px;
+    }
+
+    .toc a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      margin: 0 0 12px;
+      font-size: 1.45rem;
+      color: #0a3d90;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 12px;
+    }
+
+    .card h3 { margin: 0 0 8px; font-size: 1rem; color: var(--accent); }
+
+    ul { margin: 8px 0; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--primary-soft);
+      color: #0a3d90;
+    }
+
+    .note {
+      padding: 12px;
+      border-left: 4px solid var(--accent);
+      background: #eefcf9;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 760px) {
+      .toc ul { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Syllabus - Fundamentos de Azure (enfoque pr&aacute;ctico)</h1>
+      <p>Contenido estructurado para formar una base conceptual s&oacute;lida en dise&ntilde;o de soluciones Azure: fundamentos correctos, evoluci&oacute;n del mercado, clasificaci&oacute;n de servicios, serverless bien ubicado, seguridad moderna y costos.</p>
+      <span class="highlight">✅ Bloque clave: c&oacute;mo pensar la creaci&oacute;n de recursos (dimensiones).</span>
+      <p style="margin-top:10px;"><strong>Modalidad:</strong> sin laboratorios, solo contenido estructurado listo para syllabus.</p>
+    </header>
+
+    <nav class="toc" aria-label="Tabla de contenidos">
+      <ul>
+        <li><a href="#s1">1. Fundamento universal de una aplicaci&oacute;n</a></li>
+        <li><a href="#s2">2. Evoluci&oacute;n y variaciones del mercado</a></li>
+        <li><a href="#s3">3. Problemas al desacoplar sistemas</a></li>
+        <li><a href="#s4">4. Modelos de servicio y ejecuci&oacute;n</a></li>
+        <li><a href="#s5">5. Dimensiones para crear recursos</a></li>
+        <li><a href="#s6">6. Servicios de c&oacute;mputo</a></li>
+        <li><a href="#s7">7. Servicios de datos</a></li>
+        <li><a href="#s8">8. Seguridad e identidad</a></li>
+        <li><a href="#s9">9. Key Vault</a></li>
+        <li><a href="#s10">10. Networking</a></li>
+        <li><a href="#s11">11. Observabilidad</a></li>
+        <li><a href="#s12">12. Costos</a></li>
+        <li><a href="#s13">13. Integraci&oacute;n de soluci&oacute;n</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="section" id="s1">
+        <h2>1. Fundamento universal de una aplicaci&oacute;n</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Interfaz</h3>
+            <ul>
+              <li>Medio de interacci&oacute;n.</li>
+              <li>Gr&aacute;fica (web/m&oacute;vil), CLI o API.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>L&oacute;gica / procesamiento</h3>
+            <ul>
+              <li>Recepci&oacute;n, validaci&oacute;n y transformaci&oacute;n de datos.</li>
+              <li>Reglas de negocio y generaci&oacute;n de resultados.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Datos</h3>
+            <ul>
+              <li>Temporales (memoria) y persistentes.</li>
+              <li>Estructurados, no estructurados, semi-estructurados y vectoriales.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="note">Los componentes pueden estar integrados o desacoplados, dependiendo de la arquitectura.</div>
+      </section>
+
+      <section class="section" id="s2">
+        <h2>2. Evoluci&oacute;n de las aplicaciones y variaciones del mercado</h2>
+        <ul>
+          <li><strong>Tradicional:</strong> monol&iacute;ticas en un solo sistema.</li>
+          <li><strong>Transici&oacute;n web:</strong> separaci&oacute;n frontend, backend y base de datos.</li>
+          <li><strong>Variaciones del mercado:</strong> interfaces web/mobile/multiplataforma, m&uacute;ltiples lenguajes y frameworks, integraci&oacute;n por APIs y consumo humano/sistema y sistema/sistema.</li>
+          <li><strong>Resultado:</strong> arquitecturas desacopladas, backend &uacute;nico y responsabilidades separadas.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="s3">
+        <h2>3. Problemas al desacoplar sistemas</h2>
+        <ul>
+          <li>Comunicaci&oacute;n entre componentes.</li>
+          <li>Seguridad e identidad.</li>
+          <li>Monitoreo, costos y gobierno.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="s4">
+        <h2>4. Modelos de servicio y ejecuci&oacute;n</h2>
+        <ul>
+          <li><strong>IaaS:</strong> control de infraestructura y del sistema operativo.</li>
+          <li><strong>PaaS:</strong> infraestructura administrada y foco en la aplicaci&oacute;n.</li>
+          <li><strong>SaaS:</strong> software completamente administrado.</li>
+          <li><strong>Serverless:</strong> ejecuci&oacute;n bajo demanda, sin gesti&oacute;n de servidores y basada en eventos.</li>
+        </ul>
+        <table>
+          <thead>
+            <tr><th>Modelo</th><th>Servidor</th><th>Gesti&oacute;n</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>IaaS</td><td>Visible</td><td>Usuario</td></tr>
+            <tr><td>PaaS</td><td>Abstracto</td><td>Compartida</td></tr>
+            <tr><td>Serverless</td><td>No visible</td><td>Proveedor</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="s5">
+        <h2>5. Dimensiones para la creaci&oacute;n de recursos (BLOQUE CLAVE)</h2>
+        <ul>
+          <li><strong>Ubicaci&oacute;n (regi&oacute;n):</strong> afecta latencia, costo y disponibilidad.</li>
+          <li><strong>Capacidad / SKU:</strong> define nivel de servicio y recursos asignados.</li>
+          <li><strong>Modelo de ejecuci&oacute;n:</strong> siempre activo, serverless o escalado autom&aacute;tico.</li>
+          <li><strong>Acceso y seguridad:</strong> p&uacute;blico/privado, autenticaci&oacute;n y restricciones.</li>
+          <li><strong>Integraciones / dependencias:</strong> relaci&oacute;n con otros servicios.</li>
+          <li><strong>Impacto de configuraci&oacute;n:</strong> hay decisiones dif&iacute;ciles de modificar sin recrear.</li>
+          <li><strong>Organizaci&oacute;n:</strong> Resource Groups para agrupaci&oacute;n l&oacute;gica.</li>
+          <li><strong>Tags:</strong> clasificaci&oacute;n por ambiente, proyecto y responsable.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="s6">
+        <h2>6. Servicios de c&oacute;mputo</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Virtual Machines (IaaS)</h3>
+            <ul><li>Servidor visible, control total y ejecuci&oacute;n continua.</li><li>Depende de disco, red e IP.</li><li>Ideal para legacy o control espec&iacute;fico.</li></ul>
+          </article>
+          <article class="card">
+            <h3>App Service (PaaS)</h3>
+            <ul><li>Servidor abstracto y despliegue simplificado.</li><li>Escalado y ejecuci&oacute;n continua.</li><li>Uso en APIs y aplicaciones web.</li></ul>
+          </article>
+          <article class="card">
+            <h3>Container Apps (PaaS)</h3>
+            <ul><li>Contenedores con escalado autom&aacute;tico.</li><li>Puede escalar a cero.</li><li>Orientado a microservicios y cargas variables.</li></ul>
+          </article>
+          <article class="card">
+            <h3>Azure Functions (Serverless)</h3>
+            <ul><li>Ejecuci&oacute;n por eventos y pago por uso.</li><li>Triggers HTTP, timer y colas.</li><li>Escalado autom&aacute;tico.</li></ul>
+          </article>
+          <article class="card">
+            <h3>Durable Functions</h3>
+            <ul><li>Orquestaci&oacute;n de flujos y procesos prolongados.</li></ul>
+          </article>
+          <article class="card">
+            <h3>AKS</h3>
+            <ul><li>PaaS semi-administrado con Kubernetes.</li><li>Mayor control para escenarios complejos.</li></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="s7">
+        <h2>7. Servicios de datos</h2>
+        <ul>
+          <li><strong>Storage (PaaS):</strong> datos no estructurados y archivos.</li>
+          <li><strong>Azure SQL (PaaS):</strong> provisionado o serverless para datos estructurados.</li>
+          <li><strong>Cosmos DB (PaaS):</strong> provisionado o serverless para datos flexibles.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="s8">
+        <h2>8. Seguridad e identidad</h2>
+        <ul>
+          <li>Autenticaci&oacute;n (verificaci&oacute;n de identidad) y autorizaci&oacute;n (control de acceso).</li>
+          <li>Factores: conocimiento, posesi&oacute;n y biometr&iacute;a.</li>
+          <li>Entra ID: usuarios, grupos y gesti&oacute;n de identidad.</li>
+          <li>RBAC: roles, permisos y alcance.</li>
+          <li>Managed Identity: identidad para recursos sin credenciales embebidas.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="s9">
+        <h2>9. Key Vault</h2>
+        <ul>
+          <li>Almacenamiento seguro de claves, secretos y certificados.</li>
+          <li>Integraci&oacute;n con identidad para gesti&oacute;n segura de credenciales.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="s10">
+        <h2>10. Networking</h2>
+        <ul>
+          <li>VNet como red privada, subnets para segmentaci&oacute;n.</li>
+          <li>NSG para reglas de tr&aacute;fico y Firewall para control de acceso.</li>
+          <li>Restricciones por IP, por origen y mediante CORS.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="s11">
+        <h2>11. Observabilidad</h2>
+        <ul>
+          <li>Monitoreo integral de servicios.</li>
+          <li>Logs, m&eacute;tricas y trazabilidad como elementos base.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="s12">
+        <h2>12. Costos</h2>
+        <ul>
+          <li>Factores: tiempo, ejecuciones, almacenamiento y operaciones.</li>
+          <li>Variables: SKU, regi&oacute;n y escalado.</li>
+          <li>Modelos: consumo, capacidad y reservas.</li>
+          <li>Control: monitoreo, organizaci&oacute;n y uso disciplinado de tags.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="s13">
+        <h2>13. Integraci&oacute;n de soluci&oacute;n</h2>
+        <p><strong>Flujo base:</strong> interfaz &rarr; backend &rarr; datos.</p>
+        <p><strong>Componentes adicionales:</strong> identidad, seguridad, red y monitoreo.</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
