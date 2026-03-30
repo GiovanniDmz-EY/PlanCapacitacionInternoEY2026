@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Syllabus - Fundamentos de Azure</title>
+  <title>Fundamentos de Azure</title>
   <style>
     :root {
       --bg: #f3f7ff;
@@ -96,9 +96,7 @@
     }
 
     .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
+      display: block;
     }
 
     .card {
@@ -146,10 +144,8 @@
 <body>
   <div class="container">
     <header class="hero">
-      <h1>Syllabus - Fundamentos de Azure (enfoque pr&aacute;ctico)</h1>
-      <p>Contenido estructurado para formar una base conceptual s&oacute;lida en dise&ntilde;o de soluciones Azure: fundamentos correctos, evoluci&oacute;n del mercado, clasificaci&oacute;n de servicios, serverless bien ubicado, seguridad moderna y costos.</p>
-      <span class="highlight">✅ Bloque clave: c&oacute;mo pensar la creaci&oacute;n de recursos (dimensiones).</span>
-      <p style="margin-top:10px;"><strong>Modalidad:</strong> sin laboratorios, solo contenido estructurado listo para syllabus.</p>
+      <h1>Fundamentos de Azure </h1>
+      <p>Contenido estructurado para formar una base conceptual s&oacute;lida en dise&ntilde;o de soluciones Azure: fundamentos correctos, evoluci&oacute;n del mercado, clasificaci&oacute;n de servicios, seguridad y costos.</p>
     </header>
 
     <nav class="toc" aria-label="Tabla de contenidos">
@@ -197,6 +193,88 @@
           </article>
         </div>
         <div class="note">Los componentes pueden estar integrados o desacoplados, dependiendo de la arquitectura.</div>
+        <div class="carousel-container">`
+          <button class="carousel-btn prev" aria-label="Anterior">&#8592;</button>
+          <div class="carousel-track">
+            <div class="carousel-card card">
+              <h3>Ejemplo monol&iacute;tico</h3>
+              <p>Interfaz, l&oacute;gica y datos en un solo sistema.</p>
+              <img src="arqui_mono.png" alt="Ejemplo monolítico" style="width:100%; border-radius:8px; margin-top:8px;"/>
+            </div>
+            <div class="carousel-card card">
+              <h3>Ejemplo desacoplado</h3>
+              <p>Interfaz, backend separado y base de datos independiente.</p>
+              <img src="arqui_fbd.png" alt="Ejemplo desacoplado" style="width:100%; border-radius:8px; margin-top:8px;"/>
+            </div>
+            <div class="carousel-card card">
+              <h3>Microservicios</h3>
+              <p>Interfaces web/m&oacute;vil, backend &uacute;nico con APIs y m&uacute;ltiples servicios de datos.</p>
+              <img src="arqui_microservicios.png" alt="Microservicios" style="width:100%; border-radius:8px; margin-top:8px;"/>   
+            </div>
+          </div>
+          <button class="carousel-btn next" aria-label="Siguiente">&#8594;</button>
+        </div>
+        <script>
+          const track = document.querySelector('.carousel-track');
+          const cards = Array.from(track.children);
+          const prevBtn = document.querySelector('.carousel-btn.prev');
+          const nextBtn = document.querySelector('.carousel-btn.next');
+          let current = 0;
+
+          function updateCarousel() {
+            cards.forEach((card, idx) => {
+              card.style.display = idx === current ? 'block' : 'none';
+            });
+          }
+          prevBtn.addEventListener('click', () => {
+            current = (current - 1 + cards.length) % cards.length;
+            updateCarousel();
+          });
+          nextBtn.addEventListener('click', () => {
+            current = (current + 1) % cards.length;
+            updateCarousel();
+          });
+          updateCarousel();
+        </script>
+        <style>
+        .carousel-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          margin: 24px 0;
+        }
+        .carousel-btn {
+          background: var(--primary);
+          color: #fff;
+          border: none;
+          border-radius: 50%;
+          width: 38px;
+          height: 38px;
+          font-size: 1.5rem;
+          cursor: pointer;
+          box-shadow: var(--shadow);
+          transition: background 0.2s;
+        }
+        .carousel-btn:hover {
+          background: #083b87;
+        }
+        .carousel-track {
+          width: 100%;
+          max-width: 340px;
+          min-height: 260px;
+          display: flex;
+          justify-content: center;
+          align-items: stretch;
+          position: relative;
+        }
+        .carousel-card {
+          width: 100%;
+          min-width: 260px;
+          max-width: 340px;
+          margin: 0 auto;
+        }
+        </style>
       </section>
 
       <section class="section" id="s2">
@@ -239,49 +317,260 @@
       </section>
 
       <section class="section" id="s5">
-        <h2>5. Dimensiones para la creaci&oacute;n de recursos (BLOQUE CLAVE)</h2>
+        <h2>5. Consideraciones para la creaci&oacute;n de recursos</h2>
         <ul>
-          <li><strong>Ubicaci&oacute;n (regi&oacute;n):</strong> afecta latencia, costo y disponibilidad.</li>
-          <li><strong>Capacidad / SKU:</strong> define nivel de servicio y recursos asignados.</li>
-          <li><strong>Modelo de ejecuci&oacute;n:</strong> siempre activo, serverless o escalado autom&aacute;tico.</li>
-          <li><strong>Acceso y seguridad:</strong> p&uacute;blico/privado, autenticaci&oacute;n y restricciones.</li>
-          <li><strong>Integraciones / dependencias:</strong> relaci&oacute;n con otros servicios.</li>
-          <li><strong>Impacto de configuraci&oacute;n:</strong> hay decisiones dif&iacute;ciles de modificar sin recrear.</li>
-          <li><strong>Organizaci&oacute;n:</strong> Resource Groups para agrupaci&oacute;n l&oacute;gica.</li>
-          <li><strong>Tags:</strong> clasificaci&oacute;n por ambiente, proyecto y responsable.</li>
+          <li><strong>Ubicaci&oacute;n (regi&oacute;n):</strong> afecta <a href="https://www.azurespeed.com/Azure/Latency" target="_blank" rel="noopener">latencia</a>, costo, disponibilidad y cumplimiento legal (soberan&iacute;a de datos).</li>
+          <li><strong>Capacidad / SKU:</strong> define nivel de servicio, l&iacute;mites de hardware y recursos asignados.</li>
+          <li><strong>Modelo de ejecuci&oacute;n:</strong> define si el cobro es por recurso siempre activo, serverless o escalado autom&aacute;tico.</li>
+          <li><strong>Acceso y seguridad:</strong> define visibilidad p&uacute;blica/privada, autenticaci&oacute;n y restricciones de red (IPs).</li>
+          <li><strong>Integraciones / dependencias:</strong> relaci&oacute;n con otros servicios y recursos impl&iacute;citos (discos, NICs, IPs).</li>
+          <li><strong>Impacto de configuraci&oacute;n:</strong> decisiones de identidad (nombre) y ubicaci&oacute;n dif&iacute;ciles de modificar sin recrear.</li>
+          <li><strong>Jerarqu&iacute;a y Organizaci&oacute;n:</strong> uso de Suscripciones y Resource Groups para agrupaci&oacute;n l&oacute;gica y de costos.</li>
+          <li><strong>Tags:</strong> clasificaci&oacute;n por ambiente, proyecto y responsable para auditor&iacute;a y facturaci&oacute;n.</li>
+          <li><strong>Gobernanza y Bloqueos:</strong> uso de "Resource Locks" para evitar borrado accidental o modificaciones cr&iacute;ticas.</li>
         </ul>
       </section>
 
       <section class="section" id="s6">
         <h2>6. Servicios de c&oacute;mputo</h2>
+        <p>Los servicios de computaci&oacute;n de Azure proporcionan una suite de herramientas para crear y desplegar aplicaciones de forma eficiente. Entre ellos est&aacute;n las m&aacute;quinas virtuales (VM), Azure Kubernetes Service (AKS), Azure Functions, App Service, Container Apps y Logic Apps. Cada uno responde a necesidades distintas, desde control total hasta automatizaci&oacute;n y escalabilidad.</p>
         <div class="grid-3">
-          <article class="card">
-            <h3>Virtual Machines (IaaS)</h3>
-            <ul><li>Servidor visible, control total y ejecuci&oacute;n continua.</li><li>Depende de disco, red e IP.</li><li>Ideal para legacy o control espec&iacute;fico.</li></ul>
+          <article class="card expandable">
+            <button class="card-summary" onclick="toggleDetail(this)">
+              <h3>Virtual Machines (IaaS)</h3>
+              <ul>
+                <li>Servidor visible, control total y ejecuci&oacute;n continua.</li>
+              </ul>
+            </button>
+            <div class="card-detail">
+              <ul>
+                <li>Permiten virtualizaci&oacute;n sin invertir en hardware.</li>
+                <li>Entornos personalizables para desarrollo, pruebas y producci&oacute;n.</li>
+                <li>Soportan distintos sistemas operativos (ej. Linux en host Windows).</li>
+                <li>Ideal para aplicaciones legacy o cuando se requiere control espec&iacute;fico.</li>
+              </ul>
+              <a href="#s6.1" class="vm-link" style="display:inline-block;margin-top:8px;color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de VM &rarr;</a>
+            </div>
           </article>
-          <article class="card">
-            <h3>App Service (PaaS)</h3>
-            <ul><li>Servidor abstracto y despliegue simplificado.</li><li>Escalado y ejecuci&oacute;n continua.</li><li>Uso en APIs y aplicaciones web.</li></ul>
+          <article class="card expandable">
+            <button class="card-summary" onclick="toggleDetail(this)">
+              <h3>App Service (PaaS)</h3>
+              <ul><li>Servidor abstracto y despliegue simplificado.</li></ul>
+            </button>
+            <div class="card-detail">
+              <ul>
+                <li>Desarrollo de backend web, API y m&oacute;vil en entorno totalmente gestionado.</li>
+                <li>Escalabilidad, seguridad y DevOps integrados.</li>
+                <li>Soporta .NET, Java, Node.js, Python, PHP y contenedores Docker.</li>
+                <li>Autoescalado, balanceo de carga y automatizaci&oacute;n.</li>
+                <li>Integraci&oacute;n con VS Code y herramientas Java.</li>
+                <li>Despliegue flexible y sin preocuparse por la infraestructura.</li>
+              </ul>
+            </div>
           </article>
-          <article class="card">
-            <h3>Container Apps (PaaS)</h3>
-            <ul><li>Contenedores con escalado autom&aacute;tico.</li><li>Puede escalar a cero.</li><li>Orientado a microservicios y cargas variables.</li></ul>
+          <article class="card expandable">
+            <button class="card-summary" onclick="toggleDetail(this)">
+              <h3>Container Apps (PaaS)</h3>
+              <ul><li>Contenedores con escalado autom&aacute;tico.</li></ul>
+            </button>
+            <div class="card-detail">
+              <ul>
+                <li>Ejecuta aplicaciones en contenedores con escalado autom&aacute;tico, incluso a cero.</li>
+                <li>Ideal para microservicios y cargas variables.</li>
+                <li>Despliegue sencillo de contenedores sin gestionar infraestructura subyacente.</li>
+                <li>Integraci&oacute;n con otros servicios de Azure y soporte para eventos.</li>
+              </ul>
+            </div>
           </article>
-          <article class="card">
-            <h3>Azure Functions (Serverless)</h3>
-            <ul><li>Ejecuci&oacute;n por eventos y pago por uso.</li><li>Triggers HTTP, timer y colas.</li><li>Escalado autom&aacute;tico.</li></ul>
+          <article class="card expandable">
+            <button class="card-summary" onclick="toggleDetail(this)">
+              <h3>Azure Functions (PaaS)</h3>
+              <ul><li>Ejecuci&oacute;n por eventos y pago por uso.</li></ul>
+            </button>
+            <div class="card-detail">
+              <ul>
+                <li>Soluci&oacute;n serverless: elimina la gesti&oacute;n de servidores.</li>
+                <li>Escalado autom&aacute;tico y pago solo por ejecuci&oacute;n.</li>
+                <li>Soporta C#, Java, JavaScript, Python y PowerShell.</li>
+                <li>Ideal para tareas por eventos: HTTP, temporizadores, colas, etc.</li>
+                <li>Permite enfocarse en el c&oacute;digo y la l&oacute;gica de negocio.</li>
+              </ul>
+            </div>
           </article>
-          <article class="card">
-            <h3>Durable Functions</h3>
-            <ul><li>Orquestaci&oacute;n de flujos y procesos prolongados.</li></ul>
+          <article class="card expandable">
+            <button class="card-summary" onclick="toggleDetail(this)">
+              <h3>Logic Apps (PaaS)</h3>
+              <ul><li>Orquestaci&oacute;n de flujos.</li></ul>
+            </button>
+            <div class="card-detail">
+              <ul>
+                <li>Permite automatizar y orquestar flujos de trabajo empresariales.</li>
+                <li>Integraci&oacute;n con cientos de servicios y conectores.</li>
+                <li>Ideal para procesos repetitivos y automatizaci&oacute;n de integraciones.</li>
+              </ul>
+            </div>
           </article>
-          <article class="card">
-            <h3>AKS</h3>
-            <ul><li>PaaS semi-administrado con Kubernetes.</li><li>Mayor control para escenarios complejos.</li></ul>
+          <article class="card expandable">
+            <button class="card-summary" onclick="toggleDetail(this)">
+              <h3>AKS (Azure Kubernetes Service)</h3>
+              <ul><li>PaaS semi-administrado con Kubernetes.</li></ul>
+            </button>
+            <div class="card-detail">
+              <ul>
+                <li>Plataforma Kubernetes gestionada para desplegar y administrar aplicaciones en contenedores.</li>
+                <li>Gestión de nodos, supervisión y mantenimiento automatizados.</li>
+                <li>Pago por uso de los nodos que ejecutan tus aplicaciones.</li>
+                <li>Ideal para orquestación de contenedores y arquitecturas de microservicios.</li>
+                <li>Soporta autoescalado, agrupaciones multinodo, integración de almacenamiento y seguridad avanzada.</li>
+                <li>Facilita el descubrimiento de servicios, balanceo de carga y comunicación eficiente entre microservicios.</li>
+              </ul>
+            </div>
           </article>
         </div>
+        <script>
+        function toggleDetail(btn) {
+          const detail = btn.nextElementSibling;
+          if (detail.style.display === 'block') {
+            detail.style.display = 'none';
+            btn.classList.remove('expanded');
+          } else {
+            // Cierra otros detalles abiertos
+            document.querySelectorAll('.card-detail').forEach(d => d.style.display = 'none');
+            document.querySelectorAll('.card-summary').forEach(b => b.classList.remove('expanded'));
+            detail.style.display = 'block';
+            btn.classList.add('expanded');
+          }
+        }
+        </script>
+        <style>
+        .expandable .card-summary {
+          background: none;
+          border: none;
+          width: 100%;
+          text-align: left;
+          padding: 0;
+          cursor: pointer;
+          outline: none;
+          display: flex;
+          flex-direction: column;
+        }
+        .expandable .card-summary h3 {
+          margin-bottom: 0;
+        }
+        .expandable .card-summary.expanded h3::after {
+          content: '▲';
+          float: right;
+          font-size: 0.9em;
+          margin-left: 8px;
+        }
+        .expandable .card-summary h3::after {
+          content: '▼';
+          float: right;
+          font-size: 0.9em;
+          margin-left: 8px;
+        }
+        .expandable .card-summary.expanded h3::after {
+          content: '▲';
+        }
+        .card-detail {
+          display: none;
+          margin-top: 8px;
+          padding-top: 6px;
+          border-top: 1px solid var(--border);
+          font-size: 0.97em;
+        }
+        </style>
       </section>
+      <section class="section" id="s6.1">
+        <h2>6.1 Azure Virtual Machine</h2>
+        <ol>
+          <li><strong>Definición y Modelo de Servicio</strong>
+            <ul>
+              <li><strong>Concepto:</strong> Instancia de cómputo que emula un servidor físico (CPU, RAM, Almacenamiento).</li>
+              <li><strong>Modelo de Responsabilidad:</strong> Bajo IaaS, el usuario gestiona el Sistema Operativo, parches, middleware y aplicaciones; Microsoft garantiza la disponibilidad del hardware físico.</li>
+              <li><strong>Casos de Uso:</strong>
+                <ul>
+                  <li>Migraciones directas (Lift-and-Shift) de infraestructura local.</li>
+                  <li>Entornos con requisitos específicos de kernel o software no disponible en PaaS.</li>
+                  <li>Aislamiento total de recursos para procesamiento de datos.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
 
+          <li> <strong>Dependencias de Infraestructura (Recursos Hijos)</strong>
+            <ul>
+              <li>Una Virtual Machine no es un recurso autónomo; su despliegue requiere y dispara la creación de servicios asociados:</li>
+              <li><strong>Network Interface (NIC):</strong> Componente mandatorio que interconecta la VM con la red. Sin una NIC, la instancia carece de identidad y comunicación.</li>
+              <li><strong>Virtual Network (VNet) y Subnet:</strong> Espacio lógico obligatorio donde reside la VM. Define el segmento de red y el direccionamiento IP interno.</li>
+              <li><strong>Managed Disks:</strong> Almacenamiento persistente para el SO y datos.</li>
+            </ul>
+          </li>
+
+          <li><strong>Conectividad: Entradas y Salidas</strong>
+            <ul>
+              <li><strong>Public IP:</strong> Recurso opcional que permite la visibilidad y el acceso a la VM desde Internet (ej. para administración vía RDP/SSH).</li>
+              <li><strong>Integración Empresarial:</strong> Capacidad de la VM para conectarse a redes físicas locales (On-premise) mediante Gateways o VPNs, permitiendo arquitecturas híbridas.</li>
+              <li><strong>Comunicación Interna:</strong> Uso de IPs privadas para interconexión segura con otros servicios de Azure (Bases de datos, Almacenamiento, otras VMs) sin exponer el tráfico a la red pública.</li>
+            </ul>
+            <div class="note" style="margin-top:8px;">
+              ⚠️ <strong>Nota de Arquitectura:</strong> La conectividad de una VM no es solo hacia afuera (Internet), sino hacia adentro (VNet). Por ejemplo, un error común es dejar IPs públicas activas cuando la máquina solo necesita hablar con una base de datos interna de Azure.
+            </div>
+          </li>
+
+
+          <li>  <strong>Acceso y Autenticación</strong>
+            <ul>
+              <li><strong>Protocolos:</strong> RDP para Windows y SSH para Linux.</li>
+              <li><strong>Seguridad:</strong> Recomendación de deshabilitar acceso público directo, utilizando VPN o Azure Bastion para conexiones seguras.</li>
+              <li><strong>Autenticación:</strong>
+                <ul>
+                  <li>Autrencicacion basada en credenciales (Usuario y contraseña)</li>
+                  <li>Autenticación basada en claves SSH para Linux</li>
+                  <li>Autenticación basada en Azure Active Directory (Entra ID) para Windows</li>
+                </ul>
+              </li>      
+              <li><strong>Identidad:</strong> Integración con Azure Active Directory (Entra ID) para control de acceso basado en roles (RBAC).</li>
+            </ul>
+          </li>
+          
+          <li><strong>Azure Spot Instances: Gestión de Capacidad Excedente</strong>
+            <ul>
+              <li><strong>Naturaleza:</strong> Uso de la infraestructura ociosa en los centros de datos de Microsoft con descuentos de hasta el 90% sobre la tarifa regular.</li>
+              <li><strong>Mecanismo de Desalojo (Eviction):</strong> Microsoft recupera el hardware de forma inmediata cuando existe demanda de clientes con tarifa regular (Pay-As-You-Go).</li>
+              <li><strong>Notificación Crítica:</strong> Se emite un preaviso de únicamente 30 segundos antes de la interrupción del servicio.</li>
+              <li><strong>Política de Respuesta:</strong> El usuario define si la instancia se detiene (Deallocate) o se elimina automáticamente (Delete) tras el desalojo.</li>
+            </ul>
+            <div class="note" style="margin-top:8px;">
+              ⚠️ <strong>Nota de Arquitectura:</strong> El uso de Spot Instances está estrictamente limitado a entornos de desarrollo, pruebas o tareas no críticas que toleren interrupciones. Jamás debe utilizarse para ambientes de producción o procesos donde la persistencia del tiempo de actividad sea mandatoria.
+            </div>
+          </li>
+          <li>
+            <strong>Gestión de Operaciones y Ahorro</strong>
+            <ul>
+              <li><strong>Auto-shutdown:</strong> Política de control de costos mediante el apagado programado de la instancia.</li>
+              <li><strong>Comportamiento:</strong> Cierre forzoso de sesiones activas e interrupción de procesos a la hora definida; permite alertas de cortesía 30 minutos antes para postergación manual.</li>
+              <li><strong>Estado Deallocated:</strong> Estado final tras un apagado (manual o programado) donde se libera el costo de cómputo (CPU/RAM = $0), pero persiste el cobro por almacenamiento de discos e IPs reservadas.</li>
+              <li><strong>Boot Diagnostics:</strong> Herramienta visual para depurar errores críticos de carga del Sistema Operativo sin necesidad de acceso RDP/SSH.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Estrategias de Escalabilidad</strong>
+            <ul>
+              <li><strong>Escalado Vertical (Up/Down):</strong> Cambio de SKU para modificar la capacidad de hardware (ej. aumentar RAM). Requiere un reinicio forzado de la instancia.</li>
+              <li><strong>Escalado Horizontal (Out/In):</strong> Implementación de Virtual Machine Scale Sets (VMSS) para desplegar réplicas idénticas de la VM tras un balanceador de carga.</li>
+              <li><strong>Ventaja:</strong> Permite absorber picos de demanda distribuyendo el tráfico entre múltiples nodos sin interrumpir el servicio.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Consideraciones de Persistencia</strong>
+            <ul>
+              <li><strong>Managed Disks:</strong> Almacenamiento persistente (SSD/HDD) independiente de la VM.</li>
+              <li><strong>Delete with VM:</strong> Configuración recomendada para asegurar que, al eliminar la instancia, se limpien automáticamente sus discos e interfaces de red, evitando costos residuales por recursos huérfanos.</li>
+            </ul>
+          </li>
+        </ol>
+      </section>
       <section class="section" id="s7">
         <h2>7. Servicios de datos</h2>
         <ul>
