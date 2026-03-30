@@ -397,6 +397,7 @@
                 <li>Ideal para tareas por eventos: HTTP, temporizadores, colas, etc.</li>
                 <li>Permite enfocarse en el c&oacute;digo y la l&oacute;gica de negocio.</li>
               </ul>
+              <a href="#s6.4" style="display:inline-block;margin-top:8px;color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de Azure Functions &rarr;</a>
             </div>
           </article>
           <article class="card expandable">
@@ -674,6 +675,65 @@
             </ul>
             <div class="note" style="margin-top:8px;">
               <strong>S&iacute;ntesis:</strong> Container Apps combina simplicidad PaaS con patrones modernos de contenedores, siendo especialmente &uacute;til cuando se necesita elasticidad y despliegue basado en im&aacute;genes.
+            </div>
+          </li>
+        </ol>
+      </section>
+      <section class="section" id="s6.4">
+        <h2>6.4 Azure Functions</h2>
+        <ol>
+          <li><strong>Definici&oacute;n y modelo de servicio</strong>
+            <ul>
+              <li><strong>Concepto:</strong> servicio de c&oacute;mputo basado en eventos que permite ejecutar fragmentos de c&oacute;digo sin gestionar infraestructura.</li>
+              <li><strong>Modelo:</strong> se clasifica oficialmente como PaaS, aunque funcionalmente se reconoce como FaaS por ejecutar l&oacute;gica at&oacute;mica bajo demanda.</li>
+              <li><strong>Abstracci&oacute;n:</strong> el usuario se enfoca en el c&oacute;digo y la configuraci&oacute;n, mientras Azure gestiona sistema operativo, runtime y escalado.</li>
+            </ul>
+          </li>
+          <li><strong>Componentes y dependencias</strong>
+            <ul>
+              <li><strong>Function App:</strong> unidad l&oacute;gica que agrupa funciones y define el stack tecnol&oacute;gico como .NET, Python o Node.js.</li>
+              <li><strong>Triggers:</strong> disparadores obligatorios que inician la ejecuci&oacute;n, por ejemplo HTTP, Timer o cambios en bases de datos.</li>
+              <li><strong>Bindings:</strong> conexiones declarativas de entrada y salida para integrarse con otros servicios sin escribir c&oacute;digo de integraci&oacute;n.</li>
+              <li><strong>Azure Storage Account:</strong> dependencia mandatoria para gestionar estados internos, logs y bloqueos de ejecuci&oacute;n.</li>
+            </ul>
+          </li>
+          <li><strong>Modelo de ejecuci&oacute;n y operaci&oacute;n</strong>
+            <ul>
+              <li><strong>Event-driven:</strong> la ejecuci&oacute;n es reactiva y ocurre cuando un disparador externo activa la funci&oacute;n.</li>
+              <li><strong>Naturaleza ef&iacute;mera:</strong> est&aacute; dise&ntilde;ado para ejecuciones de corta duraci&oacute;n con tiempos de espera configurables.</li>
+              <li><strong>Stateless:</strong> cada ejecuci&oacute;n es independiente; cuando se requiere continuidad entre pasos, se utiliza Durable Functions.</li>
+            </ul>
+          </li>
+          <li><strong>Conectividad, acceso y seguridad</strong>
+            <ul>
+              <li><strong>Authorization Keys:</strong> uso de llaves Host o Function para restringir el acceso a los endpoints.</li>
+              <li><strong>Managed Identities:</strong> permite autenticarse con otros recursos de Azure sin exponer credenciales en el c&oacute;digo.</li>
+              <li><strong>VNet Integration:</strong> puede conectarse a recursos privados dentro de una red empresarial en planes compatibles.</li>
+              <li><strong>Acceso seguro:</strong> es com&uacute;n integrarlo con Key Vault, SQL u otros servicios protegidos mediante identidad administrada.</li>
+            </ul>
+          </li>
+          <li><strong>Escalabilidad</strong>
+            <ul>
+              <li><strong>Elasticidad autom&aacute;tica:</strong> el escalado se basa en el volumen de eventos entrantes y no en m&eacute;tricas manuales de hardware.</li>
+              <li><strong>Escala a cero:</strong> si no existen eventos activos, el servicio puede no mantener instancias activas.</li>
+              <li><strong>Instancias din&aacute;micas:</strong> puede crear m&uacute;ltiples copias en paralelo para absorber picos de carga masivos.</li>
+            </ul>
+          </li>
+          <li><strong>Costos y eficiencia operativa</strong>
+            <ul>
+              <li><strong>Plan de consumo:</strong> modelo de pago por ejecuci&oacute;n y tiempo de procesamiento medido en GB-segundos.</li>
+              <li><strong>Eficiencia:</strong> el cobro se realiza solo por el tiempo real de ejecuci&oacute;n, con costo cero en periodos de inactividad.</li>
+              <li><strong>Cold Start:</strong> puede existir una latencia inicial cuando una funci&oacute;n se activa tras haber permanecido inactiva en el plan de consumo.</li>
+            </ul>
+          </li>
+          <li><strong>Casos de uso y consideraciones de arquitectura</strong>
+            <ul>
+              <li><strong>Escenarios ideales:</strong> procesamiento de datos (ETL), tareas programadas, webhooks y microservicios ligeros.</li>
+              <li><strong>No ideal para:</strong> procesos de larga duraci&oacute;n o tareas que requieran control total del entorno de ejecuci&oacute;n; en esos casos conviene VM o App Service.</li>
+              <li><strong>Consideraci&oacute;n:</strong> representa la opci&oacute;n con mayor eficiencia operativa cuando la carga es intermitente y est&aacute; orientada a eventos.</li>
+            </ul>
+            <div class="note" style="margin-top:8px;">
+              <strong>S&iacute;ntesis:</strong> Azure Functions es la expresi&oacute;n m&aacute;s eficiente del modelo PaaS para ejecuci&oacute;n bajo demanda, ya que permite pagar solo por la l&oacute;gica ejecutada y escalar nativamente seg&uacute;n eventos.
             </div>
           </li>
         </ol>
