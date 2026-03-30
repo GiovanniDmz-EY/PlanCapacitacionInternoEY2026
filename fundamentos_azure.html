@@ -381,7 +381,7 @@
                 <li>Despliegue sencillo de contenedores sin gestionar infraestructura subyacente.</li>
                 <li>Integraci&oacute;n con otros servicios de Azure y soporte para eventos.</li>
               </ul>
-              <a href="#s6-3" style="display:inline-block;margin-top:8px;color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de Container Apps &rarr;</a>
+              <a href="#s6.3" style="display:inline-block;margin-top:8px;color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de Container Apps &rarr;</a>
             </div>
           </article>
           <article class="card expandable">
@@ -486,104 +486,85 @@
       <section class="section" id="s6.1">
         <h2>6.1 Azure Virtual Machine</h2>
         <ol>
-          <li><strong>Definición y Modelo de Servicio</strong>
+          <li><strong>Definici&oacute;n y modelo de servicio</strong>
             <ul>
-              <li><strong>Concepto:</strong> Instancia de cómputo que emula un servidor físico (CPU, RAM, Almacenamiento).</li>
-              <li><strong>Modelo de Responsabilidad:</strong> Bajo IaaS, el usuario gestiona el Sistema Operativo, parches, middleware y aplicaciones; Microsoft garantiza la disponibilidad del hardware físico.</li>
-              <li><strong>Casos de Uso:</strong>
-                <ul>
-                  <li>Migraciones directas (Lift-and-Shift) de infraestructura local.</li>
-                  <li>Entornos con requisitos específicos de kernel o software no disponible en PaaS.</li>
-                  <li>Aislamiento total de recursos para procesamiento de datos.</li>
-                </ul>
-              </li>
+              <li><strong>Concepto:</strong> instancia de c&oacute;mputo que emula un servidor f&iacute;sico con CPU, memoria y almacenamiento.</li>
+              <li><strong>Modelo:</strong> corresponde a IaaS, por lo que el servidor es visible y el usuario administra sistema operativo, parches, middleware y aplicaciones.</li>
+              <li><strong>Responsabilidad del proveedor:</strong> Microsoft gestiona el hardware f&iacute;sico, la disponibilidad base y la capa de virtualizaci&oacute;n.</li>
             </ul>
           </li>
-
-          <li> <strong>Dependencias de Infraestructura (Recursos Hijos)</strong>
+          <li> <strong>Componentes y dependencias</strong>
             <ul>
-              <li>Una Virtual Machine no es un recurso autónomo; su despliegue requiere y dispara la creación de servicios asociados:</li>
-              <li><strong>Network Interface (NIC):</strong> Componente mandatorio que interconecta la VM con la red. Sin una NIC, la instancia carece de identidad y comunicación.</li>
-              <li><strong>Virtual Network (VNet) y Subnet:</strong> Espacio lógico obligatorio donde reside la VM. Define el segmento de red y el direccionamiento IP interno.</li>
-              <li><strong>Managed Disks:</strong> Almacenamiento persistente para el SO y datos.</li>
+              <li><strong>Network Interface (NIC):</strong> recurso obligatorio que conecta la VM a la red y le da identidad de comunicaci&oacute;n.</li>
+              <li><strong>Virtual Network (VNet) y Subnet:</strong> segmento l&oacute;gico donde vive la m&aacute;quina y desde donde obtiene direccionamiento interno.</li>
+              <li><strong>Managed Disks:</strong> almacenamiento persistente para sistema operativo y datos.</li>
+              <li><strong>Public IP:</strong> componente opcional cuando se requiere exposici&oacute;n o administraci&oacute;n desde Internet.</li>
             </ul>
           </li>
-
-          <li><strong>Conectividad: Entradas y Salidas</strong>
+          <li><strong>Modelo de ejecuci&oacute;n y operaci&oacute;n</strong>
             <ul>
-              <li><strong>Public IP:</strong> Recurso opcional que permite la visibilidad y el acceso a la VM desde Internet (ej. para administración vía RDP/SSH).</li>
-              <li><strong>Integración Empresarial:</strong> Capacidad de la VM para conectarse a redes físicas locales (On-premise) mediante Gateways o VPNs, permitiendo arquitecturas híbridas.</li>
-              <li><strong>Comunicación Interna:</strong> Uso de IPs privadas para interconexión segura con otros servicios de Azure (Bases de datos, Almacenamiento, otras VMs) sin exponer el tráfico a la red pública.</li>
+              <li><strong>Ejecuci&oacute;n continua:</strong> la capacidad permanece asignada mientras la VM est&aacute; encendida.</li>
+              <li><strong>Operaci&oacute;n directa:</strong> el equipo administra arranque, apagado, mantenimiento del sistema y actualizaciones.</li>
+              <li><strong>Boot Diagnostics:</strong> ayuda a diagnosticar errores de inicio del sistema operativo cuando no hay acceso por RDP o SSH.</li>
+            </ul>
+          </li>
+          <li><strong>Conectividad, acceso y seguridad</strong>
+            <ul>
+              <li><strong>Conectividad interna:</strong> puede usar IPs privadas para comunicarse con otros servicios de Azure sin exponer tr&aacute;fico a Internet.</li>
+              <li><strong>Conectividad h&iacute;brida:</strong> puede integrarse con redes on-premise mediante gateways o VPNs.</li>
+              <li><strong>Protocolos de acceso:</strong> RDP para Windows y SSH para Linux.</li>
+              <li><strong>Autenticaci&oacute;n:</strong> puede basarse en usuario y contrase&ntilde;a, claves SSH o integraci&oacute;n con Entra ID, seg&uacute;n el sistema operativo.</li>
+              <li><strong>Seguridad recomendada:</strong> evitar acceso p&uacute;blico directo cuando no es necesario y preferir VPN o Azure Bastion.</li>
             </ul>
             <div class="note" style="margin-top:8px;">
-              ⚠️ <strong>Nota de Arquitectura:</strong> La conectividad de una VM no es solo hacia afuera (Internet), sino hacia adentro (VNet). Por ejemplo, un error común es dejar IPs públicas activas cuando la máquina solo necesita hablar con una base de datos interna de Azure.
-            </div>
-          </li>
-
-
-          <li>  <strong>Acceso y Autenticación</strong>
-            <ul>
-              <li><strong>Protocolos:</strong> RDP para Windows y SSH para Linux.</li>
-              <li><strong>Seguridad:</strong> Recomendación de deshabilitar acceso público directo, utilizando VPN o Azure Bastion para conexiones seguras.</li>
-              <li><strong>Autenticación:</strong>
-                <ul>
-                  <li>Autrencicacion basada en credenciales (Usuario y contraseña)</li>
-                  <li>Autenticación basada en claves SSH para Linux</li>
-                  <li>Autenticación basada en Azure Active Directory (Entra ID) para Windows</li>
-                </ul>
-              </li>      
-              <li><strong>Identidad:</strong> Integración con Azure Active Directory (Entra ID) para control de acceso basado en roles (RBAC).</li>
-            </ul>
-          </li>
-          
-          <li><strong>Azure Spot Instances: Gestión de Capacidad Excedente</strong>
-            <ul>
-              <li><strong>Naturaleza:</strong> Uso de la infraestructura ociosa en los centros de datos de Microsoft con descuentos de hasta el 90% sobre la tarifa regular.</li>
-              <li><strong>Mecanismo de Desalojo (Eviction):</strong> Microsoft recupera el hardware de forma inmediata cuando existe demanda de clientes con tarifa regular (Pay-As-You-Go).</li>
-              <li><strong>Notificación Crítica:</strong> Se emite un preaviso de únicamente 30 segundos antes de la interrupción del servicio.</li>
-              <li><strong>Política de Respuesta:</strong> El usuario define si la instancia se detiene (Deallocate) o se elimina automáticamente (Delete) tras el desalojo.</li>
-            </ul>
-            <div class="note" style="margin-top:8px;">
-              ⚠️ <strong>Nota de Arquitectura:</strong> El uso de Spot Instances está estrictamente limitado a entornos de desarrollo, pruebas o tareas no críticas que toleren interrupciones. Jamás debe utilizarse para ambientes de producción o procesos donde la persistencia del tiempo de actividad sea mandatoria.
+              <strong>Idea clave:</strong> una VM no solo se conecta hacia Internet; tambi&eacute;n forma parte de una red interna. Dise&ntilde;ar bien la conectividad evita exponer recursos innecesariamente.
             </div>
           </li>
           <li>
-            <strong>Gestión de Operaciones y Ahorro</strong>
+            <strong>Escalabilidad</strong>
             <ul>
-              <li><strong>Auto-shutdown:</strong> Política de control de costos mediante el apagado programado de la instancia.</li>
-              <li><strong>Comportamiento:</strong> Cierre forzoso de sesiones activas e interrupción de procesos a la hora definida; permite alertas de cortesía 30 minutos antes para postergación manual.</li>
-              <li><strong>Estado Deallocated:</strong> Estado final tras un apagado (manual o programado) donde se libera el costo de cómputo (CPU/RAM = $0), pero persiste el cobro por almacenamiento de discos e IPs reservadas.</li>
-              <li><strong>Boot Diagnostics:</strong> Herramienta visual para depurar errores críticos de carga del Sistema Operativo sin necesidad de acceso RDP/SSH.</li>
+              <li><strong>Escalado vertical:</strong> cambiar el SKU para aumentar o disminuir CPU y memoria; normalmente requiere reinicio.</li>
+              <li><strong>Escalado horizontal:</strong> usar Virtual Machine Scale Sets (VMSS) para desplegar varias instancias detr&aacute;s de un balanceador.</li>
+              <li><strong>Objetivo:</strong> absorber picos de demanda distribuyendo la carga entre m&uacute;ltiples nodos.</li>
             </ul>
           </li>
           <li>
-            <strong>Estrategias de Escalabilidad</strong>
+            <strong>Costos y eficiencia operativa</strong>
             <ul>
-              <li><strong>Escalado Vertical (Up/Down):</strong> Cambio de SKU para modificar la capacidad de hardware (ej. aumentar RAM). Requiere un reinicio forzado de la instancia.</li>
-              <li><strong>Escalado Horizontal (Out/In):</strong> Implementación de Virtual Machine Scale Sets (VMSS) para desplegar réplicas idénticas de la VM tras un balanceador de carga.</li>
-              <li><strong>Ventaja:</strong> Permite absorber picos de demanda distribuyendo el tráfico entre múltiples nodos sin interrumpir el servicio.</li>
+              <li><strong>Costo principal:</strong> se cobra por capacidad provisionada mientras la VM est&aacute; activa.</li>
+              <li><strong>Auto-shutdown:</strong> ayuda a reducir costos en entornos no productivos apagando la instancia autom&aacute;ticamente.</li>
+              <li><strong>Estado Deallocated:</strong> elimina el costo de c&oacute;mputo, pero pueden mantenerse cargos por discos e IPs reservadas.</li>
+              <li><strong>Spot Instances:</strong> aprovechan capacidad excedente con descuento, pero pueden ser desalojadas con muy poca anticipaci&oacute;n.</li>
             </ul>
+            <div class="note" style="margin-top:8px;">
+              <strong>Nota de arquitectura:</strong> Spot Instances solo debe usarse en escenarios tolerantes a interrupciones, como pruebas, desarrollo o procesos no cr&iacute;ticos.
+            </div>
           </li>
           <li>
-            <strong>Consideraciones de Persistencia</strong>
+            <strong>Casos de uso y consideraciones de arquitectura</strong>
             <ul>
-              <li><strong>Managed Disks:</strong> Almacenamiento persistente (SSD/HDD) independiente de la VM.</li>
-              <li><strong>Delete with VM:</strong> Configuración recomendada para asegurar que, al eliminar la instancia, se limpien automáticamente sus discos e interfaces de red, evitando costos residuales por recursos huérfanos.</li>
+              <li><strong>Casos de uso:</strong> migraciones lift-and-shift, aplicaciones legacy, software con dependencias espec&iacute;ficas o necesidad de control total del entorno.</li>
+              <li><strong>Persistencia:</strong> los discos administrados sobreviven a la instancia y deben gestionarse para evitar recursos hu&eacute;rfanos.</li>
+              <li><strong>Delete with VM:</strong> configuraci&oacute;n recomendada para limpiar autom&aacute;ticamente discos e interfaces al eliminar la instancia.</li>
+              <li><strong>Consideraci&oacute;n:</strong> ofrece m&aacute;ximo control, pero tambi&eacute;n la mayor responsabilidad operativa de las tres opciones.</li>
             </ul>
+            <div class="note" style="margin-top:8px;">
+              <strong>S&iacute;ntesis:</strong> Azure VM es la opci&oacute;n adecuada cuando se necesita control detallado del servidor, aceptando que el equipo tambi&eacute;n asume m&aacute;s tareas de operaci&oacute;n y seguridad.
+            </div>
           </li>
         </ol>
       </section>
       <section class="section" id="s6.2">
         <h2>6.2 Azure App Service</h2>
         <ol>
-          <li><strong>Definici&oacute;n y enfoque del servicio</strong>
+          <li><strong>Definici&oacute;n y modelo de servicio</strong>
             <ul>
               <li><strong>Concepto:</strong> servicio PaaS para desplegar aplicaciones web, APIs y backends sin administrar directamente sistema operativo, parches o servidor.</li>
               <li><strong>Diferencia clave frente a VM:</strong> la infraestructura sigue existiendo, pero se abstrae para que el equipo se concentre en la aplicaci&oacute;n y su configuraci&oacute;n.</li>
               <li><strong>Separaci&oacute;n importante:</strong> la aplicaci&oacute;n no es la infraestructura; el recurso visible para el usuario y la capacidad de c&oacute;mputo son componentes distintos.</li>
             </ul>
           </li>
-          <li><strong>Relaci&oacute;n entre App Service y App Service Plan</strong>
+          <li><strong>Componentes y dependencias</strong>
             <ul>
               <li><strong>App Service:</strong> representa la aplicaci&oacute;n publicada, su configuraci&oacute;n y su punto de exposici&oacute;n.</li>
               <li><strong>App Service Plan:</strong> define la infraestructura real donde corre la aplicaci&oacute;n: CPU, memoria, escalabilidad y regi&oacute;n.</li>
@@ -594,25 +575,21 @@
               <strong>Idea clave:</strong> App Service es la aplicaci&oacute;n; App Service Plan es el servidor abstracto que realmente aporta la capacidad de ejecuci&oacute;n.
             </div>
           </li>
-          <li><strong>Modelo de ejecuci&oacute;n y costo</strong>
+          <li><strong>Modelo de ejecuci&oacute;n y operaci&oacute;n</strong>
             <ul>
               <li><strong>Ejecuci&oacute;n continua:</strong> los recursos del plan permanecen asignados seg&uacute;n la capacidad configurada.</li>
-              <li><strong>Costo por capacidad provisionada:</strong> aunque la app no reciba tr&aacute;fico, la infraestructura del plan sigue activa y genera costo.</li>
-              <li><strong>Diferencia con serverless:</strong> en App Service se paga por capacidad disponible; en modelos serverless el costo depende m&aacute;s directamente de la ejecuci&oacute;n.</li>
-            </ul>
-          </li>
-          <li><strong>Modelos de despliegue</strong>
-            <ul>
               <li><strong>Code-based:</strong> se despliega el c&oacute;digo y la plataforma administra el runtime compatible.</li>
               <li><strong>Container-based:</strong> se despliega una imagen de contenedor, dando mayor control sobre dependencias y entorno de ejecuci&oacute;n.</li>
-              <li><strong>Punto en com&uacute;n:</strong> en ambos casos la aplicaci&oacute;n corre sobre el mismo modelo de hosting del App Service Plan.</li>
+              <li><strong>Deployment slots:</strong> entornos paralelos dentro del mismo App Service, por ejemplo `staging` y `production`.</li>
+              <li><strong>Swap:</strong> una versi&oacute;n validada puede intercambiarse con producci&oacute;n sin redeploy completo, reduciendo riesgo e interrupciones.</li>
             </ul>
           </li>
-          <li><strong>Slots de despliegue</strong>
+          <li><strong>Conectividad, acceso y seguridad</strong>
             <ul>
-              <li><strong>Deployment slots:</strong> entornos paralelos dentro del mismo App Service, por ejemplo `staging` y `production`.</li>
-              <li><strong>Validaci&oacute;n previa:</strong> permiten probar una versi&oacute;n antes de exponerla al usuario final.</li>
-              <li><strong>Swap:</strong> una versi&oacute;n validada puede intercambiarse con producci&oacute;n sin redeploy completo, reduciendo riesgo e interrupciones.</li>
+              <li><strong>Exposici&oacute;n por defecto:</strong> la aplicaci&oacute;n suele publicarse mediante URL HTTP/HTTPS accesible desde Internet.</li>
+              <li><strong>Configuraci&oacute;n desacoplada:</strong> variables de entorno y cadenas de conexi&oacute;n separadas del c&oacute;digo.</li>
+              <li><strong>Manejo de secretos:</strong> puede integrarse con servicios especializados para evitar credenciales embebidas en la aplicaci&oacute;n.</li>
+              <li><strong>Controles de acceso:</strong> restricciones por IP, reglas de acceso y configuraci&oacute;n CORS seg&uacute;n el tipo de consumidor.</li>
             </ul>
           </li>
           <li><strong>Escalabilidad</strong>
@@ -622,20 +599,19 @@
               <li><strong>Impacto compartido:</strong> si varias aplicaciones usan el mismo plan, el escalado afecta a todas porque comparten la misma base de infraestructura.</li>
             </ul>
           </li>
-          <li><strong>Configuraci&oacute;n y seguridad</strong>
+          <li><strong>Costos y eficiencia operativa</strong>
             <ul>
-              <li><strong>Configuraci&oacute;n desacoplada:</strong> variables de entorno y cadenas de conexi&oacute;n separadas del c&oacute;digo.</li>
-              <li><strong>Manejo de secretos:</strong> puede integrarse con servicios especializados para evitar credenciales embebidas en la aplicaci&oacute;n.</li>
-              <li><strong>Exposici&oacute;n por defecto:</strong> la aplicaci&oacute;n suele publicarse mediante URL HTTP/HTTPS accesible desde Internet.</li>
-              <li><strong>Controles de acceso:</strong> restricciones por IP, reglas de acceso y configuraci&oacute;n CORS seg&uacute;n el tipo de consumidor.</li>
+              <li><strong>Costo principal:</strong> depende del App Service Plan y de la capacidad provisionada, no del n&uacute;mero de aplicaciones.</li>
+              <li><strong>Recurso siempre activo:</strong> aunque la aplicaci&oacute;n no reciba tr&aacute;fico, la infraestructura del plan sigue generando costo.</li>
+              <li><strong>Eficiencia:</strong> varias aplicaciones pueden compartir el mismo plan para optimizar costo, siempre que la capacidad est&eacute; bien dimensionada.</li>
             </ul>
           </li>
-          <li><strong>Dependencias y consideraciones de arquitectura</strong>
+          <li><strong>Casos de uso y consideraciones de arquitectura</strong>
             <ul>
-              <li><strong>Dependencia principal:</strong> App Service Plan.</li>
-              <li><strong>Recursos complementarios:</strong> monitoreo, configuraci&oacute;n de red, almacenamiento y otros servicios de soporte pueden formar parte de la soluci&oacute;n.</li>
               <li><strong>Uso recomendado:</strong> aplicaciones web, APIs y backends que requieren disponibilidad continua sin administrar infraestructura base.</li>
               <li><strong>No ideal para:</strong> cargas puramente event-driven o escenarios donde se requiere control total del sistema operativo.</li>
+              <li><strong>Dependencias complementarias:</strong> monitoreo, configuraci&oacute;n de red, almacenamiento y otros servicios de soporte pueden formar parte de la soluci&oacute;n.</li>
+              <li><strong>Consideraci&oacute;n:</strong> es un punto intermedio entre una VM y un modelo serverless, con menor complejidad operativa pero tambi&eacute;n menos control del entorno.</li>
             </ul>
             <div class="note" style="margin-top:8px;">
               <strong>S&iacute;ntesis:</strong> App Service es un punto intermedio entre una VM y un modelo serverless. Simplifica la operaci&oacute;n, pero exige entender bien el App Service Plan para dise&ntilde;ar capacidad, costos y aislamiento.
@@ -643,92 +619,64 @@
           </li>
         </ol>
       </section>
-      <section class="section" id="s6-3">
+      <section class="section" id="s6.3">
         <h2>6.3 Azure Container Apps</h2>
-
-        <ul>
-          <li><strong>Definici&oacute;n:</strong> servicio PaaS orientado a la ejecuci&oacute;n de aplicaciones basadas en contenedores, sin administrar directamente servidores ni orquestadores.</li>
-
-          <li><strong>Modelo de ejecuci&oacute;n:</strong> permite ejecutar contenedores con escalado autom&aacute;tico, incluyendo la posibilidad de escalar a cero cuando no hay carga.</li>
-
-          <li><strong>Unidad de despliegue:</strong> la aplicaci&oacute;n se define a partir de una imagen de contenedor que incluye runtime, dependencias y configuraci&oacute;n.</li>
-
-          <li><strong>Relaci&oacute;n de componentes:</strong>
+        <ol>
+          <li><strong>Definici&oacute;n y modelo de servicio</strong>
             <ul>
-              <li><strong>Container Registry:</strong> almacena las im&aacute;genes de contenedores. No ejecuta aplicaciones, solo sirve como repositorio.</li>
-              <li><strong>Container App:</strong> es la aplicaci&oacute;n en ejecuci&oacute;n. Toma una imagen del registry y la ejecuta.</li>
-              <li><strong>Container Apps Environment:</strong> es el entorno donde viven las aplicaciones, definiendo red, aislamiento y configuraci&oacute;n compartida.</li>
+              <li><strong>Concepto:</strong> servicio PaaS orientado a ejecutar aplicaciones basadas en contenedores sin administrar directamente servidores ni orquestadores.</li>
+              <li><strong>Modelo:</strong> abstrae la infraestructura base, pero conserva conceptos propios del mundo de contenedores como imagen, revisi&oacute;n, ingress y escalado por eventos.</li>
+              <li><strong>Unidad de despliegue:</strong> la aplicaci&oacute;n se publica a partir de una imagen de contenedor que incluye runtime, dependencias y configuraci&oacute;n.</li>
             </ul>
           </li>
-
-          <li><strong>Flujo de funcionamiento:</strong>
+          <li><strong>Componentes y dependencias</strong>
             <ul>
-              <li>El c&oacute;digo se empaqueta como imagen de contenedor.</li>
-              <li>La imagen se almacena en un Container Registry.</li>
-              <li>La Container App obtiene la imagen y la ejecuta.</li>
-              <li>La aplicaci&oacute;n se ejecuta dentro de un Container Apps Environment.</li>
+              <li><strong>Container Registry:</strong> almacena y versiona las im&aacute;genes de contenedores; no ejecuta aplicaciones.</li>
+              <li><strong>Container App:</strong> es la aplicaci&oacute;n en ejecuci&oacute;n que toma una imagen y la corre.</li>
+              <li><strong>Container Apps Environment:</strong> es el entorno compartido donde viven las aplicaciones y donde se define red, aislamiento y configuraci&oacute;n compartida.</li>
+              <li><strong>Integraci&oacute;n:</strong> el acceso al registry puede resolverse con credenciales o identidad administrada.</li>
             </ul>
           </li>
-
-          <li><strong>Container Apps Environment:</strong> agrupa m&uacute;ltiples aplicaciones y define:
+          <li><strong>Modelo de ejecuci&oacute;n y operaci&oacute;n</strong>
             <ul>
-              <li>conectividad (p&uacute;blica o privada)</li>
-              <li>comunicaci&oacute;n entre servicios</li>
-              <li>integraci&oacute;n con red (VNet)</li>
-              <li>observabilidad</li>
+              <li><strong>Ejecuci&oacute;n flexible:</strong> permite escalado autom&aacute;tico e incluso escalar a cero cuando no hay carga.</li>
+              <li><strong>Flujo t&iacute;pico:</strong> construir la imagen, publicarla en un registry y desplegar una nueva revisi&oacute;n en la Container App.</li>
+              <li><strong>Revisions:</strong> permiten versionar despliegues y controlar la transici&oacute;n entre versiones.</li>
             </ul>
           </li>
-
-          <li><strong>Configuraci&oacute;n de la aplicaci&oacute;n:</strong>
+          <li><strong>Conectividad, acceso y seguridad</strong>
             <ul>
-              <li>CPU y memoria por instancia</li>
-              <li>variables de entorno</li>
-              <li>secrets</li>
-              <li>configuraci&oacute;n de ingress (acceso)</li>
-              <li>revisions (versionamiento)</li>
+              <li><strong>Ingress:</strong> define c&oacute;mo se expone la aplicaci&oacute;n y c&oacute;mo recibe tr&aacute;fico.</li>
+              <li><strong>Exposici&oacute;n:</strong> puede configurarse como p&uacute;blica o interna.</li>
+              <li><strong>Container Apps Environment:</strong> tambi&eacute;n define comunicaci&oacute;n entre servicios e integraci&oacute;n con red privada (VNet).</li>
+              <li><strong>Configuraci&oacute;n:</strong> admite variables de entorno, secrets y par&aacute;metros por aplicaci&oacute;n.</li>
             </ul>
           </li>
-
-          <li><strong>Escalado:</strong> permite configuraci&oacute;n basada en:
+          <li><strong>Escalabilidad</strong>
             <ul>
-              <li>tr&aacute;fico HTTP</li>
-              <li>eventos (colas, mensajes)</li>
-              <li>n&uacute;mero m&iacute;nimo y m&aacute;ximo de instancias</li>
+              <li><strong>Escalado por HTTP:</strong> responde al volumen de tr&aacute;fico web.</li>
+              <li><strong>Escalado por eventos:</strong> puede reaccionar a colas, mensajes u otros disparadores.</li>
+              <li><strong>L&iacute;mites configurables:</strong> se define m&iacute;nimo y m&aacute;ximo de instancias seg&uacute;n la carga esperada.</li>
             </ul>
           </li>
-
-          <li><strong>Exposici&oacute;n y acceso:</strong> puede configurarse como:
+          <li><strong>Costos y eficiencia operativa</strong>
             <ul>
-              <li>p&uacute;blico (internet)</li>
-              <li>interno (solo red privada)</li>
+              <li><strong>Factores de costo:</strong> CPU, memoria, tiempo de ejecuci&oacute;n y n&uacute;mero de instancias.</li>
+              <li><strong>Servicios adicionales:</strong> logs, registry y red pueden incrementar el costo total de la soluci&oacute;n.</li>
+              <li><strong>Eficiencia:</strong> la capacidad de escalar a cero puede volverlo m&aacute;s eficiente que un servicio siempre activo en cargas variables.</li>
             </ul>
           </li>
-
-          <li><strong>Container Registry:</strong> permite almacenar y versionar im&aacute;genes de contenedor. Se integra con Container Apps mediante credenciales o identidad administrada.</li>
-
-          <li><strong>Integraci&oacute;n con CI/CD:</strong> flujo t&iacute;pico:
+          <li><strong>Casos de uso y consideraciones de arquitectura</strong>
             <ul>
-              <li>construcci&oacute;n de imagen</li>
-              <li>publicaci&oacute;n en registry</li>
-              <li>despliegue de nueva revisi&oacute;n</li>
+              <li><strong>Casos de uso:</strong> microservicios, APIs en contenedores, aplicaciones event-driven y cargas variables.</li>
+              <li><strong>Observabilidad:</strong> incluye logs, m&eacute;tricas y monitoreo para analizar ejecuci&oacute;n, errores y consumo de recursos.</li>
+              <li><strong>Consideraci&oacute;n:</strong> ofrece mayor flexibilidad que App Service para contenedores, pero introduce conceptos adicionales como environments, revisions y escalado por eventos.</li>
             </ul>
+            <div class="note" style="margin-top:8px;">
+              <strong>S&iacute;ntesis:</strong> Container Apps combina simplicidad PaaS con patrones modernos de contenedores, siendo especialmente &uacute;til cuando se necesita elasticidad y despliegue basado en im&aacute;genes.
+            </div>
           </li>
-
-          <li><strong>Observabilidad:</strong> incluye logs, m&eacute;tricas y monitoreo para analizar ejecuci&oacute;n, errores y consumo de recursos.</li>
-
-          <li><strong>Factores de costo:</strong>
-            <ul>
-              <li>CPU y memoria consumida</li>
-              <li>tiempo de ejecuci&oacute;n</li>
-              <li>n&uacute;mero de instancias</li>
-              <li>servicios adicionales (logs, registry, red)</li>
-            </ul>
-          </li>
-
-          <li><strong>Casos de uso:</strong> adecuado para microservicios, APIs en contenedores, aplicaciones event-driven y cargas variables.</li>
-
-          <li><strong>Consideraci&oacute;n:</strong> ofrece mayor flexibilidad que App Service en escenarios de contenedores, pero introduce conceptos adicionales como environments, revisions y escalado por eventos.</li>
-        </ul>
+        </ol>
       </section>
       <section class="section" id="s7">
         <h2>7. Servicios de datos</h2>
