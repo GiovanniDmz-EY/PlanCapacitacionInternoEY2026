@@ -366,6 +366,7 @@
                 <li>Integraci&oacute;n con VS Code y herramientas Java.</li>
                 <li>Despliegue flexible y sin preocuparse por la infraestructura.</li>
               </ul>
+              <a href="#s6.2" style="display:inline-block;margin-top:8px;color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de App Service &rarr;</a>
             </div>
           </article>
           <article class="card expandable">
@@ -568,6 +569,76 @@
               <li><strong>Managed Disks:</strong> Almacenamiento persistente (SSD/HDD) independiente de la VM.</li>
               <li><strong>Delete with VM:</strong> Configuración recomendada para asegurar que, al eliminar la instancia, se limpien automáticamente sus discos e interfaces de red, evitando costos residuales por recursos huérfanos.</li>
             </ul>
+          </li>
+        </ol>
+      </section>
+      <section class="section" id="s6.2">
+        <h2>6.2 Azure App Service</h2>
+        <ol>
+          <li><strong>Definici&oacute;n y enfoque del servicio</strong>
+            <ul>
+              <li><strong>Concepto:</strong> servicio PaaS para desplegar aplicaciones web, APIs y backends sin administrar directamente sistema operativo, parches o servidor.</li>
+              <li><strong>Diferencia clave frente a VM:</strong> la infraestructura sigue existiendo, pero se abstrae para que el equipo se concentre en la aplicaci&oacute;n y su configuraci&oacute;n.</li>
+              <li><strong>Separaci&oacute;n importante:</strong> la aplicaci&oacute;n no es la infraestructura; el recurso visible para el usuario y la capacidad de c&oacute;mputo son componentes distintos.</li>
+            </ul>
+          </li>
+          <li><strong>Relaci&oacute;n entre App Service y App Service Plan</strong>
+            <ul>
+              <li><strong>App Service:</strong> representa la aplicaci&oacute;n publicada, su configuraci&oacute;n y su punto de exposici&oacute;n.</li>
+              <li><strong>App Service Plan:</strong> define la infraestructura real donde corre la aplicaci&oacute;n: CPU, memoria, escalabilidad y regi&oacute;n.</li>
+              <li><strong>Modelo compartido:</strong> varias aplicaciones pueden hospedarse dentro del mismo plan y comparten la capacidad disponible.</li>
+              <li><strong>Implicaci&oacute;n operativa:</strong> el costo y la potencia no dependen directamente del n&uacute;mero de apps, sino del plan que las sostiene.</li>
+            </ul>
+            <div class="note" style="margin-top:8px;">
+              <strong>Idea clave:</strong> App Service es la aplicaci&oacute;n; App Service Plan es el servidor abstracto que realmente aporta la capacidad de ejecuci&oacute;n.
+            </div>
+          </li>
+          <li><strong>Modelo de ejecuci&oacute;n y costo</strong>
+            <ul>
+              <li><strong>Ejecuci&oacute;n continua:</strong> los recursos del plan permanecen asignados seg&uacute;n la capacidad configurada.</li>
+              <li><strong>Costo por capacidad provisionada:</strong> aunque la app no reciba tr&aacute;fico, la infraestructura del plan sigue activa y genera costo.</li>
+              <li><strong>Diferencia con serverless:</strong> en App Service se paga por capacidad disponible; en modelos serverless el costo depende m&aacute;s directamente de la ejecuci&oacute;n.</li>
+            </ul>
+          </li>
+          <li><strong>Modelos de despliegue</strong>
+            <ul>
+              <li><strong>Code-based:</strong> se despliega el c&oacute;digo y la plataforma administra el runtime compatible.</li>
+              <li><strong>Container-based:</strong> se despliega una imagen de contenedor, dando mayor control sobre dependencias y entorno de ejecuci&oacute;n.</li>
+              <li><strong>Punto en com&uacute;n:</strong> en ambos casos la aplicaci&oacute;n corre sobre el mismo modelo de hosting del App Service Plan.</li>
+            </ul>
+          </li>
+          <li><strong>Slots de despliegue</strong>
+            <ul>
+              <li><strong>Deployment slots:</strong> entornos paralelos dentro del mismo App Service, por ejemplo `staging` y `production`.</li>
+              <li><strong>Validaci&oacute;n previa:</strong> permiten probar una versi&oacute;n antes de exponerla al usuario final.</li>
+              <li><strong>Swap:</strong> una versi&oacute;n validada puede intercambiarse con producci&oacute;n sin redeploy completo, reduciendo riesgo e interrupciones.</li>
+            </ul>
+          </li>
+          <li><strong>Escalabilidad</strong>
+            <ul>
+              <li><strong>Escalado vertical:</strong> aumentar la capacidad del plan, por ejemplo m&aacute;s CPU o memoria.</li>
+              <li><strong>Escalado horizontal:</strong> incrementar el n&uacute;mero de instancias para distribuir carga.</li>
+              <li><strong>Impacto compartido:</strong> si varias aplicaciones usan el mismo plan, el escalado afecta a todas porque comparten la misma base de infraestructura.</li>
+            </ul>
+          </li>
+          <li><strong>Configuraci&oacute;n y seguridad</strong>
+            <ul>
+              <li><strong>Configuraci&oacute;n desacoplada:</strong> variables de entorno y cadenas de conexi&oacute;n separadas del c&oacute;digo.</li>
+              <li><strong>Manejo de secretos:</strong> puede integrarse con servicios especializados para evitar credenciales embebidas en la aplicaci&oacute;n.</li>
+              <li><strong>Exposici&oacute;n por defecto:</strong> la aplicaci&oacute;n suele publicarse mediante URL HTTP/HTTPS accesible desde Internet.</li>
+              <li><strong>Controles de acceso:</strong> restricciones por IP, reglas de acceso y configuraci&oacute;n CORS seg&uacute;n el tipo de consumidor.</li>
+            </ul>
+          </li>
+          <li><strong>Dependencias y consideraciones de arquitectura</strong>
+            <ul>
+              <li><strong>Dependencia principal:</strong> App Service Plan.</li>
+              <li><strong>Recursos complementarios:</strong> monitoreo, configuraci&oacute;n de red, almacenamiento y otros servicios de soporte pueden formar parte de la soluci&oacute;n.</li>
+              <li><strong>Uso recomendado:</strong> aplicaciones web, APIs y backends que requieren disponibilidad continua sin administrar infraestructura base.</li>
+              <li><strong>No ideal para:</strong> cargas puramente event-driven o escenarios donde se requiere control total del sistema operativo.</li>
+            </ul>
+            <div class="note" style="margin-top:8px;">
+              <strong>S&iacute;ntesis:</strong> App Service es un punto intermedio entre una VM y un modelo serverless. Simplifica la operaci&oacute;n, pero exige entender bien el App Service Plan para dise&ntilde;ar capacidad, costos y aislamiento.
+            </div>
           </li>
         </ol>
       </section>
