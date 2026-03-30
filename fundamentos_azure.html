@@ -381,6 +381,7 @@
                 <li>Despliegue sencillo de contenedores sin gestionar infraestructura subyacente.</li>
                 <li>Integraci&oacute;n con otros servicios de Azure y soporte para eventos.</li>
               </ul>
+              <a href="#s6-3" style="display:inline-block;margin-top:8px;color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de Container Apps &rarr;</a>
             </div>
           </article>
           <article class="card expandable">
@@ -641,6 +642,93 @@
             </div>
           </li>
         </ol>
+      </section>
+      <section class="section" id="s6-3">
+        <h2>6.3 Azure Container Apps</h2>
+
+        <ul>
+          <li><strong>Definici&oacute;n:</strong> servicio PaaS orientado a la ejecuci&oacute;n de aplicaciones basadas en contenedores, sin administrar directamente servidores ni orquestadores.</li>
+
+          <li><strong>Modelo de ejecuci&oacute;n:</strong> permite ejecutar contenedores con escalado autom&aacute;tico, incluyendo la posibilidad de escalar a cero cuando no hay carga.</li>
+
+          <li><strong>Unidad de despliegue:</strong> la aplicaci&oacute;n se define a partir de una imagen de contenedor que incluye runtime, dependencias y configuraci&oacute;n.</li>
+
+          <li><strong>Relaci&oacute;n de componentes:</strong>
+            <ul>
+              <li><strong>Container Registry:</strong> almacena las im&aacute;genes de contenedores. No ejecuta aplicaciones, solo sirve como repositorio.</li>
+              <li><strong>Container App:</strong> es la aplicaci&oacute;n en ejecuci&oacute;n. Toma una imagen del registry y la ejecuta.</li>
+              <li><strong>Container Apps Environment:</strong> es el entorno donde viven las aplicaciones, definiendo red, aislamiento y configuraci&oacute;n compartida.</li>
+            </ul>
+          </li>
+
+          <li><strong>Flujo de funcionamiento:</strong>
+            <ul>
+              <li>El c&oacute;digo se empaqueta como imagen de contenedor.</li>
+              <li>La imagen se almacena en un Container Registry.</li>
+              <li>La Container App obtiene la imagen y la ejecuta.</li>
+              <li>La aplicaci&oacute;n se ejecuta dentro de un Container Apps Environment.</li>
+            </ul>
+          </li>
+
+          <li><strong>Container Apps Environment:</strong> agrupa m&uacute;ltiples aplicaciones y define:
+            <ul>
+              <li>conectividad (p&uacute;blica o privada)</li>
+              <li>comunicaci&oacute;n entre servicios</li>
+              <li>integraci&oacute;n con red (VNet)</li>
+              <li>observabilidad</li>
+            </ul>
+          </li>
+
+          <li><strong>Configuraci&oacute;n de la aplicaci&oacute;n:</strong>
+            <ul>
+              <li>CPU y memoria por instancia</li>
+              <li>variables de entorno</li>
+              <li>secrets</li>
+              <li>configuraci&oacute;n de ingress (acceso)</li>
+              <li>revisions (versionamiento)</li>
+            </ul>
+          </li>
+
+          <li><strong>Escalado:</strong> permite configuraci&oacute;n basada en:
+            <ul>
+              <li>tr&aacute;fico HTTP</li>
+              <li>eventos (colas, mensajes)</li>
+              <li>n&uacute;mero m&iacute;nimo y m&aacute;ximo de instancias</li>
+            </ul>
+          </li>
+
+          <li><strong>Exposici&oacute;n y acceso:</strong> puede configurarse como:
+            <ul>
+              <li>p&uacute;blico (internet)</li>
+              <li>interno (solo red privada)</li>
+            </ul>
+          </li>
+
+          <li><strong>Container Registry:</strong> permite almacenar y versionar im&aacute;genes de contenedor. Se integra con Container Apps mediante credenciales o identidad administrada.</li>
+
+          <li><strong>Integraci&oacute;n con CI/CD:</strong> flujo t&iacute;pico:
+            <ul>
+              <li>construcci&oacute;n de imagen</li>
+              <li>publicaci&oacute;n en registry</li>
+              <li>despliegue de nueva revisi&oacute;n</li>
+            </ul>
+          </li>
+
+          <li><strong>Observabilidad:</strong> incluye logs, m&eacute;tricas y monitoreo para analizar ejecuci&oacute;n, errores y consumo de recursos.</li>
+
+          <li><strong>Factores de costo:</strong>
+            <ul>
+              <li>CPU y memoria consumida</li>
+              <li>tiempo de ejecuci&oacute;n</li>
+              <li>n&uacute;mero de instancias</li>
+              <li>servicios adicionales (logs, registry, red)</li>
+            </ul>
+          </li>
+
+          <li><strong>Casos de uso:</strong> adecuado para microservicios, APIs en contenedores, aplicaciones event-driven y cargas variables.</li>
+
+          <li><strong>Consideraci&oacute;n:</strong> ofrece mayor flexibilidad que App Service en escenarios de contenedores, pero introduce conceptos adicionales como environments, revisions y escalado por eventos.</li>
+        </ul>
       </section>
       <section class="section" id="s7">
         <h2>7. Servicios de datos</h2>
