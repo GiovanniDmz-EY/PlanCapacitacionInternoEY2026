@@ -397,7 +397,7 @@
                 <li>Ideal para tareas por eventos: HTTP, temporizadores, colas, etc.</li>
                 <li>Permite enfocarse en el c&oacute;digo y la l&oacute;gica de negocio.</li>
               </ul>
-              <a href="#s6.4" style="display:inline-block;margin-top:8px;color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de Azure Functions &rarr;</a>
+              <a href="#s6.5" style="display:inline-block;margin-top:8px;color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de Azure Functions &rarr;</a>
             </div>
           </article>
           <article class="card expandable">
@@ -680,7 +680,53 @@
         </ol>
       </section>
       <section class="section" id="s6.4">
-        <h2>6.4 Azure Functions</h2>
+        <h2>6.4 Comparativa Arquitect&oacute;nica y de Escalado: Azure App Service vs. Azure Container Apps</h2>
+        <ol>
+          <li><strong>Arquitectura base y dependencia principal</strong>
+            <ul>
+              <li><strong>Azure App Service:</strong> depende de un <em>App Service Plan</em>, que funciona como un servidor abstracto donde se define la capacidad de CPU, memoria RAM, regi&oacute;n y reglas de escalado.</li>
+              <li><strong>Modelo compartido:</strong> un mismo App Service Plan puede alojar varias aplicaciones al mismo tiempo, compartiendo la capacidad provisionada.</li>
+              <li><strong>Azure Container Apps:</strong> no depende de un plan dedicado por aplicaci&oacute;n, sino de un <em>Container App Environment</em> que agrupa varias aplicaciones dentro de un mismo per&iacute;metro de red y configuraci&oacute;n compartida.</li>
+              <li><strong>Diferencia central:</strong> App Service abstrae un servidor persistente; Container Apps abstrae la ejecuci&oacute;n de contenedores dentro de un entorno serverless.</li>
+            </ul>
+          </li>
+          <li><strong>Modelo de despliegue y artefacto de ejecuci&oacute;n</strong>
+            <ul>
+              <li><strong>App Service:</strong> permite seleccionar el stack tecnol&oacute;gico, por ejemplo Python, .NET o Node.js, y desplegar el c&oacute;digo fuente directamente en la plataforma.</li>
+              <li><strong>Container Apps:</strong> no recibe c&oacute;digo fuente ni stack administrado; requiere desplegar una imagen de contenedor ya construida con la aplicaci&oacute;n empaquetada.</li>
+              <li><strong>Implicaci&oacute;n pr&aacute;ctica:</strong> Container Apps exige un proceso previo de construcci&oacute;n y publicaci&oacute;n de la imagen.</li>
+            </ul>
+          </li>
+          <li><strong>Dependencias complementarias</strong>
+            <ul>
+              <li><strong>App Service:</strong> su dependencia estructural principal es el App Service Plan, porque all&iacute; reside la capacidad real de ejecuci&oacute;n.</li>
+              <li><strong>Container Apps:</strong> necesita una fuente para obtener la imagen, normalmente un <em>Container Registry</em>.</li>
+              <li><strong>Azure Container Registry (ACR):</strong> es la opci&oacute;n nativa y recomendada en Azure para almacenar y versionar las im&aacute;genes que luego consume Container Apps.</li>
+              <li><strong>Container App Environment:</strong> adem&aacute;s de agrupar aplicaciones, simplifica la comunicaci&oacute;n entre contenedores y define el per&iacute;metro de red compartido.</li>
+            </ul>
+          </li>
+          <li><strong>Modelo de consumo y escalado</strong>
+            <ul>
+              <li><strong>App Service:</strong> mantiene una ejecuci&oacute;n continua porque el App Service Plan conserva capacidad activa de forma permanente.</li>
+              <li><strong>Consecuencia:</strong> por dise&ntilde;o siempre existe al menos una instancia activa consumiendo recursos, incluso si la aplicaci&oacute;n no recibe tr&aacute;fico.</li>
+              <li><strong>Container Apps:</strong> opera bajo un modelo serverless con elasticidad din&aacute;mica, permitiendo definir un m&aacute;ximo de instancias para absorber demanda.</li>
+              <li><strong>Escalado a cero:</strong> Container Apps puede configurarse con cero instancias m&iacute;nimas, por lo que si no hay peticiones, la aplicaci&oacute;n se apaga completamente.</li>
+            </ul>
+          </li>
+          <li><strong>Impacto en costos y decisiones de arquitectura</strong>
+            <ul>
+              <li><strong>App Service:</strong> resulta apropiado cuando se necesita una aplicaci&oacute;n siempre disponible, despliegue directo de c&oacute;digo y un modelo PaaS m&aacute;s tradicional.</li>
+              <li><strong>Container Apps:</strong> encaja mejor cuando la aplicaci&oacute;n ya est&aacute; contenedorizada, se busca elasticidad m&aacute;s agresiva o se quiere optimizar el costo en cargas intermitentes.</li>
+              <li><strong>Diferencia econ&oacute;mica:</strong> App Service cobra por capacidad provisionada continuamente; Container Apps puede reducir costo ocioso gracias al escalado a cero.</li>
+            </ul>
+            <div class="note" style="margin-top:8px;">
+              <strong>S&iacute;ntesis:</strong> En App Service se configura un Plan que define CPU y memoria, se elige el stack tecnol&oacute;gico y se despliega el c&oacute;digo directamente, manteniendo al menos una instancia activa. En Container Apps se aprovisiona un Environment, se consumen im&aacute;genes desde un Registry y se obtiene la capacidad t&eacute;cnica de escalar hasta cero instancias cuando no hay tr&aacute;fico.
+            </div>
+          </li>
+        </ol>
+      </section>
+      <section class="section" id="s6.5">
+        <h2>6.5 Azure Functions</h2>
         <ol>
           <li><strong>Definici&oacute;n y modelo de servicio</strong>
             <ul>
