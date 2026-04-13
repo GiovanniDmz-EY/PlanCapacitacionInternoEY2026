@@ -159,7 +159,7 @@
         <li><a href="#s7">7. Servicios de datos</a></li>
         <li><a href="#s8">8. Seguridad e identidad</a></li>
         <li><a href="#s9">9. Key Vault</a></li>
-        <li><a href="#s10">10. Networking</a></li>
+        <li><a href="#s10">10. Networking y redes virtuales</a></li>
         <li><a href="#s11">11. Observabilidad</a></li>
         <li><a href="#s12">12. Costos</a></li>
         <li><a href="#s13">13. Integraci&oacute;n de soluci&oacute;n</a></li>
@@ -786,13 +786,16 @@
           <li><strong>Arquitectura enterprise y seguridad</strong>
             <ul>
               <li><strong>Seguridad de red:</strong> por defecto puede ser p&uacute;blica; en producci&oacute;n conviene restringir acceso y usar Private Endpoints para exponerla dentro de una VNet con IP privada.</li>
+              <li><strong>Acceso p&uacute;blico en blobs:</strong> en Blob Storage el acceso an&oacute;nimo se controla en dos niveles: la <strong>Storage Account</strong> puede permitir o bloquear acceso p&uacute;blico a blobs, y cada <strong>container</strong> define si admite lectura an&oacute;nima o permanece privado.</li>
+              <li><strong>Jerarqu&iacute;a del permiso:</strong> si la cuenta bloquea acceso p&uacute;blico, ning&uacute;n contenedor ni blob puede exponerse an&oacute;nimamente. Si el contenedor est&aacute; en modo privado, entonces los blobs dentro de &eacute;l tampoco pueden quedar p&uacute;blicos de forma individual; prevalece la restricci&oacute;n del contenedor.</li>
+              <li><strong>Exposici&oacute;n controlada con SAS:</strong> cuando se necesita compartir temporalmente un archivo sin volver p&uacute;blico el contenedor, se puede generar una URL con <strong>Shared Access Signature (SAS)</strong> para otorgar acceso delimitado por tiempo, permisos y alcance. En general conviene que sea de corta duraci&oacute;n y lo m&aacute;s espec&iacute;fica posible.</li>
               <li><strong>Seguridad de identidad:</strong> evitar Access Keys compartidas y preferir Microsoft Entra ID con RBAC y Managed Identities.</li>
               <li><strong>Gobernanza:</strong> Azure Policy ayuda a imponer configuraciones seguras, por ejemplo prohibiendo acceso p&uacute;blico.</li>
               <li><strong>Big data analytics:</strong> con Hierarchical Namespace la cuenta se comporta como ADLS Gen2, habilitando estructuras de carpetas reales para escenarios con Databricks o Synapse.</li>
               <li><strong>Recuperaci&oacute;n regional:</strong> la replicaci&oacute;n as&iacute;ncrona de objetos entre cuentas puede apoyar estrategias de disaster recovery.</li>
             </ul>
             <div class="note" style="margin-top:8px;">
-              <strong>S&iacute;ntesis:</strong> Una Storage Account no es solo un repositorio de archivos. Es una plataforma de datos con m&uacute;ltiples servicios, costos multidimensionales, niveles de acceso con trade-offs claros y controles de resiliencia y seguridad que deben dise&ntilde;arse desde el inicio.
+              <strong>S&iacute;ntesis:</strong> Una Storage Account no es solo un repositorio de archivos. Es una plataforma de datos con m&uacute;ltiples servicios, costos multidimensionales, niveles de acceso con trade-offs claros y controles de resiliencia, visibilidad y seguridad que deben dise&ntilde;arse desde el inicio.
             </div>
           </li>
         </ol>
@@ -818,12 +821,81 @@
       </section>
 
       <section class="section" id="s10">
-        <h2>10. Networking</h2>
-        <ul>
-          <li>VNet como red privada, subnets para segmentaci&oacute;n.</li>
-          <li>NSG para reglas de tr&aacute;fico y Firewall para control de acceso.</li>
-          <li>Restricciones por IP, por origen y mediante CORS.</li>
-        </ul>
+        <h2>10. Networking y redes virtuales</h2>
+        <p>La red en Azure no solo conecta recursos; define aislamiento, alcance, seguridad y la forma en que una soluci&oacute;n entra, sale o se integra con otros sistemas. La pieza base es la <strong>Virtual Network (VNet)</strong>, una red privada l&oacute;gica dentro de una regi&oacute;n de Azure sobre la que segmentamos subredes, aplicamos pol&iacute;ticas de tr&aacute;fico y conectamos servicios privados.</p>
+        <div class="grid-3">
+          <article class="card">
+            <h3>10.1 VNet y espacio de direcciones</h3>
+            <ul>
+              <li><strong>VNet:</strong> representa una red privada en la nube para recursos Azure y redes conectadas.</li>
+              <li><strong>Rango CIDR:</strong> debe planearse desde el inicio y no traslaparse con otras VNets ni con on-premises si habr&aacute; peering, VPN o ExpressRoute.</li>
+              <li><strong>Alcance regional:</strong> una VNet pertenece a una regi&oacute;n, aunque puede conectar recursos zonales y no zonales dentro de ella.</li>
+              <li><strong>Subredes:</strong> permiten separar capas como frontend, integraci&oacute;n, datos y administraci&oacute;n.</li>
+              <li><strong>IP reservadas:</strong> Azure reserva las primeras 4 IPs y la &uacute;ltima IP en cada subnet; no deben contarse como capacidad usable.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>10.2 Control del tr&aacute;fico</h3>
+            <ul>
+              <li><strong>NSG:</strong> permiten reglas <em>allow/deny</em> de entrada y salida por origen, destino, puerto y protocolo.</li>
+              <li><strong>Route tables / UDR:</strong> cambian el siguiente salto del tr&aacute;fico para forzarlo hacia firewalls, NVAs, gateways o salidas espec&iacute;ficas.</li>
+              <li><strong>Rutas del sistema:</strong> Azure crea rutas por defecto entre subnets, hacia Internet y hacia prefijos privados conocidos.</li>
+              <li><strong>Segmentaci&oacute;n real:</strong> la subnet define frontera l&oacute;gica; el NSG y la tabla de rutas definen qu&eacute; puede cruzarla y por d&oacute;nde.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>10.3 Acceso privado a PaaS</h3>
+            <ul>
+              <li><strong>Service endpoints:</strong> extienden la identidad de la subnet hacia servicios Azure y mantienen el tr&aacute;fico en el backbone de Microsoft.</li>
+              <li><strong>Private endpoints:</strong> crean una NIC con IP privada dentro de la VNet para acceder a servicios PaaS sin exponerlos a Internet.</li>
+              <li><strong>Recomendaci&oacute;n actual:</strong> Microsoft prioriza Private Link cuando se requiere aislamiento fuerte, acceso privado desde on-premises o reducir exfiltraci&oacute;n.</li>
+              <li><strong>DNS privado:</strong> al usar private endpoints normalmente se requiere Private DNS Zone para resolver el nombre del servicio a su IP privada.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>10.4 Conectividad entre redes</h3>
+            <ul>
+              <li><strong>VNet peering:</strong> conecta VNets por la red troncal de Microsoft con baja latencia y sin gateway intermedio.</li>
+              <li><strong>No transitivo:</strong> si A est&aacute; emparejada con B y B con C, A no alcanza a C autom&aacute;ticamente.</li>
+              <li><strong>VPN Gateway:</strong> conecta Azure con on-premises o con otras VNets mediante t&uacute;neles cifrados sobre Internet.</li>
+              <li><strong>ExpressRoute:</strong> extiende la red corporativa a Azure por un enlace privado, con mayor predictibilidad que una VPN sobre Internet.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>10.5 Publicaci&oacute;n y salida a Internet</h3>
+            <ul>
+              <li><strong>Public IP:</strong> expone un recurso o balanceador hacia clientes externos cuando la arquitectura lo requiere.</li>
+              <li><strong>NAT Gateway:</strong> centraliza y estabiliza la salida a Internet de una subnet sin asignar IP p&uacute;blica a cada recurso.</li>
+              <li><strong>Application Gateway / Load Balancer:</strong> publican aplicaciones o distribuyen tr&aacute;fico, pero no sustituyen la segmentaci&oacute;n de red.</li>
+              <li><strong>Principio pr&aacute;ctico:</strong> preferir salida controlada y acceso privado antes que exponer recursos directamente.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>10.6 Dise&ntilde;o y buenas pr&aacute;cticas</h3>
+            <ul>
+              <li><strong>Separar por funci&oacute;n:</strong> front, backend, integraci&oacute;n, datos y administraci&oacute;n no deber&iacute;an compartir la misma subnet por defecto.</li>
+              <li><strong>Subnets delegadas:</strong> algunos servicios PaaS necesitan permisos expl&iacute;citos sobre la subnet para desplegarse correctamente.</li>
+              <li><strong>Hub-and-spoke:</strong> patr&oacute;n com&uacute;n para centralizar DNS, firewalls, VPN/ER y servicios compartidos.</li>
+              <li><strong>Plan de nombres y direcciones:</strong> conviene dise&ntilde;arlo junto con la arquitectura, porque cambiar rangos o peerings despu&eacute;s suele ser costoso.</li>
+            </ul>
+          </article>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Concepto</th><th>Qu&eacute; resuelve</th><th>Punto fino</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Subnet</td><td>Segmentaci&oacute;n de recursos</td><td>Es el l&iacute;mite donde se asocian NSG, rutas y varios servicios administrados.</td></tr>
+            <tr><td>NSG</td><td>Filtrado de red L3/L4</td><td>No reemplaza autenticaci&oacute;n, autorizaci&oacute;n ni protecciones de aplicaci&oacute;n.</td></tr>
+            <tr><td>Route Table</td><td>Direcci&oacute;n del tr&aacute;fico</td><td>Permite forzar inspecci&oacute;n, salida centralizada o patrones hub-and-spoke.</td></tr>
+            <tr><td>Service Endpoint</td><td>Acceso seguro desde subnet hacia PaaS</td><td>El servicio sigue siendo multitenant; no "vive" dentro de tu VNet.</td></tr>
+            <tr><td>Private Endpoint</td><td>Acceso privado a PaaS con IP interna</td><td>Requiere revisar DNS, subredes y coexistencia con acceso p&uacute;blico.</td></tr>
+            <tr><td>Peering</td><td>Conectar VNets</td><td>Exige rangos no traslapados y no es transitivo por s&iacute; solo.</td></tr>
+          </tbody>
+        </table>
+        <div class="note">
+          <strong>Importante:</strong> <strong>CORS</strong> no es un control de red. CORS regula qu&eacute; or&iacute;genes web puede consumir un navegador; no sustituye NSG, firewalls, private endpoints ni restricciones por IP.
+        </div>
       </section>
 
       <section class="section" id="s11">
