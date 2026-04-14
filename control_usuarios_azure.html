@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control de Usuarios en Azure</title>
+  <style>
+    :root {
+      --bg: #f3f7ff;
+      --panel: #ffffff;
+      --ink: #13233a;
+      --muted: #4a5b74;
+      --primary: #0a5bd3;
+      --primary-deep: #083b87;
+      --primary-soft: #e5efff;
+      --accent: #0f766e;
+      --accent-soft: #eefcf9;
+      --warn: #b45309;
+      --warn-soft: #fff7ed;
+      --border: rgba(19, 35, 58, 0.12);
+      --shadow: 0 16px 36px rgba(19, 35, 58, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 5% 0%, rgba(10, 91, 211, 0.15), transparent 30%),
+        radial-gradient(circle at 95% 0%, rgba(15, 118, 110, 0.12), transparent 25%),
+        var(--bg);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+      color: #fff;
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -90px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 920px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .toc,
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .toc {
+      padding: 18px;
+      margin-bottom: 22px;
+    }
+
+    .toc h2 {
+      margin: 0 0 10px;
+      color: var(--primary-deep);
+      font-size: 1.1rem;
+    }
+
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+      columns: 2;
+      gap: 26px;
+    }
+
+    .toc a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .section {
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      margin: 0 0 12px;
+      font-size: 1.45rem;
+      color: var(--primary-deep);
+    }
+
+    .section > p:first-of-type {
+      margin-top: 0;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fbfdff;
+      padding: 15px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary-deep);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .note,
+    .warn {
+      padding: 13px 14px;
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+
+    .note {
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .warn {
+      border-left: 4px solid var(--warn);
+      background: var(--warn-soft);
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li + li { margin-top: 4px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--primary-soft);
+      color: var(--primary-deep);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .flow-step {
+      background: linear-gradient(180deg, #ffffff, #f7fbff);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      min-height: 120px;
+      position: relative;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--primary-deep);
+    }
+
+    .flow-step::after {
+      content: "\2192";
+      position: absolute;
+      right: -9px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .flow-step:last-child::after { content: none; }
+
+    .code-block {
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #0f172a;
+      color: #e2e8f0;
+      overflow-x: auto;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #f8fbff;
+      border: 1px solid var(--border);
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .footer {
+      color: var(--muted);
+      font-size: 0.94rem;
+      padding: 8px 2px 0;
+    }
+
+    @media (max-width: 980px) {
+      .grid-3,
+      .grid-4,
+      .flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .flow-step::after {
+        content: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(100%, calc(100% - 20px));
+      }
+
+      .toc ul {
+        columns: 1;
+      }
+
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .hero,
+      .section,
+      .toc {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Control de Usuarios en Azure</h1>
+      <p>Guia ejecutiva sobre identidad, acceso, grupos, roles, permisos, suscripciones y aplicaciones en Azure. El enfoque separa claramente el plano de identidad de Microsoft Entra ID del plano de recursos gobernado por Azure RBAC.</p>
+      <div class="hero-badges">
+        <span class="badge">Microsoft Entra ID</span>
+        <span class="badge">Azure RBAC</span>
+        <span class="badge">PIM + Conditional Access</span>
+        <span class="badge">Governance por scopes</span>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Tabla de contenidos">
+      <h2>Contenido</h2>
+      <ul>
+        <li><a href="#s1">1. Resumen ejecutivo</a></li>
+        <li><a href="#s2">2. Conceptos base</a></li>
+        <li><a href="#s3">3. Tipos de identidades</a></li>
+        <li><a href="#s4">4. Flujo de autenticacion y autorizacion</a></li>
+        <li><a href="#s5">5. Azure RBAC vs roles de Entra</a></li>
+        <li><a href="#s6">6. Grupos, roles y mejores practicas</a></li>
+        <li><a href="#s7">7. Suscripciones y management groups</a></li>
+        <li><a href="#s8">8. Aplicaciones y permisos</a></li>
+        <li><a href="#s9">9. PIM, CA y cuentas de emergencia</a></li>
+        <li><a href="#s10">10. Auditoria y monitoreo</a></li>
+        <li><a href="#s11">11. Casos practicos</a></li>
+        <li><a href="#s12">12. Riesgos y checklist</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="section" id="s1">
+        <span class="eyebrow">Vista rapida</span>
+        <h2>1. Resumen ejecutivo</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Dos planos que no deben mezclarse</h3>
+            <ul>
+              <li><strong>Plano de identidad:</strong> Microsoft Entra ID administra usuarios, grupos, aplicaciones y politicas de autenticacion.</li>
+              <li><strong>Plano de recursos:</strong> Azure Resource Manager aplica autorizacion sobre recursos mediante Azure RBAC.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Decisiones de arquitectura recomendadas</h3>
+            <ul>
+              <li>Jerarquia clara de management groups y subscriptions.</li>
+              <li>Asignar acceso a traves de grupos, no directamente a usuarios.</li>
+              <li>Privilegios JIT con PIM y controles adaptativos con Conditional Access.</li>
+              <li>Priorizar managed identities frente a secretos manuales.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="note">La combinacion mas audit-able suele ser: <strong>Azure Policy</strong> para gobernanza, <strong>Azure RBAC</strong> para autorizacion, y <strong>PIM</strong> para limitar privilegios permanentes.</div>
+      </section>
+
+      <section class="section" id="s2">
+        <span class="eyebrow">Fundamentos</span>
+        <h2>2. Conceptos base</h2>
+        <p>La precision conceptual evita errores operativos y de auditoria. Una suscripcion de Azure confia en un solo tenant de Entra ID, mientras que un tenant puede ser usado por multiples suscripciones.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Elemento</th>
+              <th>Que es</th>
+              <th>Uso principal</th>
+              <th>Alcance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tenant</td>
+              <td>Directorio de identidades, grupos, apps y politicas.</td>
+              <td>Autenticacion, identidad y gobierno del directorio.</td>
+              <td>Base de confianza para las suscripciones.</td>
+            </tr>
+            <tr>
+              <td>Management group</td>
+              <td>Contenedor sobre suscripciones.</td>
+              <td>Aplicar RBAC y Azure Policy a escala.</td>
+              <td>Jerarquia superior de gobernanza.</td>
+            </tr>
+            <tr>
+              <td>Subscription</td>
+              <td>Unidad administrativa, de costos y cuotas.</td>
+              <td>Separar ownership, ambientes y presupuesto.</td>
+              <td>Depende de un management group o del root.</td>
+            </tr>
+            <tr>
+              <td>Resource group</td>
+              <td>Contenedor logico de recursos.</td>
+              <td>Organizacion y lifecycle.</td>
+              <td>Dentro de una suscripcion.</td>
+            </tr>
+            <tr>
+              <td>Role assignment</td>
+              <td>Principal + rol + scope.</td>
+              <td>Autorizar acciones sobre recursos.</td>
+              <td>Management group, subscription, RG o recurso.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="s3">
+        <span class="eyebrow">Security Principals</span>
+        <h2>3. Tipos de identidades</h2>
+        <div class="grid-4">
+          <article class="card">
+            <h3>Usuario interno</h3>
+            <p>Miembro del tenant. Representa empleados o colaboradores internos.</p>
+          </article>
+          <article class="card">
+            <h3>Invitado B2B</h3>
+            <p>Identidad externa que colabora en tu tenant, normalmente autenticada por su organizacion origen.</p>
+          </article>
+          <article class="card">
+            <h3>Service principal</h3>
+            <p>Identidad operativa de una aplicacion dentro del tenant. Es quien realmente accede a recursos.</p>
+          </article>
+          <article class="card">
+            <h3>Managed identity</h3>
+            <p>Identidad administrada por Azure para workloads. Elimina manejo manual de secretos o certificados.</p>
+          </article>
+        </div>
+        <div class="warn">No todas las identidades deben tratarse igual. Las identidades no humanas requieren estandares de credenciales, monitoreo y minimo privilegio igual o mas estricto que los usuarios.</div>
+      </section>
+
+      <section class="section" id="s4">
+        <span class="eyebrow">Flujo</span>
+        <h2>4. Flujo de autenticacion y autorizacion</h2>
+        <p>En el modelo moderno de Azure, autenticacion y autorizacion se apoyan principalmente en OAuth 2.0 y OpenID Connect. Conditional Access actua como motor Zero Trust evaluando senales antes de emitir tokens.</p>
+        <div class="flow" aria-label="Flujo conceptual de identidad">
+          <div class="flow-step">
+            <strong>1. Usuario</strong>
+            Inicia acceso desde web, movil, portal o CLI.
+          </div>
+          <div class="flow-step">
+            <strong>2. Aplicacion</strong>
+            Redirige a Entra ID para autenticacion.
+          </div>
+          <div class="flow-step">
+            <strong>3. Entra ID</strong>
+            Evalua identidad y contexto de la solicitud.
+          </div>
+          <div class="flow-step">
+            <strong>4. Conditional Access</strong>
+            Permite, bloquea o exige MFA y controles extra.
+          </div>
+          <div class="flow-step">
+            <strong>5. Token</strong>
+            Se emite ID token y/o access token.
+          </div>
+          <div class="flow-step">
+            <strong>6. Recurso</strong>
+            La API valida el token y aplica autorizacion.
+          </div>
+        </div>
+        <div class="note">Los logs de sign-in, audit y Activity Log permiten reconstruir este flujo durante auditorias o investigacion forense.</div>
+      </section>
+
+      <section class="section" id="s5">
+        <span class="eyebrow">Control de acceso</span>
+        <h2>5. Azure RBAC vs roles de Entra</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>Azure RBAC</th>
+              <th>Roles de Entra ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Que controla</td>
+              <td>Recursos de Azure: VMs, storage, Key Vault, redes, etc.</td>
+              <td>Objetos y configuracion del directorio: usuarios, grupos, apps y politicas.</td>
+            </tr>
+            <tr>
+              <td>Modelo</td>
+              <td>Asignacion por scope.</td>
+              <td>Roles administrativos del directorio.</td>
+            </tr>
+            <tr>
+              <td>Scopes tipicos</td>
+              <td>Management group, subscription, resource group, recurso.</td>
+              <td>Tenant, administrative unit o app registration.</td>
+            </tr>
+            <tr>
+              <td>Error comun</td>
+              <td>Asignar Contributor u Owner demasiado arriba en la jerarquia.</td>
+              <td>Creer que un rol de directorio da acceso a recursos Azure.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="warn">Un Global Administrator no reemplaza una asignacion RBAC, y un Owner de Azure no administra por si solo el directorio. Son planos distintos.</div>
+      </section>
+
+      <section class="section" id="s6">
+        <span class="eyebrow">Modelo operativo</span>
+        <h2>6. Grupos, roles y mejores practicas</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Usar grupos como unidad de asignacion</h3>
+            <ul>
+              <li>Reduce errores y facilita auditoria.</li>
+              <li>Evita permisos directos a usuarios individuales.</li>
+              <li>Permite mover personas sin tocar cada recurso.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Role-assignable groups</h3>
+            <ul>
+              <li>Utiles para roles de Entra ID.</li>
+              <li>La propiedad se define al crear el grupo.</li>
+              <li>No es mutable despues.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Roles custom</h3>
+            <ul>
+              <li>Usar IDs de rol en automatizacion.</li>
+              <li>Evitar comodines porque pueden otorgar permisos futuros no previstos.</li>
+              <li>Disenar siempre con least privilege.</li>
+            </ul>
+          </article>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Tipo de grupo</th>
+              <th>Uso principal</th>
+              <th>Nota practica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Security group</td>
+              <td>Autorizacion y control de acceso.</td>
+              <td>Es la base recomendada para RBAC.</td>
+            </tr>
+            <tr>
+              <td>Microsoft 365 group</td>
+              <td>Colaboracion en Teams, SharePoint y correo.</td>
+              <td>No debe confundirse con un patron puro de autorizacion tecnica.</td>
+            </tr>
+            <tr>
+              <td>Distribution group</td>
+              <td>Mensajeria.</td>
+              <td>Mas orientado a Exchange que a autorizacion.</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3 style="margin: 24px 0 8px; color: var(--primary-deep);">Patron recomendado de asignacion por alcance</h3>
+        <p>Esta es una de las ideas mas importantes de la presentacion: en Azure no se da acceso general a una persona, se le da un <strong>rol especifico</strong> sobre un <strong>scope especifico</strong>. Eso permite que cada equipo opere solo dentro de su proyecto.</p>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Objetivo</h3>
+            <ul>
+              <li>Que una persona trabaje solo en los recursos de su proyecto.</li>
+              <li>Que no pueda modificar ni afectar recursos de otros equipos.</li>
+              <li>Que la visibilidad y la capacidad operativa no sean generales para toda la organizacion.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Como se logra</h3>
+            <ul>
+              <li>Separando por <strong>subscription</strong> cuando se necesita aislamiento fuerte.</li>
+              <li>Separando por <strong>resource group</strong> cuando varios proyectos comparten suscripcion.</li>
+              <li>Asignando roles a <strong>grupos</strong> y no a usuarios sueltos.</li>
+            </ul>
+          </article>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Escenario</th>
+              <th>Scope recomendado</th>
+              <th>Rol tipico</th>
+              <th>Resultado esperado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Equipo de un proyecto que administra solo sus recursos</td>
+              <td>Resource group del proyecto</td>
+              <td>Contributor</td>
+              <td>Puede operar su solucion sin tocar otros proyectos.</td>
+            </tr>
+            <tr>
+              <td>Usuario que solo debe revisar configuraciones</td>
+              <td>Subscription o resource group segun necesidad</td>
+              <td>Reader</td>
+              <td>Puede ver, pero no cambiar.</td>
+            </tr>
+            <tr>
+              <td>Equipo central que tambien asigna accesos</td>
+              <td>Subscription o management group</td>
+              <td>Owner o User Access Administrator</td>
+              <td>Puede administrar recursos y delegar permisos.</td>
+            </tr>
+            <tr>
+              <td>Proyecto con alto aislamiento de costos, cuotas y gobierno</td>
+              <td>Subscription dedicada</td>
+              <td>Contributor o Reader segun funcion</td>
+              <td>El proyecto queda aislado del resto a nivel operativo y administrativo.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Ejemplo A</h3>
+            <p>Grupo <strong>az-rg-proyecto-a-contributors</strong> con rol <strong>Contributor</strong> en <strong>RG-Proyecto-A</strong>. Ese equipo administra solo ese grupo de recursos.</p>
+          </article>
+          <article class="card">
+            <h3>Ejemplo B</h3>
+            <p>Grupo <strong>az-sub-finanzas-readers</strong> con rol <strong>Reader</strong> en una suscripcion. Pueden auditar, pero no desplegar ni modificar.</p>
+          </article>
+          <article class="card">
+            <h3>Ejemplo C</h3>
+            <p>Equipo de plataforma con <strong>Owner</strong> o <strong>User Access Administrator</strong> en la suscripcion para controlar altas, bajas y asignaciones.</p>
+          </article>
+        </div>
+        <div class="note">
+          <strong>Idea fuerza para presentar:</strong> "Que una persona pueda ver una suscripcion no significa que pueda usarla; que pueda usar un resource group no significa que pueda operar toda la suscripcion; y que pueda administrar recursos no significa que pueda delegar permisos".
+        </div>
+      </section>
+
+      <section class="section" id="s7">
+        <span class="eyebrow">Governance</span>
+        <h2>7. Suscripciones y management groups</h2>
+        <p>La jerarquia tenant - management groups - subscriptions - resource groups - resources funciona como la columna vertebral de la gobernanza. Es donde se decide el alcance real del blast radius administrativo.</p>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Patron recomendado</h3>
+            <ul>
+              <li>Separar suscripciones de plataforma y de workloads.</li>
+              <li>Usar management groups para heredar politicas y RBAC.</li>
+              <li>Dividir por produccion, no produccion, ownership y costo.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Gobierno complementario</h3>
+            <ul>
+              <li>Azure Policy define que puede desplegarse y bajo que condiciones.</li>
+              <li>Azure RBAC define quien puede operar sobre cada alcance.</li>
+              <li>Template Specs y Deployment Stacks reemplazan el enfoque a largo plazo de Blueprints.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="pill-list" aria-label="Scopes">
+          <span class="pill">Root management group</span>
+          <span class="pill">Platform</span>
+          <span class="pill">Landing zones</span>
+          <span class="pill">Prod / NonProd</span>
+          <span class="pill">Resource groups</span>
+        </div>
+      </section>
+
+      <section class="section" id="s8">
+        <span class="eyebrow">Apps</span>
+        <h2>8. Aplicaciones y permisos</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Application object y service principal</h3>
+            <p>El registro de la app define la aplicacion a nivel global. El service principal es su instancia operativa dentro del tenant y concentra permisos efectivos y grants.</p>
+          </article>
+          <article class="card">
+            <h3>Credenciales</h3>
+            <p>Client secrets, certificados y credenciales federadas deben tener rotacion, expiracion y estandares. Cuando sea posible, conviene usar managed identities.</p>
+          </article>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Tipo de permiso</th>
+              <th>Contexto</th>
+              <th>Uso tipico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Delegated</td>
+              <td>Con usuario</td>
+              <td>Web, SPA, movil</td>
+            </tr>
+            <tr>
+              <td>Application</td>
+              <td>Sin usuario</td>
+              <td>Daemons, backend, automatizacion</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="warn">Una app con permisos <strong>app-only</strong> y admin consent excesivo puede convertirse en uno de los vectores de mayor impacto dentro del tenant.</div>
+      </section>
+
+      <section class="section" id="s9">
+        <span class="eyebrow">Privilegios</span>
+        <h2>9. PIM, Conditional Access y cuentas de emergencia</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3>PIM</h3>
+            <p>Reduce privilegios permanentes y habilita asignaciones elegibles y time-bound.</p>
+          </article>
+          <article class="card">
+            <h3>Conditional Access</h3>
+            <p>Motor Zero Trust para exigir MFA, dispositivo compliant, ubicacion valida o bloquear riesgos.</p>
+          </article>
+          <article class="card">
+            <h3>Break glass</h3>
+            <p>Cuentas cloud-only de emergencia para incidentes criticos, estrictamente controladas y monitoreadas.</p>
+          </article>
+        </div>
+        <div class="note">PIM para roles de Entra y grupos se gestiona por Microsoft Graph; PIM para Azure resources se gestiona por Azure Resource Manager.</div>
+      </section>
+
+      <section class="section" id="s10">
+        <span class="eyebrow">Observabilidad</span>
+        <h2>10. Auditoria y monitoreo</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Entra sign-in logs</h3>
+            <p>Separan actividad interactiva, no interactiva, service principals y managed identities.</p>
+          </article>
+          <article class="card">
+            <h3>Audit logs</h3>
+            <p>Capturan cambios en usuarios, grupos, apps, licencias y configuracion de identidad.</p>
+          </article>
+          <article class="card">
+            <h3>Azure Activity Log</h3>
+            <p>Bitacora de cambios en el plano de control de la suscripcion.</p>
+          </article>
+        </div>
+        <p>La practica recomendada es centralizar logs hacia Log Analytics y, cuando aplique, Sentinel, para correlacion de eventos, alertas y respuesta a incidentes.</p>
+
+      </section>
+
+      <section class="section" id="s11">
+        <span class="eyebrow">Caso practico</span>
+        <h2>11. Casos practicos para entender roles, permisos y jerarquia</h2>
+        <p>Estos ejemplos ayudan a explicar por que en Azure no basta con tener un rol administrativo. Tambien importan el plano de acceso, el scope y la capa de gobernanza aplicada.</p>
+        <h3 style="margin: 18px 0 8px; color: var(--primary-deep);">Caso 1. Key Vault: podia crear el recurso, pero no los secretos</h3>
+        <p>Este ejemplo explica la diferencia entre <strong>roles</strong>, <strong>permisos</strong>, <strong>scope</strong> y los planos de acceso en Azure.</p>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Escenario</h3>
+            <ul>
+              <li>Podia crear recursos en Azure.</li>
+              <li>Podia administrar el Key Vault como recurso.</li>
+              <li>No podia generar secretos dentro del Key Vault.</li>
+              <li>No podia dar acceso a una managed identity para consumir el Key Vault.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Interpretacion correcta</h3>
+            <ul>
+              <li>Tener permisos sobre el recurso no significa tener permisos sobre los datos del recurso.</li>
+              <li>Crear secretos pertenece al <strong>data plane</strong>.</li>
+              <li>Asignar acceso a otra identidad requiere permisos adicionales de administracion de acceso.</li>
+            </ul>
+          </article>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Accion</th>
+              <th>Plano</th>
+              <th>Que permiso se necesita</th>
+              <th>Resultado del caso</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Crear el Key Vault</td>
+              <td>Control plane</td>
+              <td>Rol de administracion del recurso, como Contributor o Key Vault Contributor</td>
+              <td>Si podia hacerlo.</td>
+            </tr>
+            <tr>
+              <td>Crear un secreto</td>
+              <td>Data plane</td>
+              <td>Permisos especificos sobre secretos, por ejemplo con Azure RBAC en el vault</td>
+              <td>No podia hacerlo.</td>
+            </tr>
+            <tr>
+              <td>Asignar permisos a la managed identity</td>
+              <td>Administracion de acceso</td>
+              <td>Capacidad para crear role assignments o access policies</td>
+              <td>No podia hacerlo.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="grid-3">
+          <article class="card">
+            <p><strong>Administrador del recurso</strong> no es lo mismo que <strong>usuario autorizado del secreto</strong>.</p>
+          </article>
+          <article class="card">
+            <p><strong>Key Vault Administrator</strong> puede operar datos del vault, pero no necesariamente puede delegar acceso a otros principals.</p>
+          </article>
+          <article class="card">
+            <p>La <strong>managed identity</strong> necesita una asignacion explicita para consumir el Key Vault; ese acceso no aparece en automatico.</p>
+          </article>
+        </div>
+        
+
+        <h3 style="margin: 24px 0 8px; color: var(--primary-deep);">Caso 2. Maquinas virtuales: podia abrir puertos, pero los cambios se revertian</h3>
+        <p>Este caso explica la diferencia entre <strong>tener permiso para ejecutar un cambio</strong> y <strong>tener permiso para mantener ese cambio</strong> cuando existe una politica de gobernanza superior.</p>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Escenario</h3>
+            <ul>
+              <li>Se creaban redes virtuales para asignar IP y habilitar conectividad hacia maquinas virtuales.</li>
+              <li>Yo podia modificar reglas de puertos para permitir conexiones.</li>
+              <li>Los cambios se revertian automaticamente despues.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Interpretacion correcta</h3>
+            <ul>
+              <li>Mi rol probablemente si permitia hacer el cambio inicial.</li>
+              <li>La reversion apunta a una capa de <strong>Azure Policy</strong> o remediacion automatica.</li>
+              <li>Esa gobernanza suele heredarse desde <strong>management group</strong>, <strong>subscription</strong> o <strong>resource group</strong>.</li>
+            </ul>
+          </article>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Comportamiento observado</th>
+              <th>Lectura tecnica</th>
+              <th>Capa mas probable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>El cambio falla inmediatamente</td>
+              <td>La solicitud fue bloqueada al evaluarse.</td>
+              <td>Falta de permisos o Azure Policy con efecto <strong>deny</strong>.</td>
+            </tr>
+            <tr>
+              <td>El cambio aplica, pero luego vuelve al estado anterior</td>
+              <td>Existe una accion correctiva posterior.</td>
+              <td>Azure Policy con <strong>modify</strong>, <strong>deployIfNotExists</strong>, tarea de remediacion o automatizacion externa.</td>
+            </tr>
+            <tr>
+              <td>Puedo cambiar, pero no conservar la configuracion</td>
+              <td>RBAC me deja operar, pero la organizacion define el estado permitido.</td>
+              <td>Gobernanza heredada por scope.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="grid-3">
+          <article class="card">
+            <p><strong>Azure RBAC</strong> responde a "que puedo intentar hacer".</p>
+          </article>
+          <article class="card">
+            <p><strong>Azure Policy</strong> responde a "que configuracion puede existir o permanecer".</p>
+          </article>
+          <article class="card">
+            <p>La jerarquia relevante en este caso suele ser <strong>management group -> subscription -> resource group -> recurso</strong>.</p>
+          </article>
+        </div>
+
+      </section>
+
+      <section class="section" id="s12">
+        <span class="eyebrow">Implementacion</span>
+        <h2>12. Riesgos comunes y checklist</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Riesgos frecuentes</h3>
+            <ul>
+              <li>Asignar Owner o Contributor con scopes demasiado amplios.</li>
+              <li>Mantener roles legacy o classic administrators aun activos.</li>
+              <li>Dar admin consent a apps con permisos application demasiado extensos.</li>
+              <li>No rotar secretos o certificados de apps.</li>
+              <li>No centralizar logs de identidad y recursos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Checklist sugerido</h3>
+            <ul>
+              <li>Documentar tenant y relacion de confianza con suscripciones.</li>
+              <li>Definir baseline de Conditional Access y validar licencias P1/P2.</li>
+              <li>Implementar PIM (Privileged Identity Management) priorizando eligible sobre permanent active.</li>
+              <li>Crear al menos dos cuentas break glass cloud-only.</li>
+              <li>Separar platform y landing zones con management groups.</li>
+              <li>Aplicar baseline de Azure Policy y exportar logs a Log Analytics.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="warn">El error mas costoso suele ser conceptual: confundir control de identidad con control de recursos. Si el diseno arranca mal en esa separacion, todo lo demas se vuelve dificil de auditar.</div>
+      </section>
+    </main>
+
+    </div>
+</body>
+</html>
