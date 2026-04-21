@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infraestructura como C&oacute;digo en Azure</title>
+  <style>
+    :root {
+      --bg: #f4f8ff;
+      --panel: #ffffff;
+      --ink: #12243d;
+      --muted: #50627d;
+      --primary: #0a5bd3;
+      --primary-deep: #083b87;
+      --primary-soft: #e6f0ff;
+      --accent: #0f766e;
+      --accent-soft: #eefcf9;
+      --warn: #b45309;
+      --warn-soft: #fff7ed;
+      --border: rgba(18, 36, 61, 0.12);
+      --shadow: 0 18px 40px rgba(18, 36, 61, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 6% 0%, rgba(10, 91, 211, 0.15), transparent 30%),
+        radial-gradient(circle at 92% 0%, rgba(15, 118, 110, 0.10), transparent 24%),
+        var(--bg);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+      color: #fff;
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -110px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 920px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .toc,
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .toc {
+      padding: 18px;
+      margin-bottom: 22px;
+    }
+
+    .toc h2 {
+      margin: 0 0 10px;
+      color: var(--primary-deep);
+      font-size: 1.1rem;
+    }
+
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+      columns: 2;
+      gap: 26px;
+    }
+
+    .toc a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .section {
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      margin: 0 0 12px;
+      font-size: 1.45rem;
+      color: var(--primary-deep);
+    }
+
+    .section > p:first-of-type {
+      margin-top: 0;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fbfdff;
+      padding: 15px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary-deep);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .note,
+    .warn {
+      padding: 13px 14px;
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+
+    .note {
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .warn {
+      border-left: 4px solid var(--warn);
+      background: var(--warn-soft);
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li + li { margin-top: 4px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--primary-soft);
+      color: var(--primary-deep);
+    }
+
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.95em;
+      color: var(--primary-deep);
+    }
+
+    @media (max-width: 920px) {
+      .grid-4,
+      .grid-3,
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .toc ul { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Infraestructura como C&oacute;digo en Azure</h1>
+      <p>Resumen ejecutivo sobre el uso de plantillas y definiciones declarativas para crear, homologar, replicar y gobernar recursos en Azure. El objetivo no es solo automatizar despliegues, sino convertir la infraestructura en un activo repetible, auditable y controlable.</p>
+      <div class="hero-badges">
+        <span class="badge">ARM Templates</span>
+        <span class="badge">Bicep</span>
+        <span class="badge">Terraform</span>
+        <span class="badge">Gobierno y Parametrizaci&oacute;n</span>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Tabla de contenidos">
+      <h2>Mapa del tema</h2>
+      <ul>
+        <li><a href="#s1">1. &iquest;Qu&eacute; es IaC?</a></li>
+        <li><a href="#s2">2. &iquest;Cu&aacute;ndo se utiliza?</a></li>
+        <li><a href="#s3">3. Beneficios principales</a></li>
+        <li><a href="#s4">4. Mecanismos en Azure</a></li>
+        <li><a href="#s5">5. Diferencia clave: estado</a></li>
+        <li><a href="#s6">6. Parametrizaci&oacute;n y ambientes</a></li>
+        <li><a href="#s7">7. Gobierno y pol&iacute;ticas</a></li>
+        <li><a href="#s8">8. Buenas pr&aacute;cticas</a></li>
+        <li><a href="#s9">9. Conclusi&oacute;n</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="section" id="s1">
+        <span class="eyebrow">Fundamento</span>
+        <h2>1. &iquest;Qu&eacute; es IaC?</h2>
+        <p><strong>Infraestructura como C&oacute;digo (IaC)</strong> es el enfoque donde la infraestructura se define mediante archivos y plantillas en lugar de configuraciones manuales hechas desde portal, CLI o pasos operativos repetitivos. La idea central es que la infraestructura se trate con la misma disciplina que el software: dise&ntilde;o, control de cambios, revisi&oacute;n, versionado y despliegue repetible.</p>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Definici&oacute;n operativa</h3>
+            <ul>
+              <li>Los recursos se describen en archivos declarativos.</li>
+              <li>La definici&oacute;n puede almacenarse en repositorios Git.</li>
+              <li>Los cambios se aplican por despliegue, no por clics manuales.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Qu&eacute; resuelve</h3>
+            <ul>
+              <li>Evita diferencias entre ambientes creados a mano.</li>
+              <li>Reduce la dependencia de conocimiento operativo informal.</li>
+              <li>Permite reconstruir o replicar infraestructura con menor fricci&oacute;n.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Idea clave</h3>
+            <ul>
+              <li>IaC no es solo "automatizar".</li>
+              <li>Tambi&eacute;n significa <strong>estandarizar</strong>, <strong>versionar</strong> y <strong>gobernar</strong>.</li>
+              <li>La plantilla es el punto de verdad de la infraestructura.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="note">
+          <strong>S&iacute;ntesis:</strong> IaC convierte la infraestructura en un artefacto controlado. Eso permite repetir entornos, auditar cambios y escalar operaciones con menos variabilidad.
+        </div>
+      </section>
+
+      <section class="section" id="s2">
+        <span class="eyebrow">Uso real</span>
+        <h2>2. &iquest;Cu&aacute;ndo se utiliza?</h2>
+        <p>IaC aparece cuando la organizaci&oacute;n deja de ver la infraestructura como un conjunto de recursos aislados y empieza a verla como una <strong>capacidad replicable</strong>. Esto aplica tanto para ambientes peque&ntilde;os como para despliegues masivos.</p>
+        <div class="grid-4">
+          <article class="card">
+            <h3>Replicaci&oacute;n de ambientes</h3>
+            <ul>
+              <li>Dev, QA, UAT y Producci&oacute;n con la misma base estructural.</li>
+              <li>Homologaci&oacute;n de configuraciones entre entornos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Escalamiento</h3>
+            <ul>
+              <li>Creaci&oacute;n masiva de recursos.</li>
+              <li>Escenarios con m&uacute;ltiples VMs, redes, storage o apps repetidas.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Estandarizaci&oacute;n</h3>
+            <ul>
+              <li>Plantillas corporativas con lineamientos comunes.</li>
+              <li>Dise&ntilde;os base para equipos distintos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Automatizaci&oacute;n DevOps</h3>
+            <ul>
+              <li>Despliegues desde pipelines.</li>
+              <li>Menor operaci&oacute;n manual y mayor repetibilidad.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="warn">
+          <strong>Punto fino:</strong> IaC no solo sirve para "crear por primera vez". Tambi&eacute;n sirve para actualizar, homologar, reconstruir y multiplicar instancias de infraestructura con una l&oacute;gica consistente.
+        </div>
+      </section>
+
+      <section class="section" id="s3">
+        <span class="eyebrow">Valor</span>
+        <h2>3. Beneficios principales</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Consistencia</h3>
+            <ul>
+              <li>El mismo archivo genera la misma estructura base.</li>
+              <li>Disminuye la deriva entre ambientes.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Automatizaci&oacute;n</h3>
+            <ul>
+              <li>Los despliegues pueden integrarse a procesos CI/CD.</li>
+              <li>Se reducen tareas repetitivas del equipo.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Reducci&oacute;n de errores</h3>
+            <ul>
+              <li>Menos clics manuales implican menos errores humanos.</li>
+              <li>Los cambios quedan definidos y revisables.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Control y auditor&iacute;a</h3>
+            <ul>
+              <li>Git funciona como historial de cambio.</li>
+              <li>Se puede identificar qui&eacute;n cambi&oacute; qu&eacute; y cu&aacute;ndo.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Escalabilidad operativa</h3>
+            <ul>
+              <li>El crecimiento deja de depender de tareas manuales.</li>
+              <li>Un mismo patr&oacute;n se multiplica con menos esfuerzo.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Base para gobierno</h3>
+            <ul>
+              <li>Facilita aplicar est&aacute;ndares de naming, tagging y seguridad.</li>
+              <li>Hace m&aacute;s viable el control institucional.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="s4">
+        <span class="eyebrow">Azure</span>
+        <h2>4. Mecanismos principales en Azure</h2>
+        <p>Azure permite trabajar IaC con herramientas nativas y tambi&eacute;n con proveedores externos. La elecci&oacute;n no es solo t&eacute;cnica; depende del alcance, del modelo operativo y del tipo de gobierno que la organizaci&oacute;n necesita.</p>
+        <div class="grid-3">
+          <article class="card">
+            <h3>ARM Templates</h3>
+            <ul>
+              <li>Formato <strong>JSON</strong>.</li>
+              <li>Es el mecanismo nativo de despliegue declarativo en Azure.</li>
+              <li>El estado se gestiona de forma impl&iacute;cita por Azure.</li>
+              <li>Tiene m&aacute;s complejidad de sintaxis y menor legibilidad.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Bicep</h3>
+            <ul>
+              <li>Lenguaje declarativo moderno para Azure.</li>
+              <li><strong>Compila a ARM</strong>, por lo que sigue usando el motor nativo de Azure.</li>
+              <li>Es m&aacute;s legible, modular y mantenible que ARM JSON.</li>
+              <li>Conserva el modelo de estado impl&iacute;cito del despliegue Azure.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Terraform</h3>
+            <ul>
+              <li>Herramienta externa y multi-cloud.</li>
+              <li>Usa lenguaje <strong>HCL</strong>.</li>
+              <li>Maneja estado expl&iacute;cito mediante archivo <code>.tfstate</code>.</li>
+              <li>Introduce fases claras de <code>plan</code> y <code>apply</code>.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Herramienta</th><th>Fortaleza</th><th>Trade-off</th><th>Cu&aacute;ndo suele encajar</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ARM Templates</td>
+              <td>Nativo de Azure y compatible con todo el modelo ARM.</td>
+              <td>Sintaxis m&aacute;s verbosa y mantenimiento m&aacute;s pesado.</td>
+              <td>Escenarios legacy, compatibilidad directa o artefactos ya existentes.</td>
+            </tr>
+            <tr>
+              <td>Bicep</td>
+              <td>Mejor experiencia de autor&iacute;a sin salir del ecosistema Azure.</td>
+              <td>Sigue siendo Azure-c&eacute;ntrico; no busca abstracci&oacute;n multi-cloud.</td>
+              <td>Organizaciones centradas en Azure que quieren IaC nativo y legible.</td>
+            </tr>
+            <tr>
+              <td>Terraform</td>
+              <td>Portabilidad conceptual y control expl&iacute;cito del estado.</td>
+              <td>Exige gestionar bien el <code>.tfstate</code> y su ciclo operativo.</td>
+              <td>Ambientes multi-cloud, equipos que ya operan Terraform o necesidad de un est&aacute;ndar transversal.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="s5">
+        <span class="eyebrow">Diferencia clave</span>
+        <h2>5. Estado: el punto que cambia la operaci&oacute;n</h2>
+        <p>La diferencia m&aacute;s importante entre Bicep/ARM y Terraform no es solo la sintaxis. Es <strong>c&oacute;mo entienden el estado de la infraestructura</strong> y qui&eacute;n carga con su administraci&oacute;n.</p>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Terraform</h3>
+            <ul>
+              <li>Mantiene un archivo de estado expl&iacute;cito.</li>
+              <li>Compara la configuraci&oacute;n declarada contra la realidad existente.</li>
+              <li>Esto da mucha visibilidad, pero obliga a gobernar el estado, su almacenamiento y su bloqueo.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>ARM / Bicep</h3>
+            <ul>
+              <li>Azure gestiona internamente la ejecuci&oacute;n y el resultado del despliegue.</li>
+              <li>No se opera un archivo de estado equivalente a <code>.tfstate</code>.</li>
+              <li>La carga operativa es menor, pero el modelo de trabajo es m&aacute;s Azure-espec&iacute;fico.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="note">
+          <strong>Idea pr&aacute;ctica:</strong> Terraform da m&aacute;s responsabilidad operativa sobre el estado; Bicep y ARM reducen esa carga porque el control se apoya en el propio modelo de Azure.
+        </div>
+      </section>
+
+      <section class="section" id="s6">
+        <span class="eyebrow">Dise&ntilde;o</span>
+        <h2>6. Parametrizaci&oacute;n y homologaci&oacute;n de ambientes</h2>
+        <p>Una plantilla &uacute;til no es la que crea un recurso una sola vez, sino la que se puede <strong>parametrizar</strong> para ambientes, capacidades y variantes sin duplicar definiciones enteras. Esta es la base de la homologaci&oacute;n entre entornos.</p>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Ambientes</h3>
+            <ul>
+              <li><strong>Dev:</strong> recursos peque&ntilde;os y costo controlado.</li>
+              <li><strong>QA:</strong> tama&ntilde;o intermedio y mayor estabilidad.</li>
+              <li><strong>Prod:</strong> capacidad alta, resiliencia y controles estrictos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Replicaci&oacute;n</h3>
+            <ul>
+              <li>Permite crear m&uacute;ltiples instancias del mismo patr&oacute;n.</li>
+              <li>Sirve para levantar varias VMs, redes o apps con diferencias m&iacute;nimas.</li>
+              <li>Reduce esfuerzo cuando el crecimiento es por cantidad.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Homologaci&oacute;n</h3>
+            <ul>
+              <li>La estructura se conserva entre entornos.</li>
+              <li>Lo que cambia son par&aacute;metros como SKU, tama&ntilde;o, naming o regi&oacute;n.</li>
+              <li>Eso evita que cada ambiente evolucione de manera distinta.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Entorno</th><th>Objetivo</th><th>Ejemplo de ajuste</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Dev</td><td>Validaci&oacute;n r&aacute;pida y bajo costo</td><td><code>vm-dev-small</code></td></tr>
+            <tr><td>QA</td><td>Pruebas controladas y comportamiento m&aacute;s cercano a real</td><td>Capacidad intermedia, reglas de acceso definidas</td></tr>
+            <tr><td>Producci&oacute;n</td><td>Operaci&oacute;n real del negocio</td><td><code>vm-prod-large</code>, alta disponibilidad y restricciones m&aacute;s fuertes</td></tr>
+          </tbody>
+        </table>
+
+        <div class="warn">
+          <strong>Advertencia:</strong> parametrizar no significa dejar todo abierto. Una buena plantilla expone lo necesario y controla lo que no deber&iacute;a variar libremente.
+        </div>
+      </section>
+
+      <section class="section" id="s7">
+        <span class="eyebrow">Gobierno</span>
+        <h2>7. Gobierno de TI y pol&iacute;ticas</h2>
+        <p>IaC no sustituye el gobierno. Las plantillas sirven para desplegar, pero si no existe una estrategia de control, tambi&eacute;n pueden replicar errores, configuraciones inseguras o costos innecesarios a gran escala. Por eso deben convivir con pol&iacute;ticas y reglas organizacionales.</p>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Controles que deben definirse</h3>
+            <ul>
+              <li><strong>Naming conventions</strong> y estructura de tags.</li>
+              <li>Pol&iacute;ticas de seguridad y configuraciones obligatorias.</li>
+              <li>Restricciones de regi&oacute;n, tipos de recursos y SKUs permitidos.</li>
+              <li>Controles de costo y lineamientos de operaci&oacute;n.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Lectura correcta</h3>
+            <ul>
+              <li>La plantilla no reemplaza a la arquitectura.</li>
+              <li>La automatizaci&oacute;n no reemplaza a la gobernanza.</li>
+              <li>Desplegar r&aacute;pido sin reglas puede escalar problemas m&aacute;s r&aacute;pido.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="note">
+          <strong>S&iacute;ntesis:</strong> IaC es un habilitador de gobierno, no un sustituto. Las reglas deben existir antes o junto con la automatizaci&oacute;n.
+        </div>
+      </section>
+
+      <section class="section" id="s8">
+        <span class="eyebrow">Pr&aacute;ctica</span>
+        <h2>8. Buenas pr&aacute;cticas de gesti&oacute;n</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Versionado</h3>
+            <ul>
+              <li>Guardar plantillas en repositorios con revisi&oacute;n de cambios.</li>
+              <li>Evitar definiciones dispersas fuera del control de Git.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Modularidad</h3>
+            <ul>
+              <li>Separar componentes reutilizables.</li>
+              <li>Evitar archivos gigantes y poco mantenibles.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Par&aacute;metros con criterio</h3>
+            <ul>
+              <li>Exponer solo lo que realmente cambia entre ambientes.</li>
+              <li>Definir valores seguros por defecto cuando aplique.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Despliegue controlado</h3>
+            <ul>
+              <li>Usar pipelines y validaciones previas.</li>
+              <li>En Terraform, revisar siempre el <code>plan</code> antes del <code>apply</code>.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Separaci&oacute;n por entorno</h3>
+            <ul>
+              <li>Definir estrategias claras para Dev, QA y Prod.</li>
+              <li>No mezclar permisos, naming o capacidades sin raz&oacute;n.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Gobierno embebido</h3>
+            <ul>
+              <li>Combinar IaC con Azure Policy, tagging y controles de costos.</li>
+              <li>Automatizar no solo la creaci&oacute;n, tambi&eacute;n el cumplimiento.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="s9">
+        <span class="eyebrow">Cierre</span>
+        <h2>9. Conclusi&oacute;n</h2>
+        <p>IaC es un modelo operativo clave para <strong>DevOps</strong> y <strong>Gobierno de TI</strong>. Permite automatizar, estandarizar y escalar infraestructura, pero solo entrega su valor completo cuando se dise&ntilde;a con criterio: plantillas mantenibles, par&aacute;metros bien pensados, controles organizacionales y una selecci&oacute;n correcta entre herramientas nativas de Azure y soluciones como Terraform.</p>
+        <div class="note">
+          <strong>Mensaje final:</strong> la pregunta no es solo "qu&eacute; herramienta usar", sino c&oacute;mo convertir el despliegue de infraestructura en una capacidad repetible, gobernada y sostenible para la organizaci&oacute;n.
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

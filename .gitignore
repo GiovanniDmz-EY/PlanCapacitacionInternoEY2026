@@ -54,3 +54,4 @@ coverage.xml
 *.sublime-workspace
 *.sublime-project
 settings.json
+*.exe
