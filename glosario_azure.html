@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glosario de T&eacute;rminos Azure</title>
+  <style>
+    :root {
+      --bg: #f2f7ff;
+      --panel: #ffffff;
+      --ink: #13233a;
+      --muted: #4d5e78;
+      --primary: #0a5bd3;
+      --primary-deep: #083b87;
+      --primary-soft: #e5efff;
+      --accent: #0f766e;
+      --accent-soft: #eefcf9;
+      --border: rgba(19, 35, 58, 0.12);
+      --shadow: 0 18px 40px rgba(19, 35, 58, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 6% 0%, rgba(10, 91, 211, 0.14), transparent 30%),
+        radial-gradient(circle at 92% 0%, rgba(15, 118, 110, 0.1), transparent 24%),
+        var(--bg);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+      color: #fff;
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -90px auto;
+      width: 270px;
+      height: 270px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 920px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .toc,
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .toc {
+      padding: 18px;
+      margin-bottom: 22px;
+    }
+
+    .toc h2 {
+      margin: 0 0 10px;
+      color: var(--primary-deep);
+      font-size: 1.1rem;
+    }
+
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+      columns: 2;
+      gap: 26px;
+    }
+
+    .toc a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .section {
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      margin: 0 0 12px;
+      color: var(--primary-deep);
+      font-size: 1.45rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .term {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fbfdff;
+      padding: 15px;
+    }
+
+    .term h3 {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+
+    .term p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .note {
+      margin-top: 12px;
+      padding: 13px 14px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      border-radius: 10px;
+    }
+
+    @media (max-width: 920px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .toc ul { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Glosario de T&eacute;rminos Azure</h1>
+      <p>Referencia r&aacute;pida de conceptos frecuentes en Azure. La idea es contar con definiciones simples pero correctas para ubicar t&eacute;rminos de gobierno, identidad, red, datos y operaci&oacute;n dentro de una arquitectura.</p>
+      <div class="hero-badges">
+        <span class="badge">Gobierno</span>
+        <span class="badge">Identidad</span>
+        <span class="badge">Red</span>
+        <span class="badge">Datos</span>
+        <span class="badge">Monitoreo</span>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Tabla de contenidos">
+      <h2>Categor&iacute;as</h2>
+      <ul>
+        <li><a href="#s1">1. Gobierno y organizaci&oacute;n</a></li>
+        <li><a href="#s2">2. Identidad y acceso</a></li>
+        <li><a href="#s3">3. Redes y conectividad</a></li>
+        <li><a href="#s4">4. Datos y almacenamiento</a></li>
+        <li><a href="#s5">5. Seguridad y cumplimiento</a></li>
+        <li><a href="#s6">6. Monitoreo y operaci&oacute;n</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="section" id="s1">
+        <h2>1. Gobierno y organizaci&oacute;n</h2>
+        <div class="grid-2">
+          <article class="term">
+            <h3>CLI</h3>
+            <p><em>Command-Line Interface</em>. Interfaz por l&iacute;nea de comandos para administrar recursos o ejecutar operaciones sin usar el portal gr&aacute;fico.</p>
+          </article>
+          <article class="term">
+            <h3>API</h3>
+            <p><em>Application Programming Interface</em>. Interfaz para que sistemas o aplicaciones se comuniquen entre s&iacute; mediante llamadas controladas.</p>
+          </article>
+          <article class="term">
+            <h3>AKS</h3>
+            <p><em>Azure Kubernetes Service</em>. Servicio administrado de Azure para desplegar y operar cl&uacute;steres de Kubernetes.</p>
+          </article>
+          <article class="term">
+            <h3>IaaS</h3>
+            <p><em>Infrastructure as a Service</em>. Modelo donde el proveedor entrega infraestructura base y el usuario administra sistema operativo, middleware y aplicaci&oacute;n.</p>
+          </article>
+          <article class="term">
+            <h3>PaaS</h3>
+            <p><em>Platform as a Service</em>. Modelo donde el proveedor administra la plataforma y el usuario se enfoca principalmente en la aplicaci&oacute;n y su configuraci&oacute;n.</p>
+          </article>
+          <article class="term">
+            <h3>SaaS</h3>
+            <p><em>Software as a Service</em>. Modelo donde el software completo es entregado como servicio administrado al usuario final.</p>
+          </article>
+          <article class="term">
+            <h3>SKU</h3>
+            <p>Combinaci&oacute;n comercial y t&eacute;cnica que define capacidad, tama&ntilde;o, l&iacute;mites, nivel de servicio y precio de un recurso.</p>
+          </article>
+          <article class="term">
+            <h3>Azure Resource Manager (ARM)</h3>
+            <p>Capa de administraci&oacute;n y despliegue de recursos en Azure. Organiza recursos, dependencias, permisos y despliegues mediante un modelo unificado.</p>
+          </article>
+          <article class="term">
+            <h3>Azure CLI</h3>
+            <p>Herramienta por l&iacute;nea de comandos multiplataforma para administrar recursos Azure desde scripts o automatizaciones.</p>
+          </article>
+          <article class="term">
+            <h3>Azure PowerShell</h3>
+            <p>Conjunto de m&oacute;dulos PowerShell para administrar Azure mediante comandos y scripts orientados al ecosistema PowerShell.</p>
+          </article>
+          <article class="term">
+            <h3>Suscripci&oacute;n</h3>
+            <p>Unidad administrativa y de facturaci&oacute;n en Azure. Los recursos se crean dentro de una suscripci&oacute;n y los costos, l&iacute;mites y permisos suelen organizarse a este nivel.</p>
+          </article>
+          <article class="term">
+            <h3>Grupo de recursos</h3>
+            <p>Contenedor l&oacute;gico donde se agrupan recursos relacionados. Facilita administraci&oacute;n, despliegue, permisos y eliminaci&oacute;n conjunta de componentes de una soluci&oacute;n.</p>
+          </article>
+          <article class="term">
+            <h3>Recurso</h3>
+            <p>Cualquier servicio o componente creado en Azure, por ejemplo una VM, una base de datos, una Storage Account o una VNet.</p>
+          </article>
+          <article class="term">
+            <h3>Etiqueta (Tag)</h3>
+            <p>Par clave-valor que se asigna a recursos para organizar, filtrar, imputar costos o aplicar gobierno. Ejemplo: <em>ambiente=prod</em>.</p>
+          </article>
+          <article class="term">
+            <h3>Pol&iacute;tica (Azure Policy)</h3>
+            <p>Mecanismo para imponer reglas de gobierno sobre recursos Azure. Puede auditar, bloquear o corregir despliegues que no cumplan con lineamientos.</p>
+          </article>
+          <article class="term">
+            <h3>Bloqueo de recursos (Resource Lock)</h3>
+            <p>Mecanismo de protecci&oacute;n para evitar eliminaci&oacute;n o modificaci&oacute;n accidental de recursos cr&iacute;ticos. Puede ser de tipo <em>Delete</em> o <em>ReadOnly</em>.</p>
+          </article>
+          <article class="term">
+            <h3>RBAC</h3>
+            <p>Modelo de control de acceso basado en roles. Define qu&eacute; acciones puede hacer una identidad sobre un alcance como suscripci&oacute;n, grupo de recursos o recurso.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="s2">
+        <h2>2. Identidad y acceso</h2>
+        <div class="grid-2">
+          <article class="term">
+            <h3>Microsoft Entra ID</h3>
+            <p>Servicio de identidad y acceso de Azure. Administra usuarios, grupos, aplicaciones, autenticaci&oacute;n y tokens. Antes se conoc&iacute;a como Azure Active Directory.</p>
+          </article>
+          <article class="term">
+            <h3>Directorio activo</h3>
+            <p>En contexto Azure suele referirse a Microsoft Entra ID como directorio de identidades en la nube, aunque Active Directory tradicional es el servicio on-premises de Windows Server.</p>
+          </article>
+          <article class="term">
+            <h3>Usuario</h3>
+            <p>Identidad de persona o cuenta que puede autenticarse en el entorno y recibir permisos sobre recursos o aplicaciones.</p>
+          </article>
+          <article class="term">
+            <h3>Grupo</h3>
+            <p>Conjunto de usuarios o identidades que facilita asignar permisos de forma colectiva en lugar de hacerlo uno por uno.</p>
+          </article>
+          <article class="term">
+            <h3>Rol</h3>
+            <p>Conjunto predefinido o personalizado de permisos. Ejemplo: Reader, Contributor u Owner.</p>
+          </article>
+          <article class="term">
+            <h3>Permiso</h3>
+            <p>Acci&oacute;n concreta autorizada, como leer, crear, actualizar o eliminar recursos, o bien leer secretos dentro de una b&oacute;veda.</p>
+          </article>
+          <article class="term">
+            <h3>Identidad administrada</h3>
+            <p>Identidad de un recurso Azure en Entra ID para autenticarse contra otros servicios sin guardar credenciales en el c&oacute;digo.</p>
+          </article>
+          <article class="term">
+            <h3>Managed Identity system-assigned</h3>
+            <p>Identidad administrada ligada directamente a un recurso. Si el recurso se elimina, la identidad tambi&eacute;n desaparece.</p>
+          </article>
+          <article class="term">
+            <h3>Managed Identity user-assigned</h3>
+            <p>Identidad administrada creada como recurso independiente y reutilizable por varios servicios.</p>
+          </article>
+          <article class="term">
+            <h3>RDP</h3>
+            <p><em>Remote Desktop Protocol</em>. Protocolo de acceso remoto gr&aacute;fico usado normalmente para administrar servidores Windows.</p>
+          </article>
+          <article class="term">
+            <h3>SSH</h3>
+            <p><em>Secure Shell</em>. Protocolo de acceso remoto seguro por terminal, muy usado para servidores Linux.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="s3">
+        <h2>3. Redes y conectividad</h2>
+        <div class="grid-2">
+          <article class="term">
+            <h3>CIDR</h3>
+            <p>Forma est&aacute;ndar de expresar bloques de direcciones IP, por ejemplo <code>10.0.0.0/16</code>. Se usa para definir rangos de red y subredes.</p>
+          </article>
+          <article class="term">
+            <h3>Geograf&iacute;a</h3>
+            <p>Agrupaci&oacute;n amplia de regiones Azure dentro de un &aacute;rea geogr&aacute;fica, usada para residencia de datos, cumplimiento y planeaci&oacute;n de continuidad.</p>
+          </article>
+          <article class="term">
+            <h3>Regi&oacute;n</h3>
+            <p>Ubicaci&oacute;n espec&iacute;fica de Azure donde se despliegan recursos, por ejemplo East US o West Europe.</p>
+          </article>
+          <article class="term">
+            <h3>Zona de disponibilidad</h3>
+            <p>Ubicaci&oacute;n f&iacute;sica separada dentro de una regi&oacute;n Azure, usada para mejorar resiliencia local frente a fallos de datacenter.</p>
+          </article>
+          <article class="term">
+            <h3>Par de regiones</h3>
+            <p>Relaci&oacute;n predefinida entre dos regiones Azure dentro de una misma geograf&iacute;a para apoyar continuidad operativa y orden de mantenimiento.</p>
+          </article>
+          <article class="term">
+            <h3>VNet (Virtual Network)</h3>
+            <p>Red privada l&oacute;gica dentro de Azure donde se conectan recursos y se define direccionamiento, segmentaci&oacute;n y conectividad.</p>
+          </article>
+          <article class="term">
+            <h3>Subred</h3>
+            <p>Segmento interno de una VNet. Permite separar cargas por funci&oacute;n, seguridad o dise&ntilde;o de arquitectura.</p>
+          </article>
+          <article class="term">
+            <h3>NIC (Network Interface)</h3>
+            <p>Interfaz de red de un recurso, como una VM. Es el componente que le da conectividad dentro de la red.</p>
+          </article>
+          <article class="term">
+            <h3>IP p&uacute;blica</h3>
+            <p>Direcci&oacute;n accesible desde Internet. Se usa cuando un recurso debe ser alcanzable desde fuera de la red privada.</p>
+          </article>
+          <article class="term">
+            <h3>IP privada</h3>
+            <p>Direcci&oacute;n interna dentro de una VNet o red privada. Sirve para comunicaci&oacute;n interna entre servicios.</p>
+          </article>
+          <article class="term">
+            <h3>DNS</h3>
+            <p>Sistema de resoluci&oacute;n de nombres a direcciones IP. Permite que una aplicaci&oacute;n use nombres legibles en lugar de memorizar IPs.</p>
+          </article>
+          <article class="term">
+            <h3>NAT</h3>
+            <p>Network Address Translation. Permite que varios recursos privados salgan a Internet usando una o varias IPs p&uacute;blicas compartidas.</p>
+          </article>
+          <article class="term">
+            <h3>NSG (Network Security Group)</h3>
+            <p>Conjunto de reglas de red para permitir o denegar tr&aacute;fico de entrada y salida seg&uacute;n origen, destino, puerto y protocolo.</p>
+          </article>
+          <article class="term">
+            <h3>UDR</h3>
+            <p><em>User Defined Route</em>. Ruta definida por el usuario para cambiar el siguiente salto del tr&aacute;fico dentro de una red Azure.</p>
+          </article>
+          <article class="term">
+            <h3>NVA</h3>
+            <p><em>Network Virtual Appliance</em>. Appliance o dispositivo virtual de red, como firewall o equipo de inspecci&oacute;n desplegado como m&aacute;quina virtual.</p>
+          </article>
+          <article class="term">
+            <h3>Private Endpoint / Enlace privado</h3>
+            <p>Mecanismo para acceder a un servicio PaaS mediante una IP privada dentro de tu VNet, evitando exponerlo a Internet.</p>
+          </article>
+          <article class="term">
+            <h3>Service Endpoint / Punto de conexi&oacute;n del servicio</h3>
+            <p>Mecanismo que extiende la identidad de una subnet hacia un servicio Azure para que el tr&aacute;fico permanezca en la red de Microsoft sin exponer el recurso a Internet p&uacute;blica.</p>
+          </article>
+          <article class="term">
+            <h3>Public Endpoint / Enlace p&uacute;blico</h3>
+            <p>Acceso a un servicio mediante su interfaz p&uacute;blica accesible desde Internet, normalmente protegido con firewall, autenticaci&oacute;n u otras restricciones.</p>
+          </article>
+          <article class="term">
+            <h3>VPN Gateway</h3>
+            <p>Servicio que conecta Azure con redes on-premises u otras redes Azure mediante t&uacute;neles cifrados sobre Internet.</p>
+          </article>
+          <article class="term">
+            <h3>ExpressRoute</h3>
+            <p>Conexi&oacute;n privada dedicada entre la red corporativa y Azure, con mayor previsibilidad y aislamiento que una VPN sobre Internet.</p>
+          </article>
+          <article class="term">
+            <h3>CORS</h3>
+            <p><em>Cross-Origin Resource Sharing</em>. Regla del navegador que controla desde qu&eacute; or&iacute;genes web puede consumirse un recurso HTTP. No sustituye controles reales de red.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="s4">
+        <h2>4. Datos y almacenamiento</h2>
+        <div class="grid-2">
+          <article class="term">
+            <h3>Contenedor</h3>
+            <p>Paquete ejecutable que incluye aplicaci&oacute;n, dependencias y runtime. Permite que la app corra de forma consistente entre distintos entornos.</p>
+          </article>
+          <article class="term">
+            <h3>Pod</h3>
+            <p>Unidad b&aacute;sica de ejecuci&oacute;n en Kubernetes. Normalmente contiene uno o varios contenedores que comparten red y almacenamiento cercano.</p>
+          </article>
+          <article class="term">
+            <h3>Nodo</h3>
+            <p>M&aacute;quina del cl&uacute;ster donde se ejecutan pods. En AKS normalmente corresponde a una m&aacute;quina virtual de Azure.</p>
+          </article>
+          <article class="term">
+            <h3>Cl&uacute;ster</h3>
+            <p>Conjunto coordinado de nodos y componentes de control que permite ejecutar aplicaciones distribuidas.</p>
+          </article>
+          <article class="term">
+            <h3>Kubernetes</h3>
+            <p>Plataforma de orquestaci&oacute;n de contenedores que automatiza despliegue, escalado, programaci&oacute;n y recuperaci&oacute;n de aplicaciones en contenedores.</p>
+          </article>
+          <article class="term">
+            <h3>Node pool</h3>
+            <p>Grupo de nodos con configuraciones similares dentro de un cl&uacute;ster, &uacute;til para separar tipos de carga o sistemas operativos.</p>
+          </article>
+          <article class="term">
+            <h3>AKS</h3>
+            <p><em>Azure Kubernetes Service</em>. Servicio administrado de Azure para desplegar y operar cl&uacute;steres de Kubernetes.</p>
+          </article>
+          <article class="term">
+            <h3>SMB / NFS</h3>
+            <p>Protocolos de compartici&oacute;n de archivos en red. Azure Files puede exponer recursos compartidos usando estos protocolos.</p>
+          </article>
+          <article class="term">
+            <h3>SAS</h3>
+            <p><em>Shared Access Signature</em>. Token temporal que otorga acceso delimitado por tiempo, permisos y alcance a recursos de almacenamiento.</p>
+          </article>
+          <article class="term">
+            <h3>ADLS Gen2</h3>
+            <p><em>Azure Data Lake Storage Gen2</em>. Extensi&oacute;n de Storage Account orientada a anal&iacute;tica masiva, con jerarqu&iacute;a real de carpetas y capacidades de Data Lake.</p>
+          </article>
+          <article class="term">
+            <h3>Azure SQL Database</h3>
+            <p>Servicio PaaS de base de datos relacional para cargas transaccionales y datos estructurados.</p>
+          </article>
+          <article class="term">
+            <h3>Azure SQL Managed Instance</h3>
+            <p>Servicio PaaS con compatibilidad m&aacute;s cercana a una instancia tradicional de SQL Server, orientado a migraciones con menos cambios.</p>
+          </article>
+          <article class="term">
+            <h3>Storage Account</h3>
+            <p>Cuenta de almacenamiento que puede ofrecer blobs, archivos, colas y tablas. Es la base de varios escenarios de datos no estructurados.</p>
+          </article>
+          <article class="term">
+            <h3>LRS / ZRS / GRS</h3>
+            <p>Opciones de redundancia en Storage. LRS mantiene copias locales, ZRS replica entre zonas de disponibilidad y GRS agrega copia geogr&aacute;fica en otra regi&oacute;n.</p>
+          </article>
+          <article class="term">
+            <h3>Data Lake</h3>
+            <p>Repositorios de datos masivos y flexibles para anal&iacute;tica, hist&oacute;ricos, ciencia de datos o integraci&oacute;n a gran escala.</p>
+          </article>
+          <article class="term">
+            <h3>Azure Data Factory</h3>
+            <p>Servicio de integraci&oacute;n y orquestaci&oacute;n de datos. Sirve para copiar, transformar y mover datos entre sistemas.</p>
+          </article>
+          <article class="term">
+            <h3>SQL Data Sync</h3>
+            <p>Servicio legacy de sincronizaci&oacute;n de datos entre bases Azure SQL y SQL Server, con modelo de consistencia eventual y retiro anunciado.</p>
+          </article>
+          <article class="term">
+            <h3>T-SQL</h3>
+            <p>Dialecto SQL de Microsoft SQL Server. Extiende SQL est&aacute;ndar con instrucciones, funciones y mecanismos propios del ecosistema Microsoft.</p>
+          </article>
+          <article class="term">
+            <h3>SQL Server Agent</h3>
+            <p>Motor interno de jobs programados en SQL Server para ejecutar tareas autom&aacute;ticas como mantenimientos, procesos o cargas.</p>
+          </article>
+          <article class="term">
+            <h3>CLR</h3>
+            <p>Capacidad de ejecutar c&oacute;digo .NET dentro del motor SQL para extender funciones del servidor de base de datos.</p>
+          </article>
+          <article class="term">
+            <h3>OLTP</h3>
+            <p><em>Online Transaction Processing</em>. Patr&oacute;n orientado a transacciones operativas del negocio, con muchas lecturas y escrituras r&aacute;pidas y consistentes.</p>
+          </article>
+          <article class="term">
+            <h3>ETL / ELT</h3>
+            <p>Patrones de integraci&oacute;n de datos. ETL significa extraer, transformar y cargar; ELT significa extraer, cargar y transformar dentro del destino.</p>
+          </article>
+          <article class="term">
+            <h3>SSIS</h3>
+            <p><em>SQL Server Integration Services</em>. Tecnolog&iacute;a de Microsoft para procesos de integraci&oacute;n y movimiento de datos.</p>
+          </article>
+          <article class="term">
+            <h3>VMSS</h3>
+            <p><em>Virtual Machine Scale Sets</em>. Grupo administrado de m&uacute;ltiples m&aacute;quinas virtuales que permite escalar horizontalmente.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="s5">
+        <h2>5. Seguridad y cumplimiento</h2>
+        <div class="grid-2">
+          <article class="term">
+            <h3>Key Vault</h3>
+            <p>Servicio para almacenar secretos, certificados y claves criptogr&aacute;ficas de forma segura y controlada.</p>
+          </article>
+          <article class="term">
+            <h3>Secreto (Secret)</h3>
+            <p>Valor sensible como una contrase&ntilde;a, token, API key o connection string que no debe exponerse directamente en c&oacute;digo o configuraci&oacute;n.</p>
+          </article>
+          <article class="term">
+            <h3>Certificado</h3>
+            <p>Objeto digital usado para autenticaci&oacute;n, cifrado o HTTPS/TLS. Puede ser administrado en Key Vault.</p>
+          </article>
+          <article class="term">
+            <h3>TDE</h3>
+            <p>Transparent Data Encryption. Mecanismo de cifrado en reposo para proteger archivos de base de datos, logs y respaldos.</p>
+          </article>
+          <article class="term">
+            <h3>Always Encrypted</h3>
+            <p>Protecci&oacute;n de columnas sensibles para que ciertos datos no sean visibles en claro incluso para administradores no autorizados.</p>
+          </article>
+          <article class="term">
+            <h3>Dynamic Data Masking</h3>
+            <p>Ocultamiento parcial del valor mostrado a ciertos perfiles. Sirve para exposici&oacute;n controlada, no sustituye cifrado real.</p>
+          </article>
+          <article class="term">
+            <h3>WORM</h3>
+            <p><em>Write Once, Read Many</em>. Modo de inmutabilidad donde un dato puede escribirse una vez y luego solo leerse, sin modificarse ni borrarse durante el periodo definido.</p>
+          </article>
+          <article class="term">
+            <h3>PII</h3>
+            <p><em>Personally Identifiable Information</em>. Informaci&oacute;n personal identificable, como nombre, identificadores, correos o datos financieros asociados a una persona.</p>
+          </article>
+          <article class="term">
+            <h3>TLS</h3>
+            <p><em>Transport Layer Security</em>. Protocolo de cifrado para proteger comunicaciones en tr&aacute;nsito, por ejemplo entre una aplicaci&oacute;n y una base de datos.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="s6">
+        <h2>6. Monitoreo y operaci&oacute;n</h2>
+        <div class="grid-2">
+          <article class="term">
+            <h3>Azure Cost Management</h3>
+            <p>Conjunto de herramientas para analizar, controlar y optimizar costos reales en Azure mediante vistas de consumo, presupuestos y alertas.</p>
+          </article>
+          <article class="term">
+            <h3>Billing</h3>
+            <p>&Aacute;mbito de facturaci&oacute;n donde se gestionan cargos, facturas, m&eacute;todos de pago y estructuras como billing account, billing profile e invoice section.</p>
+          </article>
+          <article class="term">
+            <h3>Azure Monitor</h3>
+            <p>Plataforma unificada de observabilidad en Azure para m&eacute;tricas, logs, alertas y diagn&oacute;stico de recursos.</p>
+          </article>
+          <article class="term">
+            <h3>Application Insights</h3>
+            <p>Capacidad de monitoreo de aplicaciones dentro de Azure Monitor. Permite analizar requests, excepciones, dependencias y tiempos de respuesta.</p>
+          </article>
+          <article class="term">
+            <h3>APM</h3>
+            <p><em>Application Performance Monitoring</em>. Monitoreo de rendimiento de aplicaciones, orientado a tiempos de respuesta, errores, dependencias y experiencia real.</p>
+          </article>
+          <article class="term">
+            <h3>Log Analytics Workspace</h3>
+            <p>Espacio de trabajo donde se almacenan y consultan logs con KQL en Azure Monitor.</p>
+          </article>
+          <article class="term">
+            <h3>KQL</h3>
+            <p><em>Kusto Query Language</em>. Lenguaje de consulta usado en Azure Monitor y Log Analytics para analizar logs y telemetr&iacute;a.</p>
+          </article>
+          <article class="term">
+            <h3>Azure Advisor</h3>
+            <p>Servicio que entrega recomendaciones sobre costo, seguridad, confiabilidad, rendimiento y excelencia operativa.</p>
+          </article>
+          <article class="term">
+            <h3>Azure Service Health</h3>
+            <p>Vista de incidentes, mantenimientos planeados y eventos de plataforma que pueden afectar tus suscripciones.</p>
+          </article>
+          <article class="term">
+            <h3>Azure Resource Health</h3>
+            <p>Salud individual de un recurso espec&iacute;fico. Ayuda a diagnosticar si un problema proviene del servicio Azure o de la configuraci&oacute;n propia.</p>
+          </article>
+          <article class="term">
+            <h3>Alerta</h3>
+            <p>Regla que se dispara cuando una m&eacute;trica, log o evento de salud cumple una condici&oacute;n definida y activa una notificaci&oacute;n o automatizaci&oacute;n.</p>
+          </article>
+          <article class="term">
+            <h3>Action Group</h3>
+            <p>Conjunto reutilizable de acciones que Azure ejecuta cuando una alerta se activa. Un Action Group no detecta el problema; la alerta lo detecta y el Action Group define qu&eacute; respuesta se dispara, por ejemplo enviar correo, SMS, webhook, notificaciones push o automatizaciones. Ejemplo: si una alerta detecta que la CPU de una VM supera 90%, el Action Group puede avisar al equipo y lanzar una acci&oacute;n correctiva.</p>
+          </article>
+          <article class="term">
+            <h3>DCR</h3>
+            <p><em>Data Collection Rule</em>. Regla de recolecci&oacute;n de datos que define qu&eacute; telemetr&iacute;a se captura, c&oacute;mo se transforma y hacia d&oacute;nde se env&iacute;a.</p>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Idea pr&aacute;ctica:</strong> este glosario no sustituye las sesiones tem&aacute;ticas. Su funci&oacute;n es dar una definici&oacute;n corta para ubicar cada concepto dentro de la arquitectura de Azure.
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

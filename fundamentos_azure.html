@@ -174,7 +174,7 @@
             <h3>Interfaz</h3>
             <ul>
               <li>Medio de interacci&oacute;n.</li>
-              <li>Gr&aacute;fica (web/m&oacute;vil), CLI o API.</li>
+              <li>Gr&aacute;fica (web/m&oacute;vil), <strong>CLI</strong> (<em>Command-Line Interface</em>, interfaz por l&iacute;nea de comandos) o <strong>API</strong> (<em>Application Programming Interface</em>, interfaz para que sistemas se comuniquen entre s&iacute;).</li>
             </ul>
           </article>
           <article class="card">
@@ -299,9 +299,9 @@
       <section class="section" id="s4">
         <h2>4. Modelos de servicio y ejecuci&oacute;n</h2>
         <ul>
-          <li><strong>IaaS:</strong> control de infraestructura y del sistema operativo.</li>
-          <li><strong>PaaS:</strong> infraestructura administrada y foco en la aplicaci&oacute;n.</li>
-          <li><strong>SaaS:</strong> software completamente administrado.</li>
+          <li><strong>IaaS (Infrastructure as a Service):</strong> control de infraestructura y del sistema operativo.</li>
+          <li><strong>PaaS (Platform as a Service):</strong> infraestructura administrada y foco en la aplicaci&oacute;n.</li>
+          <li><strong>SaaS (Software as a Service):</strong> software completamente administrado.</li>
           <li><strong>Serverless:</strong> ejecuci&oacute;n bajo demanda, sin gesti&oacute;n de servidores y basada en eventos.</li>
         </ul>
         <table>
@@ -320,20 +320,47 @@
         <h2>5. Consideraciones para la creaci&oacute;n de recursos</h2>
         <ul>
           <li><strong>Ubicaci&oacute;n (regi&oacute;n):</strong> afecta <a href="https://www.azurespeed.com/Azure/Latency" target="_blank" rel="noopener">latencia</a>, costo, disponibilidad y cumplimiento legal (soberan&iacute;a de datos).</li>
-          <li><strong>Capacidad / SKU:</strong> define nivel de servicio, l&iacute;mites de hardware y recursos asignados.</li>
+          <li><strong>Capacidad / SKU:</strong> define nivel de servicio, l&iacute;mites de hardware y recursos asignados. <strong>SKU</strong> es la combinaci&oacute;n comercial/t&eacute;cnica que determina tama&ntilde;o, desempe&ntilde;o y precio.</li>
           <li><strong>Modelo de ejecuci&oacute;n:</strong> define si el cobro es por recurso siempre activo, serverless o escalado autom&aacute;tico.</li>
           <li><strong>Acceso y seguridad:</strong> define visibilidad p&uacute;blica/privada, autenticaci&oacute;n y restricciones de red (IPs).</li>
           <li><strong>Integraciones / dependencias:</strong> relaci&oacute;n con otros servicios y recursos impl&iacute;citos (discos, NICs, IPs).</li>
           <li><strong>Impacto de configuraci&oacute;n:</strong> decisiones de identidad (nombre) y ubicaci&oacute;n dif&iacute;ciles de modificar sin recrear.</li>
           <li><strong>Jerarqu&iacute;a y Organizaci&oacute;n:</strong> uso de Suscripciones y Resource Groups para agrupaci&oacute;n l&oacute;gica y de costos.</li>
           <li><strong>Tags:</strong> clasificaci&oacute;n por ambiente, proyecto y responsable para auditor&iacute;a y facturaci&oacute;n.</li>
-          <li><strong>Gobernanza y Bloqueos:</strong> uso de "Resource Locks" para evitar borrado accidental o modificaciones cr&iacute;ticas.</li>
+          <li><strong>Gobernanza y Bloqueos:</strong> uso de <strong>Resource Locks</strong> (bloqueos a nivel de recurso) para evitar borrado accidental o modificaciones cr&iacute;ticas.</li>
         </ul>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Geograf&iacute;as, regiones y zonas</h3>
+            <ul>
+              <li><strong>Geograf&iacute;a:</strong> agrupaci&oacute;n amplia de regiones, por ejemplo Europa o Am&eacute;rica.</li>
+              <li><strong>Regi&oacute;n:</strong> ubicaci&oacute;n espec&iacute;fica de Azure donde se despliegan recursos, como East US o West Europe.</li>
+              <li><strong>Zona de disponibilidad:</strong> datacenter f&iacute;sicamente separado dentro de una misma regi&oacute;n, usado para mejorar resiliencia local.</li>
+              <li><strong>Par de regiones:</strong> relaci&oacute;n predefinida entre dos regiones dentro de una geograf&iacute;a para apoyar estrategias de continuidad y mantenimiento.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Azure Resource Manager</h3>
+            <ul>
+              <li><strong>Azure Resource Manager (ARM):</strong> capa de administraci&oacute;n y despliegue de recursos en Azure.</li>
+              <li>Es el modelo que entiende recursos, grupos de recursos, dependencias, plantillas y permisos.</li>
+              <li>Cuando despliegas con portal, plantillas ARM, Bicep, CLI o PowerShell, normalmente est&aacute;s operando sobre ARM.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>CLI y PowerShell</h3>
+            <ul>
+              <li><strong>Azure CLI:</strong> herramienta por l&iacute;nea de comandos multiplataforma para administrar Azure de forma declarativa o scriptable.</li>
+              <li><strong>Azure PowerShell:</strong> conjunto de m&oacute;dulos PowerShell para administrar Azure desde scripts y automatizaciones orientadas a ese ecosistema.</li>
+              <li>Ambas permiten operar recursos sin depender del portal y son muy usadas en automatizaci&oacute;n y administraci&oacute;n.</li>
+            </ul>
+          </article>
+        </div>
       </section>
 
       <section class="section" id="s6">
         <h2>6. Servicios de c&oacute;mputo</h2>
-        <p>Los servicios de computaci&oacute;n de Azure proporcionan una suite de herramientas para crear y desplegar aplicaciones de forma eficiente. Entre ellos est&aacute;n las m&aacute;quinas virtuales (VM), Azure Kubernetes Service (AKS), Azure Functions, App Service, Container Apps y Logic Apps. Cada uno responde a necesidades distintas, desde control total hasta automatizaci&oacute;n y escalabilidad.</p>
+        <p>Los servicios de computaci&oacute;n de Azure proporcionan una suite de herramientas para crear y desplegar aplicaciones de forma eficiente. Entre ellos est&aacute;n las m&aacute;quinas virtuales (VM), Azure Kubernetes Service (<strong>AKS</strong>, servicio administrado para cl&uacute;steres de Kubernetes), Azure Functions, App Service, Container Apps y Logic Apps. Cada uno responde a necesidades distintas, desde control total hasta automatizaci&oacute;n y escalabilidad.</p>
         <div class="grid-3">
           <article class="card expandable">
             <button class="card-summary" onclick="toggleDetail(this)">
@@ -397,7 +424,7 @@
                 <li>Ideal para tareas por eventos: HTTP, temporizadores, colas, etc.</li>
                 <li>Permite enfocarse en el c&oacute;digo y la l&oacute;gica de negocio.</li>
               </ul>
-              <a href="#s6.4" style="display:inline-block;margin-top:8px;color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de Azure Functions &rarr;</a>
+              <a href="#s6.5" style="display:inline-block;margin-top:8px;color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de Azure Functions &rarr;</a>
             </div>
           </article>
           <article class="card expandable">
@@ -427,6 +454,7 @@
                 <li>Soporta autoescalado, agrupaciones multinodo, integración de almacenamiento y seguridad avanzada.</li>
                 <li>Facilita el descubrimiento de servicios, balanceo de carga y comunicación eficiente entre microservicios.</li>
               </ul>
+              <a href="#s6.4" style="display:inline-block;margin-top:8px;color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de AKS &rarr;</a>
             </div>
           </article>
         </div>
@@ -496,7 +524,7 @@
           </li>
           <li> <strong>Componentes y dependencias</strong>
             <ul>
-              <li><strong>Network Interface (NIC):</strong> recurso obligatorio que conecta la VM a la red y le da identidad de comunicaci&oacute;n.</li>
+              <li><strong>Network Interface (NIC):</strong> tarjeta o interfaz de red virtual que conecta la VM a la red y le da identidad de comunicaci&oacute;n.</li>
               <li><strong>Virtual Network (VNet) y Subnet:</strong> segmento l&oacute;gico donde vive la m&aacute;quina y desde donde obtiene direccionamiento interno.</li>
               <li><strong>Managed Disks:</strong> almacenamiento persistente para sistema operativo y datos.</li>
               <li><strong>Public IP:</strong> componente opcional cuando se requiere exposici&oacute;n o administraci&oacute;n desde Internet.</li>
@@ -506,7 +534,7 @@
             <ul>
               <li><strong>Ejecuci&oacute;n continua:</strong> la capacidad permanece asignada mientras la VM est&aacute; encendida.</li>
               <li><strong>Operaci&oacute;n directa:</strong> el equipo administra arranque, apagado, mantenimiento del sistema y actualizaciones.</li>
-              <li><strong>Boot Diagnostics:</strong> ayuda a diagnosticar errores de inicio del sistema operativo cuando no hay acceso por RDP o SSH.</li>
+              <li><strong>Boot Diagnostics:</strong> ayuda a diagnosticar errores de inicio del sistema operativo cuando no hay acceso por <strong>RDP</strong> (<em>Remote Desktop Protocol</em>, acceso remoto gr&aacute;fico a Windows) o <strong>SSH</strong> (<em>Secure Shell</em>, acceso remoto seguro por terminal a Linux).</li>
             </ul>
           </li>
           <li><strong>Conectividad, acceso y seguridad</strong>
@@ -525,7 +553,7 @@
             <strong>Escalabilidad</strong>
             <ul>
               <li><strong>Escalado vertical:</strong> cambiar el SKU para aumentar o disminuir CPU y memoria; normalmente requiere reinicio.</li>
-              <li><strong>Escalado horizontal:</strong> usar Virtual Machine Scale Sets (VMSS) para desplegar varias instancias detr&aacute;s de un balanceador.</li>
+              <li><strong>Escalado horizontal:</strong> usar Virtual Machine Scale Sets (<strong>VMSS</strong>, grupo administrado de m&uacute;ltiples VMs) para desplegar varias instancias detr&aacute;s de un balanceador.</li>
               <li><strong>Objetivo:</strong> absorber picos de demanda distribuyendo la carga entre m&uacute;ltiples nodos.</li>
             </ul>
           </li>
@@ -679,8 +707,108 @@
           </li>
         </ol>
       </section>
+      <section class="section" id="s6.4">
+        <h2>6.4 Azure Kubernetes Service (AKS)</h2>
+        <ol>
+          <li><strong>Definici&oacute;n y modelo de servicio</strong>
+            <ul>
+              <li><strong>Concepto:</strong> AKS es el servicio administrado de Kubernetes en Azure para desplegar y administrar aplicaciones en contenedores.</li>
+              <li><strong>Qu&eacute; administra Azure:</strong> Azure crea y opera el <strong>plano de control</strong>, que es la capa que coordina el cl&uacute;ster, programa cargas y mantiene el estado de Kubernetes.</li>
+              <li><strong>Qu&eacute; administra el cliente:</strong> el equipo sigue administrando las cargas de trabajo, la configuraci&oacute;n del cl&uacute;ster, la seguridad operativa y los nodos de trabajo que ejecutan las aplicaciones.</li>
+              <li><strong>Lectura pr&aacute;ctica:</strong> AKS descarga mucha complejidad operativa de Kubernetes, pero no elimina la responsabilidad sobre dise&ntilde;o, seguridad, despliegues, costos y operaci&oacute;n de las aplicaciones.</li>
+            </ul>
+          </li>
+          <li><strong>Conceptos base: contenedor, pod, nodo y cl&uacute;ster</strong>
+            <ul>
+              <li><strong>Contenedor:</strong> paquete ejecutable con aplicaci&oacute;n, dependencias y runtime.</li>
+              <li><strong>Pod:</strong> unidad b&aacute;sica de ejecuci&oacute;n en Kubernetes; normalmente contiene uno o varios contenedores relacionados que comparten red y almacenamiento cercano.</li>
+              <li><strong>Nodo:</strong> m&aacute;quina virtual del cl&uacute;ster donde se ejecutan los pods; tambi&eacute;n se le suele llamar <strong>worker node</strong> porque es donde realmente corre el trabajo.</li>
+              <li><strong>Cl&uacute;ster:</strong> conjunto completo de plano de control, nodos y componentes para ejecutar aplicaciones distribuidas.</li>
+              <li><strong>Node pool:</strong> grupo de nodos con caracter&iacute;sticas similares dentro del mismo cl&uacute;ster, &uacute;til para separar tipos de carga o sistemas operativos.</li>
+            </ul>
+            <div class="note" style="margin-top:8px;">
+              <strong>Forma simple de recordarlo:</strong> el <strong>contenedor</strong> empaqueta la app, el <strong>pod</strong> la ejecuta, el <strong>nodo</strong> hospeda pods y el <strong>cl&uacute;ster</strong> coordina todo el conjunto.
+            </div>
+          </li>
+          <li><strong>C&oacute;mo funciona AKS y qu&eacute; resuelve Kubernetes</strong>
+            <ul>
+              <li>Cuando creas un cl&uacute;ster, Azure aprovisiona y mantiene el plano de control de Kubernetes.</li>
+              <li>Luego despliegas uno o varios grupos de nodos para ejecutar las aplicaciones.</li>
+              <li>Kubernetes programa los pods en los nodos disponibles seg&uacute;n recursos, reglas y estado general del cl&uacute;ster.</li>
+              <li>En el modelo est&aacute;ndar, Azure no cobra por separado el plano de control; el costo principal viene de los nodos y servicios asociados.</li>
+              <li><strong>Service discovery:</strong> Kubernetes permite que los servicios se encuentren entre s&iacute; mediante DNS o IPs internas.</li>
+              <li><strong>Load balancing:</strong> puede distribuir tr&aacute;fico entre varias r&eacute;plicas de una misma aplicaci&oacute;n.</li>
+              <li><strong>Self-healing:</strong> si un pod falla, Kubernetes intenta reiniciarlo o reprogramarlo para mantener el estado deseado.</li>
+              <li><strong>Storage orchestration:</strong> permite montar almacenamiento persistente para que las aplicaciones no pierdan datos aunque el pod se reprograme.</li>
+            </ul>
+            <figure style="margin:16px 0 10px;">
+              <img src="aks_funcionamiento.jfif" alt="Diagrama de funcionamiento de un cl&uacute;ster de Azure Kubernetes Service con plano de control administrado por Azure y nodos de trabajo donde se ejecutan los pods" style="width:100%; max-width:900px; display:block; margin:0 auto; border-radius:14px; border:1px solid var(--border); box-shadow: var(--shadow);">
+              <figcaption style="margin-top:10px; color:var(--muted); font-size:0.95rem;">
+                El diagrama resume la separaci&oacute;n entre el <strong>plano de control</strong>, administrado por Azure, y el <strong>plano de datos</strong>, donde corren los pods de la aplicaci&oacute;n. El usuario interact&uacute;a normalmente con <code>kubectl</code> o herramientas compatibles con Kubernetes; la solicitud llega al <code>API Server</code>, se registra el estado deseado en <code>etcd</code>, el <code>Scheduler</code> decide en qu&eacute; nodo ejecutar la carga y, dentro de cada VM, el <code>kubelet</code> y el runtime crean y supervisan los contenedores. Mientras tanto, <code>kube-proxy</code> habilita conectividad entre servicios y el <code>Controller Manager</code> corrige desviaciones para que el estado real coincida con el esperado.
+              </figcaption>
+            </figure>
+            <div class="note" style="margin-top:8px;">
+              <strong>Lectura pr&aacute;ctica del flujo:</strong> el usuario define el estado deseado, Kubernetes decide d&oacute;nde y c&oacute;mo ejecutar la carga, y la plataforma intenta mantenerla disponible autom&aacute;ticamente. Esa automatizaci&oacute;n y resiliencia es una de las razones principales para usar AKS.
+            </div>
+          </li>
+          <li><strong>Componentes l&oacute;gicos importantes</strong>
+            <ul>
+              <li><strong>kube-apiserver:</strong> punto de entrada para la API de Kubernetes.</li>
+              <li><strong>Scheduler:</strong> decide en qu&eacute; nodo se ejecutar&aacute; cada pod nuevo.</li>
+              <li><strong>Controller Manager:</strong> vigila que el estado real del cl&uacute;ster coincida con el estado deseado.</li>
+              <li><strong>kubelet:</strong> agente que corre en cada nodo y confirma que los contenedores realmente est&aacute;n ejecut&aacute;ndose.</li>
+              <li><strong>Container runtime:</strong> componente del nodo que ejecuta los contenedores, por ejemplo <code>containerd</code>.</li>
+            </ul>
+            <div class="note" style="margin-top:8px;">
+              <strong>Idea clave:</strong> no necesitas operar manualmente todos esos componentes en AKS, pero s&iacute; conviene saber qu&eacute; papel juegan para entender incidentes, escalado y dise&ntilde;o del cl&uacute;ster.
+            </div>
+          </li>
+          <li><strong>Red, acceso y seguridad</strong>
+            <ul>
+              <li><strong>Integraci&oacute;n de red:</strong> el cl&uacute;ster se conecta a una VNet y las aplicaciones suelen publicarse mediante servicios, ingress o balanceadores.</li>
+              <li><strong>Identidad y acceso:</strong> puede integrarse con Microsoft Entra ID y RBAC para controlar administraci&oacute;n y acceso al cl&uacute;ster.</li>
+              <li><strong>Secretos y configuraci&oacute;n:</strong> puede trabajar con secretos nativos de Kubernetes, Key Vault e identidades administradas.</li>
+              <li><strong>Imagenes:</strong> normalmente consume im&aacute;genes desde un registry como Azure Container Registry (ACR).</li>
+            </ul>
+          </li>
+          <li><strong>Escalabilidad, upgrades y operaci&oacute;n</strong>
+            <ul>
+              <li><strong>Escalado de nodos:</strong> el cl&uacute;ster puede aumentar o disminuir nodos seg&uacute;n la demanda.</li>
+              <li><strong>Escalado de pods:</strong> Kubernetes puede aumentar o disminuir r&eacute;plicas de una aplicaci&oacute;n sin cambiar necesariamente la cantidad de nodos.</li>
+              <li><strong>Recuperaci&oacute;n autom&aacute;tica:</strong> si un pod falla, Kubernetes intenta reprogramarlo para mantener el estado deseado.</li>
+              <li><strong>Upgrades:</strong> AKS ayuda a actualizar la versi&oacute;n del cl&uacute;ster y a mover cargas a nodos nuevos con menor fricci&oacute;n que un Kubernetes autoadministrado.</li>
+              <li><strong>Node pools especializados:</strong> puedes tener pools para Linux, Windows, GPU o cargas con caracter&iacute;sticas distintas.</li>
+            </ul>
+          </li>
+          <li><strong>Observabilidad e integraci&oacute;n con Azure</strong>
+            <ul>
+              <li><strong>Monitoreo:</strong> puede integrarse con Azure Monitor y Log Analytics para recolectar m&eacute;tricas y logs de nodos, cl&uacute;ster y contenedores.</li>
+              <li><strong>Diagn&oacute;stico:</strong> la observabilidad es clave porque los problemas pueden venir de aplicaciones, red, nodos, scheduling o almacenamiento.</li>
+              <li><strong>Ecosistema:</strong> AKS se integra bien con ACR, Entra ID, Policy, networking de Azure y pipelines DevOps.</li>
+            </ul>
+          </li>
+          <li><strong>Costos y trade-offs</strong>
+            <ul>
+              <li><strong>Costo principal:</strong> se paga por nodos, almacenamiento, red y servicios complementarios; el valor del servicio es que Azure administra el plano de control.</li>
+              <li><strong>Complejidad:</strong> AKS ofrece mucha flexibilidad, pero requiere m&aacute;s conocimiento operativo que App Service, Functions o Container Apps.</li>
+              <li><strong>Criterio de elecci&oacute;n:</strong> conviene cuando realmente necesitas Kubernetes como plataforma de orquestaci&oacute;n, no solo porque una app usa contenedores.</li>
+            </ul>
+          </li>
+          <li><strong>Casos de uso y cu&aacute;ndo s&iacute; conviene</strong>
+            <ul>
+              <li><strong>Microservicios:</strong> aplicaciones compuestas por varios servicios que necesitan despliegue independiente, comunicaci&oacute;n interna y escalado coordinado.</li>
+              <li><strong>Migraci&oacute;n a contenedores:</strong> lift-and-shift de aplicaciones hacia un entorno administrado de Kubernetes.</li>
+              <li><strong>Cargas avanzadas:</strong> escenarios con varios node pools, necesidades especiales de red, integraci&oacute;n con DevOps y requerimientos de portabilidad.</li>
+              <li><strong>No siempre es la primera opci&oacute;n:</strong> si el problema es m&aacute;s simple, App Service, Container Apps o Functions pueden resolver con menor complejidad.</li>
+            </ul>
+            <div class="note" style="margin-top:8px;">
+              <strong>S&iacute;ntesis:</strong> AKS es la opci&oacute;n adecuada cuando necesitas Kubernetes como plataforma de orquestaci&oacute;n. Su valor no est&aacute; solo en ejecutar contenedores, sino en coordinarlos, escalarlos y operarlos como una plataforma distribuida.
+            </div>
+          </li>
+        </ol>
+      </section>
       <section class="section" id="s6.5">
-        <h2>6.4 Azure Functions</h2>
+        <h2>6.5 Azure Functions</h2>
         <ol>
           <li><strong>Definici&oacute;n y modelo de servicio</strong>
             <ul>
@@ -744,6 +872,7 @@
           <li><strong>Storage (PaaS):</strong> datos no estructurados y archivos. <a href="#s7.1" style="color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver detalles de Storage Account &rarr;</a></li>
           <li><strong>Azure SQL:</strong> servicios relacionales administrados y opciones sobre VM para datos estructurados. <a href="#s7.2" style="color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver sesi&oacute;n de bases de datos &rarr;</a></li>
           <li><strong>Cosmos DB (PaaS):</strong> provisionado o serverless para datos flexibles.</li>
+          <li><strong>Azure Data Factory (PaaS):</strong> integraci&oacute;n, movimiento y orquestaci&oacute;n de datos entre or&iacute;genes, motores y plataformas anal&iacute;ticas. <a href="#s7.3" style="color:#0a5cdd;text-decoration:underline;font-weight:bold;">Ver sesi&oacute;n de Data Factory &rarr;</a></li>
         </ul>
       </section>
 
@@ -760,7 +889,7 @@
           <li><strong>Servicios centrales de una Storage Account</strong>
             <ul>
               <li><strong>Blobs:</strong> almacenamiento de objetos binarios para datos no estructurados como im&aacute;genes, videos y respaldos.</li>
-              <li><strong>Files:</strong> recursos compartidos SMB/NFS totalmente gestionados, &uacute;tiles para aplicaciones legacy o montajes simult&aacute;neos en varias VMs o pods.</li>
+              <li><strong>Files:</strong> recursos compartidos <strong>SMB/NFS</strong> (protocolos de compartici&oacute;n de archivos en red) totalmente gestionados, &uacute;tiles para aplicaciones legacy o montajes simult&aacute;neos en varias VMs o pods.</li>
               <li><strong>Queues:</strong> colas de mensajes para desacoplar componentes y absorber picos de carga.</li>
               <li><strong>Tables:</strong> almac&eacute;n NoSQL de clave-valor para grandes vol&uacute;menes de datos estructurados sin modelo relacional.</li>
               <li><strong>Capacidad adicional:</strong> tambi&eacute;n puede habilitarse hosting web est&aacute;tico sobre blobs para publicar frontends simples.</li>
@@ -776,10 +905,10 @@
           </li>
           <li><strong>Resiliencia y protecci&oacute;n de datos</strong>
             <ul>
-              <li><strong>Redundancia:</strong> LRS mantiene copias locales, ZRS replica entre zonas de disponibilidad y GRS agrega copia geogr&aacute;fica en otra regi&oacute;n.</li>
+              <li><strong>Redundancia:</strong> <strong>LRS</strong> (<em>Locally Redundant Storage</em>) mantiene copias locales, <strong>ZRS</strong> (<em>Zone-Redundant Storage</em>) replica entre zonas de disponibilidad y <strong>GRS</strong> (<em>Geo-Redundant Storage</em>) agrega copia geogr&aacute;fica en otra regi&oacute;n.</li>
               <li><strong>Soft delete:</strong> act&uacute;a como una papelera de reciclaje para blobs y files.</li>
               <li><strong>Blob versioning:</strong> conserva versiones anteriores de los archivos.</li>
-              <li><strong>Inmutabilidad (WORM):</strong> bloquea modificaci&oacute;n o eliminaci&oacute;n durante un periodo definido, &uacute;til para requisitos legales o regulatorios.</li>
+              <li><strong>Inmutabilidad (WORM):</strong> bloquea modificaci&oacute;n o eliminaci&oacute;n durante un periodo definido; <strong>WORM</strong> significa <em>Write Once, Read Many</em>, es decir, escribir una vez y leer muchas.</li>
               <li><strong>Lifecycle Management:</strong> automatiza transiciones entre Hot, Cool, Archive o eliminaci&oacute;n seg&uacute;n antig&uuml;edad o reglas de negocio.</li>
             </ul>
           </li>
@@ -788,10 +917,10 @@
               <li><strong>Seguridad de red:</strong> por defecto puede ser p&uacute;blica; en producci&oacute;n conviene restringir acceso y usar Private Endpoints para exponerla dentro de una VNet con IP privada.</li>
               <li><strong>Acceso p&uacute;blico en blobs:</strong> en Blob Storage el acceso an&oacute;nimo se controla en dos niveles: la <strong>Storage Account</strong> puede permitir o bloquear acceso p&uacute;blico a blobs, y cada <strong>container</strong> define si admite lectura an&oacute;nima o permanece privado.</li>
               <li><strong>Jerarqu&iacute;a del permiso:</strong> si la cuenta bloquea acceso p&uacute;blico, ning&uacute;n contenedor ni blob puede exponerse an&oacute;nimamente. Si el contenedor est&aacute; en modo privado, entonces los blobs dentro de &eacute;l tampoco pueden quedar p&uacute;blicos de forma individual; prevalece la restricci&oacute;n del contenedor.</li>
-              <li><strong>Exposici&oacute;n controlada con SAS:</strong> cuando se necesita compartir temporalmente un archivo sin volver p&uacute;blico el contenedor, se puede generar una URL con <strong>Shared Access Signature (SAS)</strong> para otorgar acceso delimitado por tiempo, permisos y alcance. En general conviene que sea de corta duraci&oacute;n y lo m&aacute;s espec&iacute;fica posible.</li>
+              <li><strong>Exposici&oacute;n controlada con SAS:</strong> cuando se necesita compartir temporalmente un archivo sin volver p&uacute;blico el contenedor, se puede generar una URL con <strong>Shared Access Signature (SAS)</strong>, un token temporal que delimita tiempo, permisos y alcance. En general conviene que sea de corta duraci&oacute;n y lo m&aacute;s espec&iacute;fica posible.</li>
               <li><strong>Seguridad de identidad:</strong> evitar Access Keys compartidas y preferir Microsoft Entra ID con RBAC y Managed Identities.</li>
               <li><strong>Gobernanza:</strong> Azure Policy ayuda a imponer configuraciones seguras, por ejemplo prohibiendo acceso p&uacute;blico.</li>
-              <li><strong>Big data analytics:</strong> con Hierarchical Namespace la cuenta se comporta como ADLS Gen2, habilitando estructuras de carpetas reales para escenarios con Databricks o Synapse.</li>
+              <li><strong>Big data analytics:</strong> con <strong>Hierarchical Namespace</strong> (jerarqu&iacute;a real de carpetas) la cuenta se comporta como <strong>ADLS Gen2</strong> (<em>Azure Data Lake Storage Gen2</em>), habilitando estructuras de carpetas reales para escenarios con Databricks o Synapse.</li>
               <li><strong>Recuperaci&oacute;n regional:</strong> la replicaci&oacute;n as&iacute;ncrona de objetos entre cuentas puede apoyar estrategias de disaster recovery.</li>
             </ul>
             <div class="note" style="margin-top:8px;">
@@ -849,11 +978,118 @@
             </tr>
             <tr>
               <td>Azure SQL Managed Instance (PaaS)</td>
-              <td>Compatibilidad elevada con SQL Server tradicional sin operar una VM completa.</td>
+              <td>Workloads que necesitan alta compatibilidad con funcionalidades de nivel instancia de SQL Server sin operar una VM completa.</td>
               <td>Mantiene el modelo administrado, pero con un costo y una huella de red mayores que Azure SQL Database.</td>
             </tr>
           </tbody>
         </table>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Azure SQL Managed Instance: qu&eacute; resuelve en la pr&aacute;ctica</h3>
+        <p><strong>Azure SQL Managed Instance</strong> no debe leerse solo como "un SQL Server muy parecido". La idea correcta es que ofrece un modelo PaaS, pero con <strong>compatibilidad mucho m&aacute;s cercana a una instancia tradicional de SQL Server</strong> que Azure SQL Database. Esto es especialmente valioso cuando se migra una aplicaci&oacute;n existente que depende de comportamientos de nivel instancia y no solo de una base aislada.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>No confundir el criterio</h3>
+            <ul>
+              <li><strong>Azure SQL Database s&iacute; soporta</strong> tablas, vistas, procedimientos almacenados, funciones y gran parte de <strong>T-SQL</strong> (el dialecto SQL de Microsoft SQL Server).</li>
+              <li>Por lo tanto, la presencia de <strong>views</strong> o <strong>stored procedures</strong> por s&iacute; sola <strong>no obliga</strong> a usar Managed Instance.</li>
+              <li>La diferencia fuerte aparece cuando la soluci&oacute;n depende de capacidades m&aacute;s cercanas a una <strong>instancia completa</strong>.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Cu&aacute;ndo empieza a importar</h3>
+            <ul>
+              <li>Cuando hay dependencias entre varias bases de datos dentro de la misma instancia.</li>
+              <li>Cuando la operaci&oacute;n depende de automatizaci&oacute;n interna con <strong>SQL Server Agent</strong> (motor de jobs programados dentro de SQL Server).</li>
+              <li>Cuando existen componentes legacy o integraciones que esperan sem&aacute;ntica m&aacute;s cercana a SQL Server tradicional.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Lectura arquitect&oacute;nica</h3>
+            <ul>
+              <li>Azure SQL Database est&aacute; m&aacute;s orientado al patr&oacute;n "una base como servicio".</li>
+              <li>Managed Instance est&aacute; orientado al patr&oacute;n "una instancia administrada con varias capacidades tradicionales".</li>
+              <li>Por eso suele ser un mejor destino de migraci&oacute;n para cargas heredadas.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Capacidad</th><th>Azure SQL Database</th><th>Azure SQL Managed Instance</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Stored procedures y vistas</td>
+              <td>S&iacute;</td>
+              <td>S&iacute;</td>
+            </tr>
+            <tr>
+              <td>Consultas entre bases con sem&aacute;ntica de instancia</td>
+              <td>No de forma nativa como una instancia tradicional</td>
+              <td>S&iacute;</td>
+            </tr>
+            <tr>
+              <td>Cross-database transactions</td>
+              <td>No</td>
+              <td>S&iacute;, dentro de la instancia</td>
+            </tr>
+            <tr>
+              <td>SQL Server Agent</td>
+              <td>No; se usan alternativas como Elastic Jobs</td>
+              <td>S&iacute;</td>
+            </tr>
+            <tr>
+              <td>Linked Servers</td>
+              <td>No</td>
+              <td>S&iacute;, con limitaciones</td>
+            </tr>
+            <tr>
+              <td>Service Broker</td>
+              <td>No</td>
+              <td>S&iacute;</td>
+            </tr>
+            <tr>
+              <td>CLR</td>
+              <td>No</td>
+              <td>S&iacute;, con restricciones propias de PaaS; <strong>CLR</strong> permite ejecutar c&oacute;digo .NET dentro del motor SQL</td>
+            </tr>
+            <tr>
+              <td>Windows authentication y logins a nivel m&aacute;s cercano a instancia</td>
+              <td>Limitado respecto a SQL Server tradicional</td>
+              <td>Compatibilidad m&aacute;s amplia</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="warn">
+          <strong>Punto fino:</strong> si la necesidad es solo tener procedimientos almacenados, vistas, funciones o l&oacute;gica T-SQL dentro de una base, <strong>Azure SQL Database sigue siendo v&aacute;lido</strong>. El salto a <strong>Managed Instance</strong> normalmente se justifica cuando la aplicaci&oacute;n depende de <strong>caracter&iacute;sticas de instancia</strong>, no solo de objetos de base de datos.
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Ejemplos concretos para elegir Managed Instance</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Jobs internos del motor</h3>
+            <ul>
+              <li>Un sistema que ejecuta respaldos l&oacute;gicos, mantenimiento o procesos nocturnos con <strong>SQL Server Agent Jobs</strong>.</li>
+              <li>Si esa operaci&oacute;n ya vive dentro del motor y se quiere migrar con el menor redise&ntilde;o posible, Managed Instance encaja mejor.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Dependencias entre bases</h3>
+            <ul>
+              <li>Aplicaciones heredadas que hacen consultas entre varias bases con referencias cruzadas o transacciones compartidas.</li>
+              <li>Ese patr&oacute;n suele alinearse mejor con Managed Instance que con Azure SQL Database.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Migraci&oacute;n con pocos cambios</h3>
+            <ul>
+              <li>Cuando el objetivo no es redise&ntilde;ar la aplicaci&oacute;n, sino moverla a PaaS manteniendo alto grado de compatibilidad.</li>
+              <li>Managed Instance reduce fricci&oacute;n frente a una reingenier&iacute;a completa hacia una base m&aacute;s desacoplada.</li>
+            </ul>
+          </article>
+        </div>
 
         <h3 style="margin-top:18px; color:#0f766e;">Servidor l&oacute;gico vs. base de datos</h3>
         <p>En la oferta PaaS de Azure SQL conviene separar dos recursos que suelen confundirse al inicio: por un lado est&aacute; <strong>Azure SQL Server</strong>, que representa el <strong>servidor l&oacute;gico</strong>; por otro, <strong>Azure SQL Database</strong>, que es la <strong>base de datos</strong> en s&iacute;. No cumplen el mismo papel y no se administran igual.</p>
@@ -935,7 +1171,81 @@
           </tbody>
         </table>
 
-        <h3 style="margin-top:18px; color:#0f766e;">Seguridad e identidad</h3>
+        <h3 style="margin-top:18px; color:#0f766e;">Niveles de servicio en vCore: General Purpose, Business Critical e Hyperscale</h3>
+        <p>Cuando trabajas con el modelo <strong>vCore</strong> en Azure SQL Database, aparece otra decisi&oacute;n importante: el <strong>nivel de servicio</strong>. Este define el tipo de almacenamiento, el comportamiento de alta disponibilidad, la latencia esperada y el perfil de la carga. No debe confundirse con el modelo <strong>DTU</strong>, porque en DTU la clasificaci&oacute;n tradicional es <strong>Basic</strong>, <strong>Standard</strong> y <strong>Premium</strong>.</p>
+        <p>La diferencia arquitect&oacute;nica m&aacute;s importante entre <strong>General Purpose</strong> y <strong>Business Critical</strong> es esta: en <strong>General Purpose</strong>, el proceso de la base de datos y los archivos de datos/log viven en <strong>capas separadas</strong>; en <strong>Business Critical</strong>, el proceso y el almacenamiento activo est&aacute;n <strong>juntos en los nodos del cl&uacute;ster</strong>. En t&eacute;rminos simples: en General Purpose el motor "va a buscar" los datos a una capa de almacenamiento remota; en Business Critical el motor los tiene mucho m&aacute;s cerca, sobre discos SSD locales, y por eso responde mejor en cargas transaccionales intensivas.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>General Purpose</h3>
+            <ul>
+              <li>Es el nivel equilibrado para la mayor&iacute;a de las cargas de trabajo empresariales.</li>
+              <li>Usa una arquitectura con <strong>c&oacute;mputo por un lado</strong> y <strong>almacenamiento remoto por otro</strong>.</li>
+              <li>Eso significa que el proceso SQL corre en un nodo de c&oacute;mputo, pero los archivos de datos y log residen en una capa de almacenamiento separada.</li>
+              <li>Se apoya en almacenamiento remoto premium y busca equilibrio entre costo, capacidad y operaci&oacute;n.</li>
+              <li>Es la opci&oacute;n natural cuando no necesitas la latencia m&aacute;s baja ni una arquitectura extrema de escalado.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Business Critical</h3>
+            <ul>
+              <li>Est&aacute; orientado a cargas <strong>OLTP</strong> (<em>Online Transaction Processing</em>, procesamiento transaccional en l&iacute;nea) con transacciones intensivas y requisitos de baja latencia.</li>
+              <li>Aqu&iacute; el proceso SQL y el almacenamiento activo est&aacute;n <strong>en el mismo nodo</strong>, usando <strong>SSD local</strong>.</li>
+              <li>Eso reduce el tiempo que tarda el motor en leer y escribir, porque no depende tanto de una capa remota para el acceso principal al dato.</li>
+              <li>Usa varias r&eacute;plicas de alta disponibilidad y una r&eacute;plica legible para descarga de consultas de solo lectura.</li>
+              <li>Su principal valor no es solo soportar m&aacute;s datos, sino responder m&aacute;s r&aacute;pido y recuperarse mejor ante fallos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Hyperscale</h3>
+            <ul>
+              <li>Est&aacute; dise&ntilde;ado para cargas que requieren <strong>crecimiento muy alto</strong> de almacenamiento y escalado flexible.</li>
+              <li>Su arquitectura desacopla c&oacute;mputo y almacenamiento para escalar de forma independiente.</li>
+              <li>Permite vol&uacute;menes muy grandes de datos y escalado de lectura con varias r&eacute;plicas seg&uacute;n la necesidad.</li>
+              <li>No compite con Business Critical por el mismo enfoque: Hyperscale prioriza elasticidad y tama&ntilde;o; Business Critical prioriza latencia e <strong>I/O</strong> (entrada/salida de datos a almacenamiento).</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Nivel</th><th>Enfoque principal</th><th>Arquitectura / almacenamiento</th><th>Punto fino</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>General Purpose</td>
+              <td>Balance entre costo y capacidad para la mayor&iacute;a de workloads</td>
+              <td>El motor corre en nodos de c&oacute;mputo y los archivos viven en almacenamiento remoto premium</td>
+              <td>Es el perfil est&aacute;ndar; no busca la latencia m&aacute;s baja del portafolio.</td>
+            </tr>
+            <tr>
+              <td>Business Critical</td>
+              <td>Baja latencia, alta I/O y recuperaci&oacute;n r&aacute;pida</td>
+              <td>Proceso y datos activos juntos en nodos con SSD local, dentro de un cl&uacute;ster con varias r&eacute;plicas</td>
+              <td>Microsoft lo orienta a escenarios con respuesta de almacenamiento de alrededor de 1-2 ms y lectura descargada a r&eacute;plica secundaria.</td>
+            </tr>
+            <tr>
+              <td>Hyperscale</td>
+              <td>Crecimiento extremo, escalado flexible y lectura distribuida</td>
+              <td>Almacenamiento desacoplado con cach&eacute; SSD local por r&eacute;plica de proceso</td>
+              <td>Puede crecer hasta vol&uacute;menes muy altos y no est&aacute; limitado por el patr&oacute;n cl&aacute;sico de un solo nodo de datos.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <strong>Lectura r&aacute;pida:</strong> si la prioridad es <strong>costo equilibrado</strong>, normalmente miras <strong>General Purpose</strong>. Si la prioridad es <strong>latencia y rendimiento transaccional</strong>, miras <strong>Business Critical</strong>. Si la prioridad es <strong>escalar almacenamiento y c&oacute;mputo a gran volumen</strong>, miras <strong>Hyperscale</strong>.
+        </div>
+
+        <div class="note">
+          <strong>Forma simple de recordarlo:</strong> en <strong>General Purpose</strong> el motor y los archivos est&aacute;n "separados" y se comunican entre capas; en <strong>Business Critical</strong> el motor y el almacenamiento principal est&aacute;n "pegados" en el mismo nodo de trabajo. Esa cercan&iacute;a es la que ayuda a bajar la latencia y mejorar la respuesta transaccional.
+        </div>
+
+        <div class="warn">
+          <strong>Punto fino del portal:</strong> cuando en Azure SQL Database ves estas opciones de <strong>General Purpose</strong>, <strong>Business Critical</strong> e <strong>Hyperscale</strong>, normalmente est&aacute;s en el modelo <strong>vCore</strong>. En el modelo <strong>DTU</strong>, la l&oacute;gica de selecci&oacute;n usa otras familias de servicio y no esta misma clasificaci&oacute;n.
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Seguridad, identidad y protecci&oacute;n del dato</h3>
         <div class="grid-3">
           <article class="card">
             <h3>Red y exposici&oacute;n</h3>
@@ -963,6 +1273,157 @@
           </article>
         </div>
 
+        <h3 style="margin-top:18px; color:#0f766e;">Protecci&oacute;n del dato: en reposo, en tr&aacute;nsito y en uso</h3>
+        <p>Proteger una base de datos no solo significa controlar qui&eacute;n entra. Tambi&eacute;n implica asegurar que el dato permanezca protegido <strong>si alguien roba un disco</strong>, <strong>si intercepta una comunicaci&oacute;n</strong> o incluso <strong>si un administrador tiene permisos amplios pero no deber&iacute;a ver datos sensibles en claro</strong>.</p>
+        <p>Adem&aacute;s, el dise&ntilde;o de protecci&oacute;n cambia seg&uacute;n la industria. En sectores como <strong>banca</strong>, <strong>salud</strong> o gobierno, no basta con cifrar la base: tambi&eacute;n hay que definir <strong>qu&eacute; perfil puede ver qu&eacute; dato</strong>, con qu&eacute; nivel de detalle y bajo qu&eacute; contexto operativo.</p>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Encriptaci&oacute;n en reposo</h3>
+            <ul>
+              <li><strong>Transparent Data Encryption (TDE):</strong> cifra los archivos de datos, logs y respaldos en reposo.</li>
+              <li>La idea pr&aacute;ctica es que si alguien accediera al medio f&iacute;sico o al almacenamiento subyacente, no podr&iacute;a leer la informaci&oacute;n en claro.</li>
+              <li>Es la respuesta cl&aacute;sica al escenario extremo de "robarse el disco".</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Encriptaci&oacute;n en tr&aacute;nsito</h3>
+            <ul>
+              <li>La comunicaci&oacute;n entre cliente y base debe viajar cifrada, normalmente mediante <strong>TLS</strong>.</li>
+              <li>Esto reduce el riesgo de lectura o manipulaci&oacute;n del tr&aacute;fico en la red.</li>
+              <li>En arquitectura enterprise no basta con cerrar firewall; tambi&eacute;n debe cuidarse el canal.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Dato sensible frente a humanos</h3>
+            <ul>
+              <li><strong>Always Encrypted:</strong> protege columnas sensibles para que ciertos datos ni siquiera sean visibles en claro para el motor o para administradores no autorizados.</li>
+              <li><strong>Dynamic Data Masking:</strong> oculta parcialmente el dato en consultas para ciertos perfiles, pero <strong>no sustituye</strong> la encriptaci&oacute;n.</li>
+              <li>La diferencia clave es que enmascarar no equivale a cifrar.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Gobierno del dato y segregaci&oacute;n de funciones</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Dise&ntilde;o por perfil</h3>
+            <ul>
+              <li>No solo se dise&ntilde;an tablas, relaciones e &iacute;ndices; tambi&eacute;n se dise&ntilde;a <strong>qui&eacute;n puede consultar cada atributo</strong>.</li>
+              <li>Un mismo registro puede contener datos operativos, sensibles y regulatorios con reglas de acceso distintas.</li>
+              <li>La pregunta correcta no es solo "qui&eacute;n entra a la base", sino "qu&eacute; columnas y qu&eacute; filas deber&iacute;a ver cada rol".</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Ejemplo en salud</h3>
+            <ul>
+              <li>Un m&eacute;dico s&iacute; puede necesitar ver datos cl&iacute;nicos en claro para atender a un paciente.</li>
+              <li>Eso no significa que <strong>todos los m&eacute;dicos</strong> deban ver <strong>todos los pacientes</strong> sin restricci&oacute;n.</li>
+              <li>Ah&iacute; entran controles como dise&ntilde;o por perfiles, filtros por contexto, <strong>Row-Level Security</strong> y reglas de negocio a nivel aplicaci&oacute;n y datos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Rol del administrador</h3>
+            <ul>
+              <li>El administrador de base de datos deber&iacute;a enfocarse en estructura, rendimiento, respaldos, usuarios y operaci&oacute;n.</li>
+              <li>En un modelo maduro, <strong>no deber&iacute;a ser consumidor natural del contenido sensible</strong> almacenado en las tablas.</li>
+              <li>Por eso la protecci&oacute;n del dato no es solo t&eacute;cnica; tambi&eacute;n es un tema de gobierno y separaci&oacute;n de responsabilidades.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Mecanismo</th><th>Qu&eacute; protege</th><th>Punto fino</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>TDE</td>
+              <td>Archivos de base, logs y backups en reposo.</td>
+              <td>Protege el almacenamiento; no significa que cualquier usuario conectado deje de ver datos seg&uacute;n sus permisos.</td>
+            </tr>
+            <tr>
+              <td>TLS en conexi&oacute;n</td>
+              <td>La comunicaci&oacute;n entre cliente y servidor.</td>
+              <td>Protege el tr&aacute;fico en tr&aacute;nsito, no los datos ya persistidos.</td>
+            </tr>
+            <tr>
+              <td>Always Encrypted</td>
+              <td>Columnas sensibles como identificadores, datos financieros o <strong>PII</strong> (<em>Personally Identifiable Information</em>, informaci&oacute;n personal identificable).</td>
+              <td>Sirve cuando ni el DBA deber&iacute;a ver ciertos datos en claro; agrega complejidad en dise&ntilde;o y uso de consultas.</td>
+            </tr>
+            <tr>
+              <td>Dynamic Data Masking</td>
+              <td>Presentaci&oacute;n parcial del dato para algunos usuarios.</td>
+              <td>No es un mecanismo criptogr&aacute;fico; es una capa de exposici&oacute;n controlada.</td>
+            </tr>
+            <tr>
+              <td>Row-Level Security y dise&ntilde;o por roles</td>
+              <td>Restringe qu&eacute; filas o segmentos de informaci&oacute;n ve cada perfil.</td>
+              <td>La protecci&oacute;n del dato tambi&eacute;n depende del modelo de autorizaci&oacute;n y de c&oacute;mo se dise&ntilde;an los perfiles de negocio.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="warn">
+          <strong>Idea de certificaci&oacute;n:</strong> cuando la pregunta es "si se roban el almacenamiento y no deben poder leer la base", la pista suele apuntar a <strong>encriptaci&oacute;n en reposo</strong>. Cuando la pregunta es "ni el administrador de base debe ver ciertos valores sensibles", normalmente la respuesta va hacia <strong>protecci&oacute;n de columnas</strong>, no solo a firewall o TLS.
+        </div>
+
+        <div class="note">
+          <strong>Lectura de arquitectura:</strong> en industrias reguladas, la seguridad del dato no se resuelve con un solo mecanismo. Normalmente combina <strong>cifrado</strong>, <strong>enmascaramiento</strong>, <strong>restricci&oacute;n por filas o perfiles</strong> y una separaci&oacute;n clara entre quien administra la plataforma y quien est&aacute; autorizado a consumir la informaci&oacute;n.
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">SQL, Data Lake y anal&iacute;tica: no cumplen el mismo papel</h3>
+        <p>Otra confusi&oacute;n frecuente es pensar que una base SQL y un Data Lake compiten por el mismo problema. En realidad responden a necesidades distintas.</p>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Azure SQL Database</h3>
+            <ul>
+              <li>Est&aacute; orientado a datos <strong>estructurados</strong> y operaciones transaccionales.</li>
+              <li>Es ideal para aplicaciones que insertan, actualizan, validan y consultan datos del negocio en tiempo casi real.</li>
+              <li>Su foco principal es integridad, consistencia y soporte a la operaci&oacute;n de la aplicaci&oacute;n.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Data Lake</h3>
+            <ul>
+              <li>Se usa para almacenar grandes vol&uacute;menes de datos crudos, hist&oacute;ricos o semiestructurados.</li>
+              <li>Es com&uacute;n en escenarios de anal&iacute;tica, ciencia de datos, machine learning o integraci&oacute;n masiva.</li>
+              <li>No reemplaza una base transaccional; la complementa.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Anal&iacute;tica y Big Data</h3>
+            <ul>
+              <li>Cuando el objetivo es explotar datos a gran escala, cruzar fuentes o procesar hist&oacute;ricos, suelen intervenir servicios anal&iacute;ticos encima del lake.</li>
+              <li>La aplicaci&oacute;n suele escribir en SQL; la anal&iacute;tica suele consolidar y procesar fuera del patr&oacute;n OLTP.</li>
+              <li>Es normal que SQL alimente procesos hacia un Lake para reporting, BI o modelos avanzados.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Recurso</th><th>Objetivo principal</th><th>Patr&oacute;n t&iacute;pico</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Azure SQL Database</td>
+              <td>Operaci&oacute;n transaccional del negocio</td>
+              <td>Aplicaciones, APIs, ERP, CRM, backends OLTP</td>
+            </tr>
+            <tr>
+              <td>Data Lake</td>
+              <td>Acumulaci&oacute;n masiva y flexible de datos</td>
+              <td>Hist&oacute;ricos, ingesta de m&uacute;ltiples fuentes, data engineering</td>
+            </tr>
+            <tr>
+              <td>Plataformas anal&iacute;ticas / Big Data</td>
+              <td>Procesamiento, transformaci&oacute;n y explotaci&oacute;n avanzada</td>
+              <td>BI, agregaciones pesadas, modelos anal&iacute;ticos y machine learning</td>
+            </tr>
+          </tbody>
+        </table>
+
         <h3 style="margin-top:18px; color:#0f766e;">Alta disponibilidad y r&eacute;plicas</h3>
         <div class="grid-3">
           <article class="card">
@@ -983,15 +1444,365 @@
           <article class="card">
             <h3>Failover Groups</h3>
             <ul>
-              <li>Automatizan la conmutaci&oacute;n entre regi&oacute;n primaria y secundaria.</li>
-              <li>Reducen el impacto operativo porque abstraen el cambio en la cadena de conexi&oacute;n.</li>
-              <li>Son especialmente valiosos en aplicaciones cr&iacute;ticas con RTO exigente.</li>
+              <li>Automatizan la conmutaci&oacute;n entre una base principal y su secundaria en otra regi&oacute;n.</li>
+              <li>La ventaja clave es que la aplicaci&oacute;n se conecta a un <strong>endpoint estable</strong>, no directamente al nombre fijo de una sola base o servidor.</li>
+              <li>Si la regi&oacute;n primaria falla, Azure redirige el punto de conexi&oacute;n hacia la secundaria y evita que el equipo tenga que cambiar manualmente la cadena de conexi&oacute;n en plena contingencia.</li>
             </ul>
           </article>
         </div>
 
         <div class="note">
-          <strong>S&iacute;ntesis:</strong> en Azure SQL la decisi&oacute;n correcta combina responsabilidad operativa, patr&oacute;n de carga, identidad y estrategia de continuidad. Elegir entre VM y PaaS no es solo una cuesti&oacute;n de tecnolog&iacute;a, sino de qu&eacute; parte de la administraci&oacute;n quiere seguir cargando el equipo.
+          <strong>Forma simple de entenderlo:</strong> una <strong>geo-r&eacute;plica</strong> te da una copia en otra regi&oacute;n. Un <strong>Failover Group</strong> agrega la <strong>l&oacute;gica de conmutaci&oacute;n y el nombre de conexi&oacute;n estable</strong> para que la aplicaci&oacute;n no tenga que saber en qu&eacute; regi&oacute;n est&aacute; activa la base en ese momento.
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Concepto</th><th>Qu&eacute; hace</th><th>Valor pr&aacute;ctico</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Geo-replicaci&oacute;n</td>
+              <td>Mantiene una copia sincronizada de la base en otra regi&oacute;n.</td>
+              <td>Sirve para disaster recovery y, en algunos dise&ntilde;os, para descargar lectura.</td>
+            </tr>
+            <tr>
+              <td>Failover Group</td>
+              <td>Orquesta el cambio entre primaria y secundaria y expone un endpoint estable.</td>
+              <td>Evita editar manualmente cadenas de conexi&oacute;n cuando ocurre una ca&iacute;da regional.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Ejemplo pr&aacute;ctico: e-commerce</h3>
+            <ul>
+              <li>La base principal est&aacute; en <strong>East US</strong> y la secundaria en <strong>Central US</strong>.</li>
+              <li>La aplicaci&oacute;n web no apunta a `servidor-east.database.windows.net`, sino al endpoint del <strong>Failover Group</strong>.</li>
+              <li>Si East US tiene una ca&iacute;da, Azure promueve la secundaria y la aplicaci&oacute;n sigue usando el mismo nombre de conexi&oacute;n.</li>
+              <li>El resultado es menor tiempo de interrupci&oacute;n y menos trabajo manual del equipo en una crisis.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Ejemplo pr&aacute;ctico: banca o salud</h3>
+            <ul>
+              <li>Un sistema transaccional no puede depender de que alguien edite configuraciones a mano durante un incidente.</li>
+              <li>Con Failover Group, el plan de continuidad ya deja preparada la ruta de cambio hacia la regi&oacute;n secundaria.</li>
+              <li>Eso no elimina la necesidad de validar consistencia, pruebas de contingencia y tiempos de recuperaci&oacute;n, pero s&iacute; reduce mucho la fricci&oacute;n operativa.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Escalabilidad avanzada y arquitecturas distribuidas</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Lectura vs. escritura</h3>
+            <ul>
+              <li>No siempre se balancean igual.</li>
+              <li>En muchas arquitecturas la <strong>primaria</strong> concentra escrituras y consistencia, mientras que las <strong>secundarias</strong> ayudan a absorber lecturas.</li>
+              <li>Eso mejora escalabilidad, pero tambi&eacute;n obliga a entender latencia y consistencia entre nodos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Fragmentaci&oacute;n o sharding</h3>
+            <ul>
+              <li>Cuando una sola base deja de ser suficiente, una estrategia es dividir los datos en varias bases m&aacute;s peque&ntilde;as.</li>
+              <li>La divisi&oacute;n puede hacerse por cliente, regi&oacute;n, rango o criterio de negocio.</li>
+              <li>Esto incrementa la complejidad porque el dato deja de estar centralizado en un solo motor.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Sincronizaci&oacute;n y supervisi&oacute;n</h3>
+            <ul>
+              <li>En esquemas distribuidos suelen aparecer servicios intermedios de sincronizaci&oacute;n, integraci&oacute;n o supervisi&oacute;n.</li>
+              <li>Ya no basta con dise&ntilde;ar tablas; tambi&eacute;n hay que dise&ntilde;ar flujos de consistencia, reconciliaci&oacute;n y monitoreo.</li>
+              <li>Mientras m&aacute;s extrema es la distribuci&oacute;n, m&aacute;s importante se vuelve la observabilidad del dato.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Lectura arquitect&oacute;nica:</strong> las r&eacute;plicas ayudan mucho para lectura, continuidad y disaster recovery. Cuando el reto real es la escritura distribuida o el volumen extremo, la conversaci&oacute;n deja de ser solo "poner m&aacute;s r&eacute;plicas" y pasa a ser de <strong>particionado, sincronizaci&oacute;n y gobierno del dato</strong>.
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">SQL Data Sync for Azure</h3>
+        <p><strong>SQL Data Sync</strong> es un servicio de Azure SQL Database pensado para sincronizar los datos seleccionados entre varias bases, incluso combinando <strong>Azure SQL Database</strong> y <strong>SQL Server on-premises</strong>. Su modelo no es de cl&uacute;ster ni de alta disponibilidad; es un modelo de <strong>sincronizaci&oacute;n de datos</strong>.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>C&oacute;mo funciona</h3>
+            <ul>
+              <li>Trabaja con un esquema de <strong>hub and spoke</strong>.</li>
+              <li>La base <strong>hub</strong> debe ser Azure SQL Database.</li>
+              <li>Los miembros pueden ser otras Azure SQL Database o instancias de SQL Server.</li>
+              <li>La sincronizaci&oacute;n ocurre entre el hub y cada miembro, no entre todos los nodos de forma directa.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Casos donde encaja</h3>
+            <ul>
+              <li>Sincronizar subconjuntos de tablas entre una base en Azure y sucursales o sedes que a&uacute;n tienen SQL Server local.</li>
+              <li>Mantener datos operativos compartidos entre varias bases cuando no se busca un cl&uacute;ster transaccional estricto.</li>
+              <li>Escenarios legacy donde el objetivo es propagar datos, no montar una estrategia completa de HA/DR.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>L&iacute;mites importantes</h3>
+            <ul>
+              <li>No ofrece <strong>consistencia transaccional estricta</strong>; su modelo es de <strong>consistencia eventual</strong>.</li>
+              <li>Usa <strong>triggers</strong> y tablas auxiliares para detectar cambios, lo que puede impactar rendimiento.</li>
+              <li>No es una herramienta de backup, restore, ni una soluci&oacute;n de disaster recovery.</li>
+              <li>No soporta Azure SQL Managed Instance.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>&iquest;Qu&eacute; significa hub and spoke?</strong> Es un patr&oacute;n donde existe un nodo central llamado <strong>hub</strong> y varios nodos perif&eacute;ricos llamados <strong>spokes</strong>. En SQL Data Sync, la base <strong>hub</strong> es el punto central de sincronizaci&oacute;n y cada base miembro se conecta con ella. La comunicaci&oacute;n ocurre entre <strong>hub &harr; member</strong>, no entre todos los miembros directamente.
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Ejemplo simple</h3>
+            <ul>
+              <li>Una base central en Azure se define como <strong>hub</strong>.</li>
+              <li>Tres sucursales con sus propias bases se definen como <strong>spokes</strong>.</li>
+              <li>La sucursal A sincroniza con el hub.</li>
+              <li>La sucursal B sincroniza con el hub.</li>
+              <li>La sucursal C sincroniza con el hub.</li>
+              <li>La sucursal A no sincroniza directamente con B o C.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Por qu&eacute; se usa</h3>
+            <ul>
+              <li>Centraliza el control y la coordinaci&oacute;n del intercambio de datos.</li>
+              <li>Facilita reglas de sincronizaci&oacute;n y resoluci&oacute;n de conflictos.</li>
+              <li>Evita una malla completa de conexiones entre todas las bases.</li>
+              <li>Hace m&aacute;s simple la administraci&oacute;n cuando hay varias sedes o sistemas sat&eacute;lite.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Aspecto</th><th>SQL Data Sync</th><th>Punto fino</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Topolog&iacute;a</td>
+              <td>Hub and spoke</td>
+              <td>El hub siempre debe ser Azure SQL Database.</td>
+            </tr>
+            <tr>
+              <td>Direcci&oacute;n</td>
+              <td>Bidireccional o unidireccional</td>
+              <td>Los conflictos pueden resolverse con la l&oacute;gica "hub wins" o "member wins".</td>
+            </tr>
+            <tr>
+              <td>Consistencia</td>
+              <td>Eventual</td>
+              <td>No debe confundirse con replicaci&oacute;n transaccional o alta disponibilidad.</td>
+            </tr>
+            <tr>
+              <td>Seguridad</td>
+              <td>Requiere autenticaci&oacute;n SQL</td>
+              <td>No soporta Microsoft Entra ID para las conexiones del servicio.</td>
+            </tr>
+            <tr>
+              <td>Vigencia</td>
+              <td>Servicio en retiro</td>
+              <td>Microsoft indica retiro oficial el <strong>30 de septiembre de 2027</strong>.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="warn">
+          <strong>Advertencia actual:</strong> Microsoft public&oacute; que <strong>SQL Data Sync se retirar&aacute; el 30 de septiembre de 2027</strong>. Por eso, hoy conviene explicarlo como un servicio existente en escenarios legacy, pero no como la apuesta estrat&eacute;gica de largo plazo para nuevas arquitecturas.
+        </div>
+
+        <div class="note">
+          <strong>Transici&oacute;n habitual:</strong> cuando un equipo empieza a buscar <strong>alternativas a SQL Data Sync</strong>, es muy com&uacute;n que termine evaluando <strong>Azure Data Factory</strong>. La raz&oacute;n es que ADF permite mover y refrescar datos entre sistemas, pero con una l&oacute;gica distinta: <strong>pipelines programados y procesos de integraci&oacute;n</strong>, no sincronizaci&oacute;n bidireccional administrada entre bases como servicio dedicado.
+        </div>
+
+        <div class="note">
+          <strong>Forma simple de recordarlo:</strong> si el problema es "quiero que ciertos datos se propaguen entre varias bases", SQL Data Sync entra en la conversaci&oacute;n. Si el problema es "quiero continuidad operativa, failover autom&aacute;tico o consistencia transaccional fuerte", entonces hay que mirar otras estrategias como r&eacute;plicas, failover groups o mecanismos distintos de replicaci&oacute;n.
+        </div>
+
+        <div class="note">
+          <strong>S&iacute;ntesis:</strong> en Azure SQL la decisi&oacute;n correcta combina responsabilidad operativa, patr&oacute;n de carga, identidad, protecci&oacute;n del dato y estrategia de continuidad. Elegir entre VM y PaaS no es solo una cuesti&oacute;n de tecnolog&iacute;a, sino de qu&eacute; parte de la administraci&oacute;n quiere seguir cargando el equipo y qu&eacute; tan lejos necesita llevar la seguridad y la escalabilidad de los datos.
+        </div>
+      </section>
+
+      <section class="section" id="s7.3">
+        <h2>7.3 Azure Data Factory</h2>
+        <p><strong>Azure Data Factory (ADF)</strong> es un servicio PaaS de <strong>integraci&oacute;n y orquestaci&oacute;n de datos</strong>. No es una base de datos, no es un Data Lake y no es una herramienta de alta disponibilidad transaccional. Su funci&oacute;n principal es <strong>mover, transformar y coordinar datos</strong> entre distintos or&iacute;genes y destinos, tanto en Azure como on-premises.</p>
+        <p>Por eso, ADF suele aparecer cuando alguien explora <strong>alternativas a Azure SQL Data Sync</strong>. No porque lo reemplace de forma id&eacute;ntica, sino porque permite construir flujos de copia e integraci&oacute;n que cubren parte de esa necesidad desde un enfoque m&aacute;s amplio de <strong>ETL / ELT</strong> (extraer, transformar y cargar / extraer, cargar y transformar) y orquestaci&oacute;n.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Qu&eacute; s&iacute; es</h3>
+            <ul>
+              <li>Un orquestador de pipelines de datos.</li>
+              <li>Una capa para copiar, transformar y programar flujos de integraci&oacute;n.</li>
+              <li>Un puente entre SQL, Storage, Data Lake, Synapse, Databricks, APIs y or&iacute;genes on-premises.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Qu&eacute; no es</h3>
+            <ul>
+              <li>No almacena los datos del negocio como lo har&iacute;a una base.</li>
+              <li>No sustituye Azure SQL, Cosmos DB o Data Lake.</li>
+              <li>No resuelve por s&iacute; solo consistencia transaccional ni continuidad operativa de una base de datos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Idea clave</h3>
+            <ul>
+              <li>Si Azure SQL es donde viven los datos transaccionales, ADF es una opci&oacute;n para <strong>moverlos o procesarlos hacia otro destino</strong>.</li>
+              <li>Su enfoque es <strong>ETL / ELT</strong>, integraci&oacute;n y automatizaci&oacute;n de cargas.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Componentes principales</h3>
+        <div class="grid-4">
+          <article class="card">
+            <h3>Pipeline</h3>
+            <ul>
+              <li>Es el flujo l&oacute;gico completo.</li>
+              <li>Agrupa actividades, dependencias, par&aacute;metros y triggers.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Activity</h3>
+            <ul>
+              <li>Es la acci&oacute;n concreta: copiar, ejecutar un notebook, correr un stored procedure o validar datos.</li>
+              <li>La m&aacute;s conocida es <strong>Copy Activity</strong>.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Linked Service / Dataset</h3>
+            <ul>
+              <li><strong>Linked Service:</strong> define la conexi&oacute;n al origen o destino.</li>
+              <li><strong>Dataset:</strong> representa el conjunto de datos espec&iacute;fico que usar&aacute; la actividad.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Integration Runtime</h3>
+            <ul>
+              <li>Es la capa de ejecuci&oacute;n que mueve o despacha el trabajo.</li>
+              <li>Puede ser <strong>Azure IR</strong>, <strong>Self-hosted IR</strong> o <strong>Azure-SSIS IR</strong>.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Cu&aacute;ndo encaja Azure Data Factory</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Ingesta y copias</h3>
+            <ul>
+              <li>Copiar datos desde SQL Server on-premises hacia Azure SQL, Blob Storage o Data Lake.</li>
+              <li>Centralizar datos dispersos en varias fuentes Azure u on-premises.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Orquestaci&oacute;n</h3>
+            <ul>
+              <li>Programar pipelines por horario, eventos o dependencias.</li>
+              <li>Encadenar pasos de extracci&oacute;n, transformaci&oacute;n, carga y notificaci&oacute;n.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Anal&iacute;tica y modernizaci&oacute;n</h3>
+            <ul>
+              <li>Llevar datos de sistemas transaccionales hacia Data Lake o plataformas anal&iacute;ticas.</li>
+              <li>Alimentar procesos en Synapse, Databricks o modelos de BI.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Escenario</th><th>Rol de ADF</th><th>Ejemplo pr&aacute;ctico</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Migraci&oacute;n de datos</td>
+              <td>Mueve informaci&oacute;n entre or&iacute;genes y destinos</td>
+              <td>Copiar tablas desde SQL Server on-premises hacia Azure SQL Database.</td>
+            </tr>
+            <tr>
+              <td>Data Lake / BI</td>
+              <td>Ingiere y publica datos hacia almacenamiento anal&iacute;tico</td>
+              <td>Extraer datos diarios de ERP y escribirlos en ADLS Gen2 en formato parquet.</td>
+            </tr>
+            <tr>
+              <td>Orquestaci&oacute;n empresarial</td>
+              <td>Coordina procesos entre m&uacute;ltiples servicios</td>
+              <td>Correr una copia, luego un notebook en Databricks y al final un procedimiento de publicaci&oacute;n.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Integration Runtime: el punto operativo m&aacute;s importante</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Azure IR</h3>
+            <ul>
+              <li>Se usa cuando el movimiento y la ejecuci&oacute;n pueden resolverse desde Azure.</li>
+              <li>Es el caso m&aacute;s com&uacute;n para fuentes y destinos cloud.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Self-hosted IR</h3>
+            <ul>
+              <li>Se instala en una m&aacute;quina propia o VM para llegar a redes privadas u on-premises.</li>
+              <li>Es clave cuando el origen o destino no es p&uacute;blicamente accesible.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Azure-SSIS IR</h3>
+            <ul>
+              <li>Sirve para ejecutar paquetes <strong>SSIS</strong> (<em>SQL Server Integration Services</em>) en modo administrado.</li>
+              <li>Es &uacute;til en migraciones donde ya existe una inversi&oacute;n fuerte en Integration Services.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Relaci&oacute;n con Azure SQL, Data Lake y sincronizaci&oacute;n</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>ADF vs Azure SQL</h3>
+            <ul>
+              <li>Azure SQL almacena y sirve datos transaccionales.</li>
+              <li>ADF mueve, transforma u orquesta lo que ocurre alrededor de esos datos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>ADF vs Data Lake</h3>
+            <ul>
+              <li>Data Lake es el repositorio de datos masivos.</li>
+              <li>ADF puede ser el mecanismo que carga o refresca ese lake.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>ADF vs SQL Data Sync</h3>
+            <ul>
+              <li>ADF est&aacute; orientado a pipelines y procesos de integraci&oacute;n.</li>
+              <li>SQL Data Sync est&aacute; orientado a sincronizaci&oacute;n de datos entre bases, con consistencia eventual.</li>
+              <li>ADF suele aparecer como alternativa moderna cuando el objetivo real es refrescar, copiar o consolidar datos entre sistemas.</li>
+              <li>No resuelven exactamente el mismo problema.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="warn">
+          <strong>Punto fino:</strong> usar ADF para copiar datos no significa que tengas sincronizaci&oacute;n en tiempo real ni replicaci&oacute;n transaccional. Normalmente se trabaja con ejecuciones programadas, lotes o flujos orquestados, no con una base secundaria activa como en escenarios de alta disponibilidad.
+        </div>
+
+        <div class="note">
+          <strong>S&iacute;ntesis:</strong> Azure Data Factory es la pieza que conecta el mundo transaccional con el mundo anal&iacute;tico y de integraci&oacute;n. No compite con una base de datos; la complementa al encargarse del movimiento, transformaci&oacute;n y orquestaci&oacute;n de datos entre sistemas.
         </div>
       </section>
 
@@ -1054,7 +1865,7 @@
           <article class="card">
             <h3>Bibliotecas y credenciales</h3>
             <ul>
-              <li>Las SDK modernas suelen ofrecer un mecanismo por defecto como <strong>DefaultAzureCredential</strong>.</li>
+              <li>Las <strong>SDK</strong> (bibliotecas oficiales de desarrollo) modernas suelen ofrecer un mecanismo por defecto como <strong>DefaultAzureCredential</strong>.</li>
               <li>En desarrollo es &uacute;til porque intenta varias rutas de autenticaci&oacute;n: variables de entorno, sesi&oacute;n del usuario, herramientas locales y managed identity.</li>
               <li>En producci&oacute;n no siempre es la mejor pr&aacute;ctica dejar la selecci&oacute;n al mecanismo por defecto si existen varias opciones habilitadas.</li>
             </ul>
@@ -1113,10 +1924,168 @@
 
       <section class="section" id="s9">
         <h2>9. Key Vault</h2>
-        <ul>
-          <li>Almacenamiento seguro de claves, secretos y certificados.</li>
-          <li>Integraci&oacute;n con identidad para gesti&oacute;n segura de credenciales.</li>
-        </ul>
+        <p><strong>Azure Key Vault</strong> es el servicio dise&ntilde;ado para almacenar de forma segura <strong>secretos, certificados y claves criptogr&aacute;ficas</strong>. En la pr&aacute;ctica se usa para guardar elementos sensibles como contrase&ntilde;as, API keys, connection strings, certificados TLS o llaves de cifrado, de manera que no queden embebidos en c&oacute;digo, archivos de configuraci&oacute;n o variables expuestas.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Qu&eacute; guarda</h3>
+            <ul>
+              <li><strong>Secrets:</strong> contrase&ntilde;as, tokens, API keys, cadenas de conexi&oacute;n.</li>
+              <li><strong>Certificates:</strong> certificados y su ciclo de vida.</li>
+              <li><strong>Keys:</strong> llaves criptogr&aacute;ficas para escenarios de cifrado, firma o integraci&oacute;n con otros servicios.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Qu&eacute; resuelve</h3>
+            <ul>
+              <li>Evita que las credenciales vivan dentro del c&oacute;digo fuente.</li>
+              <li>Centraliza control, auditor&iacute;a y caducidad de valores sensibles.</li>
+              <li>Permite que los servicios consuman secretos mediante identidad, no mediante usuarios embebidos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Idea clave</h3>
+            <ul>
+              <li>Guardar un secreto en Key Vault no resuelve por s&iacute; solo la seguridad.</li>
+              <li>Lo importante es <strong>qui&eacute;n puede administrarlo</strong> y <strong>qui&eacute;n puede leer su valor</strong>.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Separaci&oacute;n de permisos: control plane vs data plane</h3>
+        <p>En Key Vault hay una separaci&oacute;n muy importante entre administrar el recurso y consumir el contenido. Esa diferencia suele ser donde aparecen los errores de dise&ntilde;o.</p>
+
+        <table>
+          <thead>
+            <tr><th>Capa</th><th>Qu&eacute; permite</th><th>Ejemplo de rol o acci&oacute;n</th><th>Punto fino</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Control plane</td>
+              <td>Crear el vault, cambiar configuraci&oacute;n, redes, tags y propiedades del recurso</td>
+              <td>Administrar el recurso Azure Key Vault</td>
+              <td>Administrar el recurso no implica poder leer el valor de los secretos.</td>
+            </tr>
+            <tr>
+              <td>Data plane</td>
+              <td>Leer, crear, actualizar o borrar secretos, claves y certificados</td>
+              <td>Roles como <strong>Key Vault Secrets User</strong> o <strong>Key Vault Secrets Officer</strong></td>
+              <td>Aqu&iacute; se define qui&eacute;n realmente puede consumir o manipular el contenido sensible.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Administrador del recurso</h3>
+            <ul>
+              <li>Puede configurar la b&oacute;veda, sus redes, diagn&oacute;sticos o su modelo de acceso.</li>
+              <li>No deber&iacute;a asumir por defecto que puede leer todos los secretos.</li>
+              <li>En un dise&ntilde;o sano, administrar la plataforma y consumir secretos son funciones distintas.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Administrador de secretos</h3>
+            <ul>
+              <li>Puede crear, modificar o eliminar secretos.</li>
+              <li>Es distinto de quien administra el recurso completo.</li>
+              <li>En entornos gobernados conviene separar esta funci&oacute;n del due&ntilde;o de la aplicaci&oacute;n y del operador de infraestructura.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Consumidor del secreto</h3>
+            <ul>
+              <li>Es el servicio o aplicaci&oacute;n que necesita leer el valor para operar.</li>
+              <li>Lo recomendado en Azure es que ese consumo se haga con <strong>Managed Identity</strong> y permisos de lectura m&iacute;nimos.</li>
+              <li>La identidad no necesita administrar secretos; solo leer los que realmente usa.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Managed Identity y consumo seguro</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Patr&oacute;n recomendado</h3>
+            <ul>
+              <li>Un servicio como App Service, Functions o Container Apps obtiene una <strong>Managed Identity</strong>.</li>
+              <li>Esa identidad recibe permisos de consumo sobre el vault.</li>
+              <li>La aplicaci&oacute;n lee el secreto sin guardar credenciales en su c&oacute;digo.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Permisos m&iacute;nimos</h3>
+            <ul>
+              <li>Si la aplicaci&oacute;n solo debe leer secretos, no necesita permisos de escritura o borrado.</li>
+              <li>Un rol como <strong>Key Vault Secrets User</strong> suele ser suficiente para consumo.</li>
+              <li>Esto ayuda a respetar principio de menor privilegio.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Error com&uacute;n</h3>
+            <ul>
+              <li>Dar permisos amplios al recurso o al equipo sin distinguir consumidor, operador y administrador.</li>
+              <li>El resultado es que demasiadas identidades terminan con acceso a datos sensibles.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Caducidad, rotaci&oacute;n y versionamiento</h3>
+        <p>En una organizaci&oacute;n gobernada, los secretos no deber&iacute;an vivir indefinidamente. Key Vault soporta <strong>expiraci&oacute;n</strong>, <strong>versionado</strong> y, seg&uacute;n el tipo de objeto y la integraci&oacute;n, estrategias de <strong>rotaci&oacute;n</strong>.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Expiraci&oacute;n</h3>
+            <ul>
+              <li>Los secretos pueden tener fecha de vencimiento.</li>
+              <li>Esto ayuda a imponer disciplina de renovaci&oacute;n y cumplimiento.</li>
+              <li>Es especialmente relevante para API keys, certificados y credenciales compartidas.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Versionamiento</h3>
+            <ul>
+              <li>Cuando actualizas un secreto, Key Vault genera una nueva versi&oacute;n.</li>
+              <li>Eso permite cambiar valores sin perder el historial operativo del objeto.</li>
+              <li>El reto arquitect&oacute;nico es decidir si los consumidores apuntan a una versi&oacute;n fija o a la versi&oacute;n m&aacute;s reciente.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Rotaci&oacute;n</h3>
+            <ul>
+              <li>La rotaci&oacute;n busca reemplazar peri&oacute;dicamente secretos o llaves antes de que caduquen o queden expuestos.</li>
+              <li>En llaves criptogr&aacute;ficas existe soporte de rotaci&oacute;n autom&aacute;tica con pol&iacute;ticas espec&iacute;ficas.</li>
+              <li>En secretos, la renovaci&oacute;n muchas veces depende del proceso de la aplicaci&oacute;n o de automatizaciones externas.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Ejemplo pr&aacute;ctico con Container Apps</h3>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Referencia a Key Vault</h3>
+            <ul>
+              <li>Container Apps puede consumir secretos desde Key Vault mediante una identidad administrada.</li>
+              <li>La configuraci&oacute;n usa un <strong>URI del secreto</strong>.</li>
+              <li>Ese URI puede apuntar a una <strong>versi&oacute;n espec&iacute;fica</strong> o a la <strong>versi&oacute;n m&aacute;s reciente</strong>.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Impacto de la versi&oacute;n</h3>
+            <ul>
+              <li>Si usas un URI sin versi&oacute;n, el servicio puede recoger autom&aacute;ticamente la versi&oacute;n m&aacute;s reciente.</li>
+              <li>Si usas un URI con versi&oacute;n fija, controlas exactamente qu&eacute; valor consume la aplicaci&oacute;n.</li>
+              <li>La decisi&oacute;n depende de si quieres prioridad en estabilidad o en actualizaci&oacute;n autom&aacute;tica.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="warn">
+          <strong>Punto fino:</strong> una cosa es publicar una nueva versi&oacute;n del secreto en Key Vault y otra es que todos los consumidores la tomen inmediatamente. Siempre hay que revisar c&oacute;mo refresca secretos cada servicio y si la referencia es versionada o no.
+        </div>
+
+        <div class="note">
+          <strong>S&iacute;ntesis:</strong> Key Vault no es solo un repositorio de secretos. Es una pieza de gobierno: separa administraci&oacute;n del recurso, administraci&oacute;n del contenido y consumo por servicios. Su valor real aparece cuando se combina con <strong>Managed Identity</strong>, permisos m&iacute;nimos, expiraci&oacute;n, rotaci&oacute;n y una estrategia clara de versionamiento.
+        </div>
       </section>
 
       <section class="section" id="s10">
@@ -1127,7 +2096,7 @@
             <h3>10.1 VNet y espacio de direcciones</h3>
             <ul>
               <li><strong>VNet:</strong> representa una red privada en la nube para recursos Azure y redes conectadas.</li>
-              <li><strong>Rango CIDR:</strong> debe planearse desde el inicio y no traslaparse con otras VNets ni con on-premises si habr&aacute; peering, VPN o ExpressRoute.</li>
+              <li><strong>Rango CIDR:</strong> debe planearse desde el inicio; <strong>CIDR</strong> es la forma est&aacute;ndar de expresar bloques de direcciones IP, por ejemplo `10.0.0.0/16`, y no debe traslaparse con otras VNets ni con on-premises si habr&aacute; peering, VPN o ExpressRoute.</li>
               <li><strong>Alcance regional:</strong> una VNet pertenece a una regi&oacute;n, aunque puede conectar recursos zonales y no zonales dentro de ella.</li>
               <li><strong>Subredes:</strong> permiten separar capas como frontend, integraci&oacute;n, datos y administraci&oacute;n.</li>
               <li><strong>IP reservadas:</strong> Azure reserva las primeras 4 IPs y la &uacute;ltima IP en cada subnet; no deben contarse como capacidad usable.</li>
@@ -1136,8 +2105,8 @@
           <article class="card">
             <h3>10.2 Control del tr&aacute;fico</h3>
             <ul>
-              <li><strong>NSG:</strong> permiten reglas <em>allow/deny</em> de entrada y salida por origen, destino, puerto y protocolo.</li>
-              <li><strong>Route tables / UDR:</strong> cambian el siguiente salto del tr&aacute;fico para forzarlo hacia firewalls, NVAs, gateways o salidas espec&iacute;ficas.</li>
+              <li><strong>NSG:</strong> los <strong>Network Security Groups</strong> permiten reglas <em>allow/deny</em> de entrada y salida por origen, destino, puerto y protocolo.</li>
+              <li><strong>Route tables / UDR:</strong> las <strong>User Defined Routes</strong> cambian el siguiente salto del tr&aacute;fico para forzarlo hacia firewalls, <strong>NVAs</strong> (appliances virtuales de red), gateways o salidas espec&iacute;ficas.</li>
               <li><strong>Rutas del sistema:</strong> Azure crea rutas por defecto entre subnets, hacia Internet y hacia prefijos privados conocidos.</li>
               <li><strong>Segmentaci&oacute;n real:</strong> la subnet define frontera l&oacute;gica; el NSG y la tabla de rutas definen qu&eacute; puede cruzarla y por d&oacute;nde.</li>
             </ul>
@@ -1148,7 +2117,7 @@
               <li><strong>Service endpoints:</strong> extienden la identidad de la subnet hacia servicios Azure y mantienen el tr&aacute;fico en el backbone de Microsoft.</li>
               <li><strong>Private endpoints:</strong> crean una NIC con IP privada dentro de la VNet para acceder a servicios PaaS sin exponerlos a Internet.</li>
               <li><strong>Recomendaci&oacute;n actual:</strong> Microsoft prioriza Private Link cuando se requiere aislamiento fuerte, acceso privado desde on-premises o reducir exfiltraci&oacute;n.</li>
-              <li><strong>DNS privado:</strong> al usar private endpoints normalmente se requiere Private DNS Zone para resolver el nombre del servicio a su IP privada.</li>
+              <li><strong>DNS privado:</strong> al usar private endpoints normalmente se requiere <strong>Private DNS Zone</strong>, una zona DNS interna, para resolver el nombre del servicio a su IP privada.</li>
             </ul>
           </article>
           <article class="card">
@@ -1157,7 +2126,7 @@
               <li><strong>VNet peering:</strong> conecta VNets por la red troncal de Microsoft con baja latencia y sin gateway intermedio.</li>
               <li><strong>No transitivo:</strong> si A est&aacute; emparejada con B y B con C, A no alcanza a C autom&aacute;ticamente.</li>
               <li><strong>VPN Gateway:</strong> conecta Azure con on-premises o con otras VNets mediante t&uacute;neles cifrados sobre Internet.</li>
-              <li><strong>ExpressRoute:</strong> extiende la red corporativa a Azure por un enlace privado, con mayor predictibilidad que una VPN sobre Internet.</li>
+              <li><strong>ExpressRoute:</strong> extiende la red corporativa a Azure por un enlace privado dedicado, con mayor predictibilidad que una VPN sobre Internet.</li>
             </ul>
           </article>
           <article class="card">
@@ -1193,26 +2162,432 @@
           </tbody>
         </table>
         <div class="note">
-          <strong>Importante:</strong> <strong>CORS</strong> no es un control de red. CORS regula qu&eacute; or&iacute;genes web puede consumir un navegador; no sustituye NSG, firewalls, private endpoints ni restricciones por IP.
+          <strong>Importante:</strong> <strong>CORS</strong> (<em>Cross-Origin Resource Sharing</em>) no es un control de red. Regula qu&eacute; or&iacute;genes web puede consumir un navegador; no sustituye NSG, firewalls, private endpoints ni restricciones por IP.
         </div>
       </section>
 
       <section class="section" id="s11">
         <h2>11. Observabilidad</h2>
-        <ul>
-          <li>Monitoreo integral de servicios.</li>
-          <li>Logs, m&eacute;tricas y trazabilidad como elementos base.</li>
-        </ul>
+        <p>La observabilidad en Azure no es un solo servicio. Es un conjunto de capacidades para <strong>ver, diagnosticar, alertar y reaccionar</strong> ante el comportamiento de aplicaciones, infraestructura y servicios administrados. La pieza central es <strong>Azure Monitor</strong>, pero alrededor de &eacute;l existen experiencias y servicios complementarios que cubren infraestructura, aplicaciones, salud de plataforma y recomendaciones operativas.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Azure Monitor</h3>
+            <ul>
+              <li>Es la plataforma unificada de monitoreo de Azure.</li>
+              <li>Centraliza <strong>m&eacute;tricas, logs, eventos y trazas</strong> desde recursos Azure, otros clouds y entornos on-premises.</li>
+              <li>Es el punto base para alertas, dashboards, consultas y automatizaci&oacute;n operativa.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Application Insights</h3>
+            <ul>
+              <li>Es la capacidad de <strong>APM</strong> (<em>Application Performance Monitoring</em>, monitoreo del rendimiento de aplicaciones) dentro de Azure Monitor para aplicaciones.</li>
+              <li>Sirve para requests, dependencias, excepciones, tiempos de respuesta, mapas de aplicaci&oacute;n y trazabilidad.</li>
+              <li>Ayuda a ver qu&eacute; pasa dentro del c&oacute;digo y en la experiencia real de la app.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Log Analytics Workspace</h3>
+            <ul>
+              <li>Es el almac&eacute;n donde Azure Monitor guarda y consulta logs.</li>
+              <li>Permite centralizar datos de m&uacute;ltiples recursos y hacer consultas con <strong>KQL</strong> (<em>Kusto Query Language</em>, lenguaje de consulta de Azure Monitor y Log Analytics).</li>
+              <li>Es uno de los componentes m&aacute;s comunes y est&aacute;ndares en dise&ntilde;os de monitoreo en Azure.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Servicios y capacidades m&aacute;s comunes</h3>
+        <table>
+          <thead>
+            <tr><th>Servicio o capacidad</th><th>Qu&eacute; monitorea o aporta</th><th>Uso t&iacute;pico</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Azure Monitor</td>
+              <td>Base unificada de m&eacute;tricas, logs, eventos y alertas</td>
+              <td>Monitoreo general de recursos, sistemas y soluciones</td>
+            </tr>
+            <tr>
+              <td>Application Insights</td>
+              <td>Desempe&ntilde;o y diagn&oacute;stico de aplicaciones</td>
+              <td>Errores, dependencias, tiempos de respuesta, trazas y mapa de aplicaciones</td>
+            </tr>
+            <tr>
+              <td>Log Analytics Workspace</td>
+              <td>Repositorio y an&aacute;lisis de logs</td>
+              <td>Consultas KQL, retenci&oacute;n, correlaci&oacute;n y base para alertas</td>
+            </tr>
+            <tr>
+              <td>Azure Monitor Alerts</td>
+              <td>Detecci&oacute;n y notificaci&oacute;n proactiva</td>
+              <td>Alertas por m&eacute;tricas, logs, Activity Log, Service Health o Resource Health</td>
+            </tr>
+            <tr>
+              <td>Azure Service Health</td>
+              <td>Incidentes, mantenimientos planeados y avisos que afectan suscripciones</td>
+              <td>Ver afectaciones regionales o de servicios Azure que te impactan</td>
+            </tr>
+            <tr>
+              <td>Azure Resource Health</td>
+              <td>Salud puntual de un recurso espec&iacute;fico</td>
+              <td>Diagnosticar si una VM, App Service o SQL tuvo indisponibilidad por causa de Azure</td>
+            </tr>
+            <tr>
+              <td>Azure Advisor</td>
+              <td>Recomendaciones operativas y de buenas pr&aacute;cticas</td>
+              <td>Costos, seguridad, rendimiento, confiabilidad y excelencia operativa</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Alertas: no es un servicio aislado, es una capacidad transversal</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Metric Alerts</h3>
+            <ul>
+              <li>Se disparan con base en m&eacute;tricas ya calculadas.</li>
+              <li>Son &uacute;tiles para CPU, memoria, latencia, disponibilidad o conteos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Log Alerts</h3>
+            <ul>
+              <li>Se basan en consultas sobre logs.</li>
+              <li>Permiten detectar patrones m&aacute;s complejos, correlaciones o errores espec&iacute;ficos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Health Alerts</h3>
+            <ul>
+              <li>Aqu&iacute; entran <strong>Service Health alerts</strong> y <strong>Resource Health alerts</strong>.</li>
+              <li>No son otro producto distinto: son <strong>tipos de reglas de alerta</strong> apoyadas en se&ntilde;ales de salud.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Aclaraci&oacute;n importante:</strong> lo que mencionas como "alerta de salud" efectivamente no suele verse como un servicio aislado de monitoreo, sino como una <strong>regla de alerta</strong> construida sobre <strong>Azure Service Health</strong> o <strong>Azure Resource Health</strong> para notificar incidentes, mantenimientos o degradaciones.
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Service Health vs Resource Health vs Advisor</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Azure Service Health</h3>
+            <ul>
+              <li>Mira la salud de Azure desde la perspectiva de la plataforma y de tu suscripci&oacute;n.</li>
+              <li>Te avisa si un servicio o regi&oacute;n que usas est&aacute; teniendo incidentes o mantenimiento planeado.</li>
+              <li>Es muy &uacute;til para saber si el problema viene de Azure y no de tu configuraci&oacute;n.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Azure Resource Health</h3>
+            <ul>
+              <li>Baja al nivel del recurso individual.</li>
+              <li>Sirve para ver si una VM, App Service o SQL Database estuvo disponible o fue afectado por un problema del proveedor.</li>
+              <li>Ayuda mucho en diagn&oacute;stico de incidentes y revisi&oacute;n de SLA.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Azure Advisor</h3>
+            <ul>
+              <li>No es monitoreo en tiempo real como tal.</li>
+              <li>Es un asistente de recomendaciones que analiza configuraci&oacute;n y telemetr&iacute;a de uso.</li>
+              <li>Se usa para mejorar costo, seguridad, rendimiento, confiabilidad y excelencia operativa.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Otros componentes comunes de una estrategia de monitoreo</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Action Groups</h3>
+            <ul>
+              <li>Definen qu&eacute; hacer cuando una alerta se dispara.</li>
+              <li>Pueden enviar correo, SMS, push, webhooks o disparar automatizaciones.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Workbooks</h3>
+            <ul>
+              <li>Permiten construir vistas personalizadas con consultas, gr&aacute;ficas y diagn&oacute;sticos.</li>
+              <li>Son muy comunes para tableros operativos o troubleshooting guiado.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Diagnostic settings / DCR</h3>
+            <ul>
+              <li>Definen hacia d&oacute;nde se env&iacute;an logs y m&eacute;tricas.</li>
+              <li>Son el punto base para que los datos lleguen a Log Analytics, Storage o Event Hub. En escenarios modernos tambi&eacute;n aparecen las <strong>DCR</strong> (<em>Data Collection Rules</em>, reglas de recolecci&oacute;n de datos).</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="warn">
+          <strong>Lectura arquitect&oacute;nica:</strong> para un dise&ntilde;o b&aacute;sico y serio en Azure, lo m&iacute;nimo com&uacute;n suele ser <strong>Azure Monitor + Log Analytics Workspace + Alerts + Service/Resource Health</strong>, y si hay aplicaciones propias, tambi&eacute;n <strong>Application Insights</strong>. <strong>Azure Advisor</strong> entra como complemento de recomendaciones, no como reemplazo del monitoreo operativo.
+        </div>
       </section>
 
       <section class="section" id="s12">
         <h2>12. Costos</h2>
-        <ul>
-          <li>Factores: tiempo, ejecuciones, almacenamiento y operaciones.</li>
-          <li>Variables: SKU, regi&oacute;n y escalado.</li>
-          <li>Modelos: consumo, capacidad y reservas.</li>
-          <li>Control: monitoreo, organizaci&oacute;n y uso disciplinado de tags.</li>
-        </ul>
+        <p>Hablar de costos en Azure no es solo revisar precios por servicio. Tambi&eacute;n implica entender <strong>qui&eacute;n ve la facturaci&oacute;n</strong>, <strong>qui&eacute;n administra el pago</strong>, <strong>c&oacute;mo se monitorea el gasto</strong> y <strong>c&oacute;mo se estima una implementaci&oacute;n antes de desplegarla</strong>. En la pr&aacute;ctica conviene separar dos planos: el <strong>operativo</strong> y el de <strong>facturaci&oacute;n</strong>.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Factores de costo</h3>
+            <ul>
+              <li>Tiempo de ejecuci&oacute;n, horas activas o instancias aprovisionadas.</li>
+              <li>Almacenamiento, transacciones, transferencia de datos y redundancia.</li>
+              <li>SKU, regi&oacute;n, elasticidad, reservas y modelo de compra.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Costo operativo</h3>
+            <ul>
+              <li>Es el gasto real del uso diario de los recursos desplegados.</li>
+              <li>Se analiza con Cost Management, presupuestos, alertas y tendencias de consumo.</li>
+              <li>Su foco es controlar desviaciones y optimizar el gasto ya existente.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Costo estimado</h3>
+            <ul>
+              <li>Es el costo proyectado de una arquitectura que a&uacute;n no est&aacute; desplegada o que se est&aacute; redise&ntilde;ando.</li>
+              <li>Se trabaja con la <strong>Azure Pricing Calculator</strong>.</li>
+              <li>Su foco es anticipar presupuesto y validar viabilidad financiera.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Facturaci&oacute;n: billing account, billing profile y pago</h3>
+        <p>En el modelo moderno de <strong>Microsoft Customer Agreement (MCA)</strong>, la jerarqu&iacute;a de facturaci&oacute;n separa el contrato general del detalle operativo de las facturas.</p>
+
+        <table>
+          <thead>
+            <tr><th>Concepto</th><th>Qu&eacute; representa</th><th>Por qu&eacute; importa</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Billing account</td>
+              <td>La cuenta de facturaci&oacute;n principal del acuerdo</td>
+              <td>Es el nivel alto donde se organiza la relaci&oacute;n comercial y el acceso global de facturaci&oacute;n.</td>
+            </tr>
+            <tr>
+              <td>Billing profile</td>
+              <td>El agrupador que genera una factura y administra m&eacute;todos de pago</td>
+              <td>Aqu&iacute; se ven facturas, cargos, moneda, direcci&oacute;n de cobro y pagos asociados.</td>
+            </tr>
+            <tr>
+              <td>Invoice section</td>
+              <td>Subdivisi&oacute;n interna dentro del billing profile</td>
+              <td>Sirve para separar cargos por proyecto, departamento o ambiente dentro de una misma factura.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Billing profile</h3>
+            <ul>
+              <li>Es uno de los conceptos m&aacute;s importantes de facturaci&oacute;n moderna en Azure.</li>
+              <li>En t&eacute;rminos pr&aacute;cticos, es el nivel donde se gestionan <strong>facturas y m&eacute;todos de pago</strong>.</li>
+              <li>Es el equivalente funcional de donde se consolida lo que se va a cobrar.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Qui&eacute;n puede ver y qui&eacute;n puede pagar</h3>
+            <ul>
+              <li>No todo usuario con acceso t&eacute;cnico a la suscripci&oacute;n debe tener acceso a facturaci&oacute;n.</li>
+              <li>Hay roles espec&iacute;ficos de billing para ver facturas, cargos, usage y gestionar pagos.</li>
+              <li>En una organizaci&oacute;n madura, finanzas, compras o IT managers suelen tener estos accesos, no cualquier operador de recursos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>M&eacute;todos de pago</h3>
+            <ul>
+              <li>Se administran a nivel de facturaci&oacute;n, no como parte normal del despliegue de recursos.</li>
+              <li>El billing profile es donde se asocia la forma de pago para las facturas correspondientes.</li>
+              <li>Esto debe separarse claramente de los permisos para crear recursos o administrar infraestructura.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Control de costos: monitoreo, presupuestos y alertas</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Cost Management</h3>
+            <ul>
+              <li>Es la herramienta principal para analizar costos reales, tendencias y distribuci&oacute;n del gasto.</li>
+              <li>Permite filtrar por suscripci&oacute;n, grupo de recursos, tags, servicios y periodos.</li>
+              <li>Es la base de la gesti&oacute;n operativa del costo.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Presupuestos</h3>
+            <ul>
+              <li>Permiten definir un l&iacute;mite esperado de gasto por alcance y periodo.</li>
+              <li>No bloquean el consumo por s&iacute; solos, pero ayudan a gobernarlo.</li>
+              <li>Se usan como referencia para detectar desviaciones tempranas.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Alertas de presupuesto</h3>
+            <ul>
+              <li>Se disparan cuando el gasto real o proyectado alcanza umbrales como 50%, 80% o 100%.</li>
+              <li>Sirven para notificar y actuar antes de perder control del costo.</li>
+              <li>Pueden integrarse con grupos de acci&oacute;n y automatizaciones seg&uacute;n el alcance.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Herramienta</th><th>Para qu&eacute; sirve</th><th>Punto fino</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cost Analysis</td>
+              <td>Analizar consumo real, tendencias y distribuci&oacute;n de cargos</td>
+              <td>Sirve para operaci&oacute;n diaria y finops; no estima una arquitectura futura.</td>
+            </tr>
+            <tr>
+              <td>Budget</td>
+              <td>Definir un l&iacute;mite esperado de gasto</td>
+              <td>El presupuesto alerta; no necesariamente detiene el servicio.</td>
+            </tr>
+            <tr>
+              <td>Budget alerts</td>
+              <td>Notificar cuando el gasto alcanza umbrales definidos</td>
+              <td>Son b&aacute;sicos para gobierno, pero dependen de que alguien reaccione o de automatizaci&oacute;n complementaria.</td>
+            </tr>
+            <tr>
+              <td>Anomaly alerts</td>
+              <td>Detectar cambios inesperados de consumo</td>
+              <td>Ayudan a identificar picos o ca&iacute;das anormales que no estaban presupuestados.</td>
+            </tr>
+            <tr>
+              <td>Azure Pricing Calculator</td>
+              <td>Estimar el costo de una posible implementaci&oacute;n</td>
+              <td>Trabaja con supuestos y cantidades esperadas; no sustituye la factura real.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <strong>Lectura pr&aacute;ctica:</strong> <strong>Cost Management</strong> responde "cu&aacute;nto estoy gastando y en qu&eacute;". La <strong>Pricing Calculator</strong> responde "cu&aacute;nto podr&iacute;a costar si despliego esta arquitectura".
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Asignaci&oacute;n de costo por proyecto: tags vs suscripci&oacute;n vs factura</h3>
+        <p>Esta es una confusi&oacute;n muy com&uacute;n en cursos y ex&aacute;menes. Cuando la pregunta dice algo como <strong>"quiero adjudicar o imputar el costo por proyecto"</strong>, la respuesta m&aacute;s habitual es <strong>tags</strong>, porque las etiquetas permiten <strong>clasificar, filtrar, agrupar y reportar</strong> el consumo por proyecto, centro de costo, ambiente o due&ntilde;o.</p>
+        <p>Sin embargo, eso no significa que Azure vaya a emitir autom&aacute;ticamente una factura separada para cada proyecto solo por tener una etiqueta. Lo que hace Azure es ayudarte a <strong>identificar el gasto</strong> para luego hacer <strong>showback</strong> o <strong>chargeback interno</strong> dentro de la organizaci&oacute;n.</p>
+
+        <table>
+          <thead>
+            <tr><th>Mecanismo</th><th>Para qu&eacute; sirve</th><th>Cu&aacute;ndo usarlo</th><th>Lo que no resuelve por s&iacute; solo</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tags</td>
+              <td>Asignar y analizar costos por proyecto, &aacute;rea, ambiente o centro de costo</td>
+              <td>Cuando varios proyectos viven en la misma suscripci&oacute;n y necesitas repartir el costo de forma r&aacute;pida y flexible</td>
+              <td>No crea facturas separadas por proyecto; solo facilita el filtrado y reporte del gasto</td>
+            </tr>
+            <tr>
+              <td>Suscripci&oacute;n</td>
+              <td>Aislar administraci&oacute;n, permisos, cuotas, pol&iacute;ticas y tambi&eacute;n costo</td>
+              <td>Cuando quieres separaci&oacute;n fuerte entre proyectos o ambientes, no solo visibilidad del costo</td>
+              <td>Es una frontera administrativa m&aacute;s pesada; no siempre conviene crear una suscripci&oacute;n por cada proyecto</td>
+            </tr>
+            <tr>
+              <td>Billing profile / invoice section</td>
+              <td>Organizar cargos dentro del &aacute;mbito de facturaci&oacute;n en MCA</td>
+              <td>Cuando tambi&eacute;n quieres que la estructura de la factura tenga separaci&oacute;n por proyecto, departamento o unidad</td>
+              <td>No sustituye tags para an&aacute;lisis granular de recursos individuales</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Ejemplo pr&aacute;ctico con tags</h3>
+            <ul>
+              <li>Asignas <strong>Proyecto = A</strong> a un conjunto de recursos y <strong>Proyecto = B</strong> a otro.</li>
+              <li>En Cost Management agrupas el gasto por esa etiqueta.</li>
+              <li>El sistema puede mostrar algo como: Proyecto A = 5 pesos y Proyecto B = 6 pesos.</li>
+              <li>Con eso ya puedes imputar internamente el costo al due&ntilde;o de cada proyecto.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Lectura correcta del examen</h3>
+            <ul>
+              <li>Si la pregunta es <strong>"c&oacute;mo asigno o identifico costo por proyecto"</strong>, normalmente la respuesta es <strong>tags</strong>.</li>
+              <li>Si la pregunta fuera <strong>"c&oacute;mo separo administrativamente o financieramente proyectos completos"</strong>, la conversaci&oacute;n puede llevar a <strong>suscripciones</strong> o a <strong>invoice sections</strong>.</li>
+              <li>La clave es distinguir entre <strong>analizar costo</strong> y <strong>separar estructura de facturaci&oacute;n</strong>.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Idea clave:</strong> las <strong>tags</strong> son la mejor respuesta para <strong>gesti&oacute;n y asignaci&oacute;n de costos por proyecto</strong> dentro de una misma estructura Azure. Pero el cobro interno al due&ntilde;o del proyecto sigue siendo un proceso organizacional tuyo, apoyado por la informaci&oacute;n que Azure te permite filtrar y exportar.
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Estimaci&oacute;n previa con la Azure Pricing Calculator</h3>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Cu&aacute;ndo usarla</h3>
+            <ul>
+              <li>Antes de desplegar una soluci&oacute;n nueva.</li>
+              <li>Cuando se compara una arquitectura contra otra.</li>
+              <li>Cuando se requiere justificar presupuesto antes de implementaci&oacute;n.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Qu&eacute; se modela</h3>
+            <ul>
+              <li>Servicio, SKU, regi&oacute;n, cantidad de instancias, horas, almacenamiento, transferencia y reservas.</li>
+              <li>En cuentas autenticadas, puede reflejar precios negociados o descuentos del acuerdo.</li>
+              <li>Es una herramienta de planeaci&oacute;n, no una garant&iacute;a exacta del cobro final.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Qu&eacute; pasa si no se paga</h3>
+        <p>La falta de pago no impacta de inmediato del mismo modo en todas las cuentas, pero s&iacute; existe un ciclo de estados que es importante entender desde operaci&oacute;n y gobierno.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Past Due</h3>
+            <ul>
+              <li>La suscripci&oacute;n sigue activa, pero existe un saldo pendiente.</li>
+              <li>Azure empieza a mostrar avisos para regularizar el pago.</li>
+              <li>Es la etapa donde a&uacute;n se puede actuar sin que los recursos entren en suspensi&oacute;n.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Disabled / Warned</h3>
+            <ul>
+              <li>Si el problema no se atiende, la suscripci&oacute;n puede quedar advertida o deshabilitada.</li>
+              <li>En ese estado ya no se pueden crear o modificar recursos y varios servicios dejan de operar con normalidad.</li>
+              <li>Por ejemplo, VMs pueden desasignarse, IPs temporales liberarse y algunos servicios quedar suspendidos o solo lectura.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Deleted</h3>
+            <ul>
+              <li>Si la situaci&oacute;n persiste, la suscripci&oacute;n puede terminar eliminada junto con sus recursos subyacentes.</li>
+              <li>La ventana exacta depende del tipo de suscripci&oacute;n y del motivo de deshabilitaci&oacute;n.</li>
+              <li>Microsoft documenta que algunas suscripciones pueden permanecer deshabilitadas entre <strong>1 y 90 d&iacute;as</strong> antes de eliminarse permanentemente.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="warn">
+          <strong>Punto fino:</strong> t&eacute;cnicamente una persona puede administrar recursos Azure y no tener ning&uacute;n acceso a facturas o m&eacute;todos de pago. Esa separaci&oacute;n es deseable. Pero tambi&eacute;n significa que, si no existe coordinaci&oacute;n entre operaci&oacute;n y finanzas, una suscripci&oacute;n puede entrar en estados de advertencia o deshabilitaci&oacute;n sin que el equipo t&eacute;cnico lo atienda a tiempo.
+        </div>
+
+        <div class="note">
+          <strong>S&iacute;ntesis:</strong> en Azure el costo no solo se gobierna eligiendo bien servicios y SKUs. Tambi&eacute;n se gobierna definiendo <strong>qu&eacute; alcance factura</strong>, <strong>qui&eacute;n puede ver y pagar</strong>, <strong>c&oacute;mo se monitorea el gasto real</strong> y <strong>c&oacute;mo se estima una implementaci&oacute;n antes de desplegarla</strong>.
+        </div>
       </section>
 
       <section class="section" id="s13">

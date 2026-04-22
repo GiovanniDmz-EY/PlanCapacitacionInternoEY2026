@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indice del Material Azure</title>
+  <style>
+    :root {
+      --bg: #eef4ff;
+      --panel: rgba(255, 255, 255, 0.9);
+      --panel-strong: #ffffff;
+      --ink: #122033;
+      --muted: #526074;
+      --primary: #0a5bd3;
+      --primary-deep: #083b87;
+      --primary-soft: #dbeafe;
+      --accent: #0f766e;
+      --accent-soft: #d1fae5;
+      --border: rgba(18, 32, 51, 0.1);
+      --shadow: 0 24px 60px rgba(18, 32, 51, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(10, 91, 211, 0.16), transparent 28%),
+        radial-gradient(circle at 100% 0%, rgba(15, 118, 110, 0.12), transparent 24%),
+        linear-gradient(180deg, #eef4ff 0%, #f6f9ff 100%);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+      color: #fff;
+      border-radius: 26px;
+      padding: 38px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      bottom: -120px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -0.03em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 860px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .section {
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .section h2 {
+      margin: 0 0 10px;
+      color: var(--primary-deep);
+      font-size: 1.5rem;
+    }
+
+    .section p {
+      margin-top: 0;
+    }
+
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      background: var(--panel-strong);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 12px 28px rgba(18, 32, 51, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card h3 {
+      margin: 0;
+      color: var(--accent);
+      font-size: 1.05rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .card a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      color: var(--primary-deep);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .quick-links a {
+      text-decoration: none;
+      color: var(--primary-deep);
+      background: var(--primary-soft);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .note {
+      margin-top: 14px;
+      padding: 14px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      border-radius: 10px;
+    }
+
+    @media (max-width: 920px) {
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Indice del Material Azure</h1>
+      <p>Punto de entrada para el material del plan de capacitaci&oacute;n. Esta portada organiza los contenidos principales por tema para que la navegaci&oacute;n entre fundamentos, seguridad, datos e infraestructura sea directa.</p>
+      <div class="hero-badges">
+        <span class="badge">Cloud Fundamentals</span>
+        <span class="badge">Seguridad</span>
+        <span class="badge">Datos</span>
+        <span class="badge">IaC</span>
+      </div>
+    </header>
+
+    <section class="section">
+      <h2>Acceso R&aacute;pido</h2>
+      <p>Los documentos siguientes concentran el material principal del repositorio.</p>
+      <div class="quick-links">
+        <a href="intro_azure.html">Introducci&oacute;n a Azure</a>
+        <a href="fundamentos_azure.html">Fundamentos de Azure</a>
+        <a href="control_usuarios_azure.html">Control de Usuarios</a>
+        <a href="infraestructura_como_codigo.html">Infraestructura como C&oacute;digo</a>
+        <a href="glosario_azure.html">Glosario Azure</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Contenido Principal</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>Introducci&oacute;n a Microsoft Azure</h3>
+          <p>Material base para contextualizar la plataforma, sus principios y una primera lectura de servicios y capacidades en Azure.</p>
+          <a href="intro_azure.html">Abrir material</a>
+        </article>
+        <article class="card">
+          <h3>Fundamentos de Azure</h3>
+          <p>Documento principal del curso con c&oacute;mputo, datos, seguridad, Key Vault, observabilidad, redes, SQL, Data Factory e integraci&oacute;n de soluci&oacute;n.</p>
+          <a href="fundamentos_azure.html">Abrir material</a>
+        </article>
+        <article class="card">
+          <h3>Control de Usuarios en Azure</h3>
+          <p>Contenido orientado a identidad, usuarios, grupos, permisos y controles relacionados con acceso y gobierno sobre recursos.</p>
+          <a href="control_usuarios_azure.html">Abrir material</a>
+        </article>
+        <article class="card">
+          <h3>Infraestructura como C&oacute;digo</h3>
+          <p>Resumen sobre ARM, Bicep, Terraform, parametrizaci&oacute;n, gobierno y uso de plantillas para homologar y automatizar ambientes.</p>
+          <a href="infraestructura_como_codigo.html">Abrir material</a>
+        </article>
+        <article class="card">
+          <h3>Glosario de T&eacute;rminos Azure</h3>
+          <p>Consulta r&aacute;pida de conceptos frecuentes como suscripci&oacute;n, grupos de recursos, RBAC, VNet, DNS, NAT, enlaces privados y observabilidad.</p>
+          <a href="glosario_azure.html">Abrir material</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Material Complementario</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>Introducci&oacute;n a la Nube</h3>
+          <p>Contenido de entrada para conceptos generales de cloud antes de bajar al ecosistema espec&iacute;fico de Azure.</p>
+          <a href="Intro2Cloud.html">Abrir material</a>
+        </article>
+        <article class="card">
+          <h3>Plan de Capacitaci&oacute;n Azure</h3>
+          <p>Vista general o material de apoyo del plan formativo, &uacute;til como portada adicional o contexto general del programa.</p>
+          <a href="intro_piloto.html">Abrir material</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Sugerencia de Recorrido</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3>1. Fundamento</h3>
+          <p>Empieza por nube e introducci&oacute;n a Azure para fijar conceptos, modelos y vocabulario base.</p>
+        </article>
+        <article class="card">
+          <h3>2. Construcci&oacute;n</h3>
+          <p>Contin&uacute;a con Fundamentos de Azure para revisar c&oacute;mputo, datos, seguridad, red y monitoreo.</p>
+        </article>
+        <article class="card">
+          <h3>3. Gobierno</h3>
+          <p>Cierra con control de usuarios e infraestructura como c&oacute;digo para conectar operaci&oacute;n, seguridad y estandarizaci&oacute;n.</p>
+        </article>
+      </div>
+      <div class="note">
+        <strong>Nota:</strong> este archivo funciona como portada del repositorio y puede usarse como p&aacute;gina inicial para navegar entre todos los HTML del curso.
+      </div>
+    </section>
+  </div>
+</body>
+</html>
