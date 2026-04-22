@@ -619,6 +619,7 @@
               <li><strong>Configuraci&oacute;n desacoplada:</strong> variables de entorno y cadenas de conexi&oacute;n separadas del c&oacute;digo.</li>
               <li><strong>Manejo de secretos:</strong> puede integrarse con servicios especializados para evitar credenciales embebidas en la aplicaci&oacute;n.</li>
               <li><strong>Controles de acceso:</strong> restricciones por IP, reglas de acceso y configuraci&oacute;n CORS seg&uacute;n el tipo de consumidor.</li>
+              <li><strong>Capa de publicaci&oacute;n:</strong> cuando una aplicaci&oacute;n web necesita una entrada m&aacute;s robusta, suele publicarse detr&aacute;s de <strong>Application Gateway</strong>, que es un balanceador y <em>reverse proxy</em> HTTP/HTTPS de capa 7, y opcionalmente detr&aacute;s de <strong>WAF</strong> (<em>Web Application Firewall</em>).</li>
             </ul>
           </li>
           <li><strong>Escalabilidad</strong>
@@ -838,6 +839,8 @@
               <li><strong>VNet Injection:</strong> en Flex permite conectarse a recursos en redes privadas sin recurrir al costo elevado del plan Premium, manteniendo el modelo de pago por uso.</li>
               <li><strong>Managed Identities:</strong> autenticaci&oacute;n autom&aacute;tica con otros servicios de Azure sin necesidad de escribir contrase&ntilde;as o connection strings en el c&oacute;digo.</li>
               <li><strong>Authorization Keys:</strong> protecci&oacute;n de endpoints HTTP mediante llaves de acceso de nivel funci&oacute;n o host.</li>
+              <li><strong>L&iacute;mite de la Function key:</strong> funciona como secreto compartido para controlar invocaci&oacute;n b&aacute;sica, pero no sustituye gobierno de APIs, cuotas, versionado, transformaciones ni una estrategia completa de autenticaci&oacute;n empresarial.</li>
+              <li><strong>Exposici&oacute;n empresarial:</strong> cuando una Function se vuelve parte de una API real de negocio, es com&uacute;n publicarla detr&aacute;s de <strong>Azure API Management</strong>, que agrega autenticaci&oacute;n, autorizaci&oacute;n, throttling, productos, suscripciones, pol&iacute;ticas, observabilidad y desacoplamiento frente al backend.</li>
             </ul>
           </li>
           <li><strong>Escalabilidad</strong>
@@ -1370,6 +1373,279 @@
 
         <div class="note">
           <strong>Lectura de arquitectura:</strong> en industrias reguladas, la seguridad del dato no se resuelve con un solo mecanismo. Normalmente combina <strong>cifrado</strong>, <strong>enmascaramiento</strong>, <strong>restricci&oacute;n por filas o perfiles</strong> y una separaci&oacute;n clara entre quien administra la plataforma y quien est&aacute; autorizado a consumir la informaci&oacute;n.
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Optimizaci&oacute;n inteligente y an&aacute;lisis de performance</h3>
+        <p>En Azure SQL hay varios componentes que ayudan a mejorar rendimiento, pero <strong>no todos son el mismo tipo de capacidad</strong>. Algunos viven dentro del motor, otros solo visualizan informaci&oacute;n y otros son servicios de Azure que emiten recomendaciones desde fuera del motor.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Automatic Tuning</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> capacidad nativa de optimizaci&oacute;n autom&aacute;tica para mejorar performance con base en telemetr&iacute;a del workload.</li>
+              <li><strong>Qu&eacute; puede hacer:</strong> detectar recomendaciones sobre &iacute;ndices y planes de ejecuci&oacute;n, aplicar acciones y revertirlas si no mejoran realmente.</li>
+              <li><strong>Tipo:</strong> configuraci&oacute;n integrada, no un servicio aparte.</li>
+              <li><strong>Aplica a:</strong> Azure SQL Database y Azure SQL Managed Instance, aunque la experiencia y opciones no son exactamente iguales en todos los casos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Query Store</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> historial persistente de consultas, planes y estad&iacute;sticas de ejecuci&oacute;n.</li>
+              <li><strong>Valor pr&aacute;ctico:</strong> permite comparar comportamiento en el tiempo, detectar regresiones y entender por qu&eacute; una consulta empez&oacute; a rendir peor.</li>
+              <li><strong>Tipo:</strong> feature interna de la base de datos.</li>
+              <li><strong>Lectura correcta:</strong> es una de las bases t&eacute;cnicas para tuning, diagn&oacute;stico y varias experiencias de rendimiento.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Query Performance Insight</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> experiencia visual del portal de Azure para identificar queries costosas o de larga duraci&oacute;n.</li>
+              <li><strong>Dependencia:</strong> usa la informaci&oacute;n capturada por Query Store.</li>
+              <li><strong>Tipo:</strong> herramienta de monitoreo y an&aacute;lisis; no modifica por s&iacute; sola la base.</li>
+              <li><strong>Aplica principalmente a:</strong> Azure SQL Database en el portal.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Azure Advisor para SQL</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> servicio de Azure que analiza configuraci&oacute;n y uso de recursos para emitir recomendaciones.</li>
+              <li><strong>En SQL:</strong> puede mostrar sugerencias de performance, confiabilidad, seguridad, costo u operaci&oacute;n a nivel recurso.</li>
+              <li><strong>Tipo:</strong> servicio externo a la base, pero integrado con el ecosistema Azure.</li>
+              <li><strong>Punto fino:</strong> Advisor recomienda; no reemplaza el an&aacute;lisis profundo del motor ni el tuning detallado dentro de la base.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>"IA" en contexto correcto</h3>
+            <ul>
+              <li>Cuando en Azure SQL se habla de optimizaci&oacute;n inteligente o basada en IA, normalmente no se refiere a un servicio separado de IA generativa.</li>
+              <li>Se refiere m&aacute;s bien a capacidades del servicio que analizan patrones de carga, recomiendan acciones y en algunos casos aplican correcciones de forma autom&aacute;tica.</li>
+              <li>La idea importante para examen y arquitectura es distinguir entre <strong>motor</strong>, <strong>portal</strong> y <strong>servicio externo</strong>.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Componente</th><th>Qu&eacute; hace</th><th>Tipo</th><th>Punto fino</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Automatic Tuning</td>
+              <td>Optimiza autom&aacute;ticamente rendimiento con recomendaciones y acciones controladas</td>
+              <td>Capacidad nativa del servicio</td>
+              <td>No es un producto aparte; vive dentro de Azure SQL.</td>
+            </tr>
+            <tr>
+              <td>Query Store</td>
+              <td>Guarda historial de queries, planes y estad&iacute;sticas</td>
+              <td>Feature interna de base de datos</td>
+              <td>Es la base para mucho del an&aacute;lisis de performance.</td>
+            </tr>
+            <tr>
+              <td>Query Performance Insight</td>
+              <td>Visualiza queries problem&aacute;ticas en el portal</td>
+              <td>Herramienta de monitoreo</td>
+              <td>Ayuda a investigar; no corrige nada por s&iacute; sola.</td>
+            </tr>
+            <tr>
+              <td>Azure Advisor</td>
+              <td>Emite recomendaciones a nivel recurso</td>
+              <td>Servicio de Azure</td>
+              <td>Opera fuera del motor SQL, aunque usa informaci&oacute;n integrada del recurso.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Auditor&iacute;a avanzada e integridad verificable</h3>
+        <p>No todo control de seguridad en base de datos persigue el mismo objetivo. Hay mecanismos para <strong>registrar actividad</strong>, otros para <strong>detectar amenazas</strong> y otros para <strong>probar que los datos no fueron alterados sin dejar evidencia</strong>.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Azure SQL Ledger</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> capacidad del motor que agrega evidencia criptogr&aacute;fica de integridad sobre cambios en datos.</li>
+              <li><strong>C&oacute;mo se usa:</strong> se habilita al crear <strong>ledger tables</strong>.</li>
+              <li><strong>C&oacute;mo funciona:</strong> genera cadenas de hashes y res&uacute;menes que permiten detectar manipulaciones.</li>
+              <li><strong>Lectura correcta:</strong> puede explicarse como una idea "tipo blockchain" por la evidencia encadenada, pero <strong>no es un blockchain p&uacute;blico</strong> ni un servicio separado.</li>
+              <li><strong>Aplica hoy:</strong> Microsoft lo documenta para Azure SQL Database y Azure SQL Managed Instance.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>SQL Auditing</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> registro de eventos y actividad sobre la base.</li>
+              <li><strong>Para qu&eacute; sirve:</strong> rastrear accesos, consultas, cambios y eventos relevantes para cumplimiento o investigaci&oacute;n.</li>
+              <li><strong>Destinos comunes:</strong> Storage Account, Log Analytics y Event Hub.</li>
+              <li><strong>Tipo:</strong> configuraci&oacute;n de auditor&iacute;a con destino externo; no es lo mismo que integridad criptogr&aacute;fica.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Microsoft Defender for SQL</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> plan de seguridad que ayuda a detectar comportamientos an&oacute;malos y posibles amenazas.</li>
+              <li><strong>Ejemplos:</strong> intentos de SQL injection, patrones sospechosos de acceso, vulnerabilidades o actividad anormal.</li>
+              <li><strong>Tipo:</strong> servicio adicional del ecosistema de seguridad, con costo.</li>
+              <li><strong>Nombre actual:</strong> hoy se habla de <strong>Microsoft Defender for SQL</strong>; antes era com&uacute;n o&iacute;r <strong>Advanced Threat Protection</strong>.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Capacidad</th><th>Objetivo principal</th><th>Tipo</th><th>Diferencia clave</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ledger</td>
+              <td>Integridad verificable y evidencia de manipulaci&oacute;n</td>
+              <td>Capacidad interna del motor</td>
+              <td>Busca demostrar si el dato fue alterado.</td>
+            </tr>
+            <tr>
+              <td>Auditing</td>
+              <td>Registro de actividad</td>
+              <td>Configuraci&oacute;n de auditor&iacute;a</td>
+              <td>Guarda qui&eacute;n hizo qu&eacute; y cu&aacute;ndo.</td>
+            </tr>
+            <tr>
+              <td>Defender for SQL</td>
+              <td>Detecci&oacute;n de amenazas y exposici&oacute;n de vulnerabilidades</td>
+              <td>Servicio adicional</td>
+              <td>Se enfoca en seguridad activa y alertamiento.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <strong>Diferencia que conviene memorizar:</strong> <strong>Auditing</strong> sirve para tener <strong>registro</strong>. <strong>Ledger</strong> sirve para tener <strong>integridad verificable</strong>. <strong>Defender for SQL</strong> sirve para <strong>detectar actividad sospechosa y debilidades</strong>.
+        </div>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Backups, restauraci&oacute;n y mantenimiento del dato</h3>
+        <p>En el modelo PaaS de Azure SQL, los respaldos ya forman parte del servicio. La conversaci&oacute;n ya no es tanto "c&oacute;mo monto mi estrategia de backup desde cero", sino <strong>qu&eacute; retenci&oacute;n necesito</strong>, <strong>hasta qu&eacute; punto en el tiempo debo poder restaurar</strong> y <strong>qu&eacute; tan lejos quiero conservar evidencia hist&oacute;rica</strong>.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Automated Backups</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> respaldos autom&aacute;ticos administrados por Microsoft.</li>
+              <li><strong>Incluyen:</strong> full, differential y transaction log backups.</li>
+              <li><strong>Tipo:</strong> capacidad incluida en el modelo PaaS.</li>
+              <li><strong>Punto fino:</strong> el usuario no controla completamente el calendario interno, pero s&iacute; configura aspectos como retenci&oacute;n y algunas opciones relacionadas al almacenamiento de backup.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Point-in-Time Restore (PITR)</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> restaurar la base a un momento espec&iacute;fico dentro de la ventana de retenci&oacute;n.</li>
+              <li><strong>Cu&aacute;ndo se usa:</strong> borrado accidental, carga incorrecta de datos, error funcional o incidente reciente.</li>
+              <li><strong>Tipo:</strong> capacidad incluida basada en los backups autom&aacute;ticos.</li>
+              <li><strong>Ventana t&iacute;pica:</strong> la retenci&oacute;n corta suele ser configurable entre 1 y 35 d&iacute;as.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Long-Term Retention (LTR)</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> retenci&oacute;n prolongada de backups para cumplimiento, auditor&iacute;a o necesidades hist&oacute;ricas.</li>
+              <li><strong>Base t&eacute;cnica:</strong> se apoya en backups full autom&aacute;ticos.</li>
+              <li><strong>Tipo:</strong> configuraci&oacute;n adicional sobre la estrategia de respaldo del servicio.</li>
+              <li><strong>Escala temporal:</strong> Microsoft documenta LTR de hasta 10 a&ntilde;os seg&uacute;n la pol&iacute;tica configurada.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Geo-replicaci&oacute;n y Failover Groups</h3>
+            <ul>
+              <li><strong>Qu&eacute; resuelven:</strong> continuidad regional y disaster recovery.</li>
+              <li><strong>Tipo:</strong> configuraciones adicionales de replicaci&oacute;n y conmutaci&oacute;n.</li>
+              <li><strong>Lectura correcta:</strong> no sustituyen el respaldo hist&oacute;rico; responden m&aacute;s al problema de continuidad que al de retenci&oacute;n de largo plazo.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Pol&iacute;ticas de retenci&oacute;n de datos</h3>
+            <ul>
+              <li><strong>Qu&eacute; son:</strong> reglas de negocio para eliminar, archivar o mover datos seg&uacute;n edad, tipo o regulaci&oacute;n.</li>
+              <li><strong>Punto fino:</strong> no existe un &uacute;nico "servicio de data retention policy" en Azure SQL que resuelva todo.</li>
+              <li><strong>C&oacute;mo suele implementarse:</strong> jobs, automatizaciones, particionamiento, procesos de archivado, Functions, Automation o flujos de ciclo de vida del dato.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Capacidad</th><th>Para qu&eacute; sirve</th><th>Tipo</th><th>Punto fino</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Automated Backups</td>
+              <td>Proteger la base con respaldos administrados</td>
+              <td>Incluido en PaaS</td>
+              <td>El servicio administra la mec&aacute;nica del backup.</td>
+            </tr>
+            <tr>
+              <td>PITR</td>
+              <td>Recuperar la base a un momento exacto dentro de la ventana de retenci&oacute;n</td>
+              <td>Capacidad incluida</td>
+              <td>Es la respuesta cl&aacute;sica ante errores recientes de datos.</td>
+            </tr>
+            <tr>
+              <td>LTR</td>
+              <td>Conservar backups por meses o a&ntilde;os</td>
+              <td>Configuraci&oacute;n adicional</td>
+              <td>Apunta m&aacute;s a cumplimiento que a operaci&oacute;n diaria.</td>
+            </tr>
+            <tr>
+              <td>Geo-replicaci&oacute;n / Failover Group</td>
+              <td>Continuidad regional y DR</td>
+              <td>Configuraci&oacute;n adicional</td>
+              <td>No reemplaza la estrategia de backup hist&oacute;rico.</td>
+            </tr>
+            <tr>
+              <td>Data retention policies</td>
+              <td>Eliminar o archivar datos seg&uacute;n reglas de negocio</td>
+              <td>Patr&oacute;n de dise&ntilde;o, no producto &uacute;nico</td>
+              <td>Se materializa con procesos y automatizaciones.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Clasificaci&oacute;n y gobierno de datos sensibles</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Data Discovery &amp; Classification</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> capacidad integrada para detectar, clasificar, etiquetar y reportar columnas con datos sensibles.</li>
+              <li><strong>Ejemplos:</strong> datos personales, financieros, de salud o informaci&oacute;n regulada.</li>
+              <li><strong>Tipo:</strong> feature interna del entorno SQL.</li>
+              <li><strong>Valor pr&aacute;ctico:</strong> ayuda a saber qu&eacute; datos requieren controles reforzados y a soportar auditor&iacute;a o cumplimiento.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Sensitivity Labels y Purview</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> el ecosistema de etiquetado sensible a nivel organizacional suele relacionarse con <strong>Microsoft Purview</strong>.</li>
+              <li><strong>Tipo:</strong> esto ya cae en una experiencia m&aacute;s amplia de gobierno del dato fuera del motor SQL puro.</li>
+              <li><strong>Punto fino actual:</strong> la clasificaci&oacute;n local de SQL y el etiquetado global de Purview no deben asumirse como una sola experiencia id&eacute;ntica.</li>
+              <li><strong>Lectura correcta:</strong> SQL ayuda a clasificar dentro de la base; Purview ayuda a gobernar el patrimonio de datos a nivel m&aacute;s amplio.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Por qu&eacute; importa</h3>
+            <ul>
+              <li>Clasificar datos sensibles no es solo un tema documental.</li>
+              <li>Influye en auditor&iacute;a, masking, cifrado, acceso por perfiles, alertamiento y controles regulatorios.</li>
+              <li>Sin clasificaci&oacute;n, es mucho m&aacute;s dif&iacute;cil priorizar qu&eacute; columnas requieren protecci&oacute;n especial.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="warn">
+          <strong>Punto fino de gobierno:</strong> <strong>Data Discovery &amp; Classification</strong> s&iacute; es una capacidad interna del entorno SQL. En cambio, hablar de <strong>Purview</strong> ya implica un plano m&aacute;s amplio de catalogaci&oacute;n, etiquetado y gobierno del dato a nivel organizacional.
         </div>
 
         <h3 style="margin-top:18px; color:#0f766e;">SQL, Data Lake y anal&iacute;tica: no cumplen el mismo papel</h3>
@@ -2134,7 +2410,9 @@
             <ul>
               <li><strong>Public IP:</strong> expone un recurso o balanceador hacia clientes externos cuando la arquitectura lo requiere.</li>
               <li><strong>NAT Gateway:</strong> centraliza y estabiliza la salida a Internet de una subnet sin asignar IP p&uacute;blica a cada recurso.</li>
-              <li><strong>Application Gateway / Load Balancer:</strong> publican aplicaciones o distribuyen tr&aacute;fico, pero no sustituyen la segmentaci&oacute;n de red.</li>
+              <li><strong>Application Gateway:</strong> es un balanceador de aplicaciones y <em>reverse proxy</em> HTTP/HTTPS de capa 7. Puede hacer terminaci&oacute;n TLS, afinidad de sesi&oacute;n, enrutamiento por host o path y validaci&oacute;n de salud del backend.</li>
+              <li><strong>WAF:</strong> significa <strong>Web Application Firewall</strong>. En Azure suele asociarse a Application Gateway para inspeccionar tr&aacute;fico web y bloquear ataques comunes como <code>SQL injection</code> o <code>XSS</code> (<em>Cross-Site Scripting</em>).</li>
+              <li><strong>Punto fino:</strong> Application Gateway y WAF protegen y publican aplicaciones web, pero no sustituyen autenticaci&oacute;n, autorizaci&oacute;n, segmentaci&oacute;n de red ni gobierno de APIs.</li>
               <li><strong>Principio pr&aacute;ctico:</strong> preferir salida controlada y acceso privado antes que exponer recursos directamente.</li>
             </ul>
           </article>
@@ -2593,7 +2871,101 @@
       <section class="section" id="s13">
         <h2>13. Integraci&oacute;n de soluci&oacute;n</h2>
         <p><strong>Flujo base:</strong> interfaz &rarr; backend &rarr; datos.</p>
-        <p><strong>Componentes adicionales:</strong> identidad, seguridad, red y monitoreo.</p>
+        <p>En una arquitectura real, hospedar frontend y backend no es suficiente. Tambi&eacute;n hace falta dise&ntilde;ar <strong>c&oacute;mo entra el tr&aacute;fico</strong>, c&oacute;mo se exponen las APIs, qu&eacute; controles se aplican antes de llegar al c&oacute;digo y qui&eacute;n administra esa capa de publicaci&oacute;n.</p>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Exponer directo no siempre basta</h3>
+            <ul>
+              <li>App Service, Functions o Container Apps pueden publicarse directamente con su URL.</li>
+              <li>Eso puede ser suficiente en escenarios simples, demos o integraciones internas controladas.</li>
+              <li>En soluciones empresariales suele faltar control centralizado de seguridad, trazabilidad, cuotas, transformaciones y gobierno de consumo.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Azure API Management</h3>
+            <ul>
+              <li><strong>Qu&eacute; es:</strong> plataforma PaaS para publicar, proteger, transformar, versionar y monitorear APIs.</li>
+              <li><strong>Componente principal:</strong> un <strong>API gateway</strong>, es decir, una puerta de entrada para llamadas a APIs que recibe la petici&oacute;n del cliente y la reenv&iacute;a al backend aplicando pol&iacute;ticas.</li>
+              <li><strong>Backends t&iacute;picos:</strong> Functions, App Service, AKS, Logic Apps, servicios on-premises o APIs de terceros.</li>
+              <li><strong>Controles frecuentes:</strong> validaci&oacute;n de API keys, JWT o certificados; rate limiting, cuotas, transformaciones de headers o payloads, CORS, cache y observabilidad.</li>
+              <li><strong>Valor pr&aacute;ctico:</strong> desacopla al consumidor del backend real. Puedes mover una API de Function a App Service o AKS sin cambiar tanto a los clientes.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Application Gateway + WAF</h3>
+            <ul>
+              <li><strong>Application Gateway:</strong> punto de entrada HTTP/HTTPS para aplicaciones web. Opera en capa 7 y sirve para publicar sitios, terminar TLS, balancear carga y enrutar por dominio o ruta.</li>
+              <li><strong>WAF:</strong> significa <strong>Web Application Firewall</strong>; no es "federation". Su funci&oacute;n es inspeccionar peticiones web y bloquear amenazas comunes contra aplicaciones.</li>
+              <li><strong>Protecciones t&iacute;picas:</strong> reglas administradas basadas en OWASP, detecci&oacute;n o prevenci&oacute;n de ataques como SQL injection y cross-site scripting.</li>
+              <li><strong>Lectura correcta:</strong> Application Gateway publica y distribuye tr&aacute;fico web; WAF agrega inspecci&oacute;n y protecci&oacute;n a esa entrada.</li>
+            </ul>
+          </article>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Componente</th><th>Qu&eacute; controla</th><th>Cu&aacute;ndo conviene</th><th>Lo que no reemplaza</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Function key / clave de funci&oacute;n</td>
+              <td>Invocaci&oacute;n b&aacute;sica de una Azure Function mediante un secreto compartido</td>
+              <td>Escenarios simples, pruebas, automatizaciones internas o protecci&oacute;n ligera</td>
+              <td>Gobierno completo de APIs, suscripciones, cuotas, versionado y seguridad empresarial</td>
+            </tr>
+            <tr>
+              <td>API Management</td>
+              <td>Exposici&oacute;n, gobierno y seguridad de APIs</td>
+              <td>Cuando varios consumidores usan APIs y necesitas control centralizado, trazabilidad y desacoplamiento del backend</td>
+              <td>Protecci&oacute;n L7 contra ataques web como WAF o segmentaci&oacute;n de red</td>
+            </tr>
+            <tr>
+              <td>Application Gateway</td>
+              <td>Entrada web, balanceo HTTP/HTTPS, TLS y enrutamiento</td>
+              <td>Aplicaciones web o APIs que necesitan una puerta de entrada de capa 7 dentro de una arquitectura Azure</td>
+              <td>Gobierno del ciclo de vida de APIs o autenticaci&oacute;n completa por s&iacute; solo</td>
+            </tr>
+            <tr>
+              <td>WAF</td>
+              <td>Inspecci&oacute;n y bloqueo de ataques comunes a aplicaciones web</td>
+              <td>Cuando la aplicaci&oacute;n est&aacute; expuesta por HTTP/HTTPS y requiere una capa adicional de protecci&oacute;n</td>
+              <td>Autorizaci&oacute;n funcional, l&oacute;gica de negocio segura o controles de identidad dentro de la app</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top:18px; color:#0f766e;">Ejemplos pr&aacute;cticos</h3>
+        <div class="grid-3">
+          <article class="card">
+            <h3>API basada en Functions</h3>
+            <ul>
+              <li><strong>Flujo:</strong> cliente m&oacute;vil o web &rarr; API Management &rarr; Azure Functions &rarr; base de datos.</li>
+              <li><strong>Por qu&eacute; sirve:</strong> las Functions siguen siendo el backend, pero API Management concentra autenticaci&oacute;n, l&iacute;mites y anal&iacute;tica.</li>
+              <li><strong>Ventaja:</strong> el backend puede evolucionar sin exponer directamente la URL nativa de cada Function.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Aplicaci&oacute;n web corporativa</h3>
+            <ul>
+              <li><strong>Flujo:</strong> navegador &rarr; Application Gateway con WAF &rarr; App Service o AKS.</li>
+              <li><strong>Por qu&eacute; sirve:</strong> Application Gateway concentra entrada HTTPS, certificados, balanceo y enrutamiento; WAF agrega protecci&oacute;n contra ataques web frecuentes.</li>
+              <li><strong>Ventaja:</strong> la aplicaci&oacute;n no queda expuesta "sola" y la entrada se administra de forma centralizada.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Arquitectura combinada</h3>
+            <ul>
+              <li><strong>Frontend web:</strong> puede entrar por Application Gateway + WAF.</li>
+              <li><strong>Backend API:</strong> puede publicarse por API Management.</li>
+              <li><strong>Lectura clave:</strong> no compiten necesariamente; resuelven problemas distintos y con frecuencia conviven en la misma soluci&oacute;n.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Idea de arquitectura:</strong> si el problema principal es <strong>publicar y gobernar APIs</strong>, piensa primero en <strong>API Management</strong>. Si el problema principal es <strong>publicar y proteger aplicaciones web HTTP/HTTPS</strong>, piensa en <strong>Application Gateway</strong> y <strong>WAF</strong>. En muchos escenarios empresariales se usan juntos.
+        </div>
       </section>
     </main>
   </div>
