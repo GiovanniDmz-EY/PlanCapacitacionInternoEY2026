@@ -1,0 +1,94 @@
+# Programa de Capacitación: Arquitectura y Capacidades de Azure AI
+**Duración:** 10 Horas
+**Perfil:** Arquitectos de Software, Desarrolladores y Data Analytics.
+**Enfoque:** Teórico-Práctico (AI-900 Oriented + Real World Scenarios).
+
+---
+
+## Bloque 1: Fundamentos, Ética y Taxonomía (1.5 h)
+*Objetivo: Nivelar conceptos base y entender el marco de responsabilidad.*
+
+1. **Introducción a la IA:**
+   - Diferencias clave: Inteligencia Artificial vs. Machine Learning vs. Deep Learning vs. IA Generativa.
+   - Tipos de Aprendizaje:
+     - **Supervisado:** Regresión (valores numéricos) y Clasificación (categorías).
+     - **No Supervisado:** Clustering (agrupamiento por patrones).
+     - **Por Refuerzo:** Agentes basados en recompensas.
+2. **IA Responsable (Microsoft Framework):**
+   - Los 6 principios: Equidad, Confiabilidad/Seguridad, Privacidad, Inclusión, Transparencia y Responsabilidad.
+3. **Cargas de Trabajo Típicas:**
+   - Visión, Lenguaje, Voz, Procesamiento de Documentos y Analítica Predictiva.
+
+---
+
+## Bloque 2: Oferta de Servicios y Estrategia de Despliegue (2 h)
+*Objetivo: Entender el "dónde" y "cómo" se implementan las soluciones.*
+
+1. **Los Tres Niveles de Servicio en Azure:**
+   - **Nivel 1: Modelos Ready-to-use:** Consumo directo vía API/SDK sin entrenamiento previo.
+   - **Nivel 2: Customización (Fine-tuning):** Personalización de modelos base con datos propios (Custom Vision, Document Intelligence, etc.).
+   - **Nivel 3: Azure Machine Learning:** Ciclo de vida completo (MLOps). Gestión de datasets, etiquetado, entrenamiento desde cero, notebooks y despliegue de infraestructura dedicada.
+2. **Estrategias de Inferencia y Ejecución:**
+   - **Cloud-Native:** Escalabilidad total en la nube de Azure.
+   - **Contenedores de Azure AI (Docker):** Ejecución en infraestructura local (On-Premises/AKS) para cumplimiento de privacidad (Banca).
+   - **Modelos en el Edge (Exportación):** Uso de ONNX, TensorFlow o CoreML para dispositivos locales (Raspberry Pi, Móviles).
+3. **Consumo Técnico: SDK vs. REST API:**
+   - Ventajas de los SDKs (manejo de reintentos, seguridad integrada) vs. APIs (portabilidad universal).
+
+---
+
+## Bloque 3: Visión Artificial y Procesamiento de Documentos (2.5 h)
+*Objetivo: Extracción de valor de medios visuales y documentos estructurados.*
+
+1. **Azure AI Vision:**
+   - Clasificación de imágenes vs. Detección de objetos (Bounding Boxes).
+   - Segmentación, análisis espacial (video) y reconocimiento de marcas/celebridades.
+   - OCR y Face API (Políticas de acceso limitado).
+2. **Azure AI Document Intelligence:**
+   - El modelo híbrido: Visión + Layout + NLP.
+   - Modelos Pre-built (Facturas, IDs) vs. Modelos Custom.
+3. **Gobernanza de Modelos Custom:**
+   - El reto del "Feedback Loop": Por qué los servicios no auto-entrenan por defecto.
+   - Implementación de un "Shadow Store" (Blob Storage) para recolección de datos de producción.
+   - Gestión de Iteraciones: Entrenamiento, Publicación y Versionado de Endpoints.
+
+---
+
+## Bloque 4: Lenguaje, Voz y Agentes Conversacionales (2 h)
+*Objetivo: Procesamiento de la comunicación humana.*
+
+1. **Azure AI Language:**
+   - NLP Clásico: Análisis de sentimiento, extracción de entidades y resumen.
+   - **Protección de Datos:** Detección de PII (Información Personal Identificable) en banca.
+   - Conversational Language Understanding (CLU): La evolución de LUIS.
+2. **Azure AI Speech:**
+   - Speech-to-Text (Transcripción) y Text-to-Speech (Voces Neurales).
+   - Traducción de voz en tiempo real.
+3. **Ecosistema de Bots:**
+   - **Azure Bot Service:** Orquestación basada en código y conectividad multi-canal.
+   - Integración de servicios de lenguaje como "cerebro" del bot.
+
+---
+
+## Bloque 5: IA Generativa y Seguridad (2 h)
+*Objetivo: Implementación segura de LLMs y filtros de contenido.*
+
+1. **Azure OpenAI Service:**
+   - Diferencias con OpenAI comercial: Seguridad, aislamiento de datos y SLAs.
+   - Limitaciones por región, cuotas de tokens y versiones de modelos (GPT-4, Phi).
+2. **Arquitectura RAG (Retrieval-Augmented Generation):**
+   - El rol de **Azure AI Search**: Indexadores, búsqueda semántica y vectorial.
+   - Integración con fuentes de datos privadas.
+3. **Moderación y Filtros de Contenido (Content Safety):**
+   - Categorías de riesgo y niveles de severidad (Low, Medium, High).
+   - Configuración de políticas: Bloqueo vs. Notificación (Anotación).
+   - Manejo de Falsos Positivos: Cómo evitar que símbolos técnicos o logs rompan la ejecución del modelo.
+
+---
+
+## Bloque Final: Métricas de Éxito y Evaluación (Integrado)
+*Se revisa en cada sección de entrenamiento/customización.*
+
+1. **Modelos de Clasificación:** Matriz de Confusión, Precisión, Recall y F1-Score.
+2. **Modelos de Regresión:** MAE, RMSE y R-Squared ($R^2$).
+3. **Detección de Objetos:** IoU (Intersection over Union) y mAP.
