@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arquitectura y Servicios de Inteligencia Artificial en Azure</title>
+  <style>
+    :root {
+      --bg: #eef4ff;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-strong: #ffffff;
+      --ink: #122033;
+      --muted: #526074;
+      --primary: #0a5bd3;
+      --primary-deep: #083b87;
+      --primary-soft: #dbeafe;
+      --accent: #0f766e;
+      --accent-soft: #d1fae5;
+      --border: rgba(18, 32, 51, 0.1);
+      --shadow: 0 24px 60px rgba(18, 32, 51, 0.12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(10, 91, 211, 0.14), transparent 30%),
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.12), transparent 26%),
+        linear-gradient(180deg, #f3f8ff 0%, #eaf1fb 100%);
+      line-height: 1.65;
+    }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 64px;
+    }
+
+    .hero {
+      padding: 48px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(8, 59, 135, 0.96), rgba(10, 91, 211, 0.9));
+      color: #f7fbff;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.2rem, 4.8vw, 3.8rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      max-width: 14ch;
+    }
+
+    .hero p { margin: 0; max-width: 900px; }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    nav {
+      position: sticky;
+      top: 12px;
+      z-index: 20;
+      margin-bottom: 24px;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    nav ul { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    nav a {
+      text-decoration: none;
+      color: var(--primary-deep);
+      background: var(--primary-soft);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    main { display: grid; gap: 20px; }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 16px 38px rgba(18, 32, 51, 0.09);
+    }
+
+    .panel h2 { margin-top: 0; color: var(--primary-deep); font-size: 1.55rem; }
+    .panel h3 { margin-bottom: 8px; color: var(--accent); }
+
+    .grid-2, .grid-3 { display: grid; gap: 14px; margin-top: 12px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+
+    .card {
+      background: var(--surface-strong);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 12px 24px rgba(18, 32, 51, 0.07);
+    }
+
+    .card p, li { color: var(--muted); }
+
+    ul { margin: 8px 0 0; padding-left: 20px; }
+
+    .pill {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #115e59;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 920px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .hero { padding: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <h1>Inteligencia Artificial en Azure: de fundamentos a MLOps</h1>
+      <p>Material estructurado para revisar los conceptos base de IA, Machine Learning y Deep Learning; los principios de uso responsable de Microsoft; y los principales servicios de Azure para visión, lenguaje, voz, documentos, IA generativa y ciclo de vida completo de modelos.</p>
+      <div class="hero-badges">
+        <span class="badge">AI Fundamentals</span>
+        <span class="badge">Responsible AI</span>
+        <span class="badge">Azure AI Services</span>
+        <span class="badge">RAG &amp; MLOps</span>
+      </div>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="#fundamentos">Fundamentos</a></li>
+        <li><a href="#oferta">Oferta Azure AI</a></li>
+        <li><a href="#vision">Computer Vision</a></li>
+        <li><a href="#lenguaje">Lenguaje y Speech</a></li>
+        <li><a href="#genai">Azure OpenAI + RAG</a></li>
+        <li><a href="#mlops">Machine Learning Studio</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section id="fundamentos" class="panel">
+        <h2>1) Fundamentos de Inteligencia Artificial</h2>
+        <div class="grid-2">
+          <article class="card">
+            <span class="pill">Conceptos Base</span>
+            <h3>IA, ML, DL y Aprendizaje Autom&aacute;tico</h3>
+            <ul>
+              <li><strong>Inteligencia Artificial:</strong> disciplina amplia para crear sistemas capaces de percibir, razonar y actuar.</li>
+              <li><strong>Machine Learning:</strong> subcampo que aprende patrones a partir de datos.</li>
+              <li><strong>Deep Learning:</strong> redes neuronales profundas para tareas complejas como visi&oacute;n y lenguaje.</li>
+              <li><strong>IA Generativa:</strong> modelos que crean texto, imagen, c&oacute;digo u otros contenidos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <span class="pill">Tipos de Aprendizaje</span>
+            <h3>Supervisado, no supervisado y por refuerzo</h3>
+            <ul>
+              <li><strong>Supervisado:</strong> clasificaci&oacute;n y regresi&oacute;n usando datos etiquetados.</li>
+              <li><strong>No supervisado:</strong> clustering y descubrimiento de patrones sin etiqueta.</li>
+              <li><strong>Refuerzo:</strong> agentes que aprenden por prueba/error con recompensas.</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:14px;">
+          <span class="pill">Responsible AI</span>
+          <h3>Principios de IA Responsable (Microsoft)</h3>
+          <p>Dise&ntilde;o y operaci&oacute;n de soluciones de IA bajo seis principios: <strong>equidad</strong>, <strong>confiabilidad y seguridad</strong>, <strong>privacidad y seguridad de datos</strong>, <strong>inclusi&oacute;n</strong>, <strong>transparencia</strong> y <strong>responsabilidad</strong>.</p>
+        </article>
+      </section>
+
+      <section id="oferta" class="panel">
+        <h2>2) Oferta de servicios de IA en Azure (vista ejecutiva)</h2>
+        <div class="grid-3">
+          <article class="card">
+            <span class="pill">Nivel 1</span>
+            <h3>Modelos listos para usar</h3>
+            <p>Servicios preentrenados consumibles por API/SDK para escenarios de visi&oacute;n, lenguaje, voz y documentos, minimizando tiempo de salida a producci&oacute;n.</p>
+          </article>
+          <article class="card">
+            <span class="pill">Nivel 2</span>
+            <h3>Servicios para personalizaci&oacute;n</h3>
+            <p>Capacidades para adaptar modelos con datos de negocio: por ejemplo, <strong>Custom Vision</strong>, modelos custom de <strong>Document Intelligence</strong> o personalizaci&oacute;n de lenguaje.</p>
+          </article>
+          <article class="card">
+            <span class="pill">Nivel 3</span>
+            <h3>Modelos base y MLOps</h3>
+            <p>Gobierno del ciclo completo en <strong>Azure Machine Learning</strong>: datasets, etiquetado, entrenamiento, evaluaci&oacute;n, despliegue, monitoreo y versionado.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="vision" class="panel">
+        <h2>3) Computer Vision y documentos</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Azure AI Vision y Custom Vision</h3>
+            <ul>
+              <li>Clasificaci&oacute;n de im&aacute;genes, detecci&oacute;n de objetos y OCR.</li>
+              <li>Escenarios de inspecci&oacute;n visual, compliance y automatizaci&oacute;n operativa.</li>
+              <li><strong>Custom Vision:</strong> entrenamiento de modelos para dominios espec&iacute;ficos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Form Recognizer / Document Intelligence</h3>
+            <ul>
+              <li>Extracci&oacute;n de texto, tablas, claves y valores desde formularios.</li>
+              <li>Modelos preconstruidos (facturas, identificaciones) y modelos custom.</li>
+              <li>Aplicaci&oacute;n en onboarding, KYC, backoffice y procesamiento masivo.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="lenguaje" class="panel">
+        <h2>4) Lenguaje, NLP y Speech</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Azure AI Language (NLP)</h3>
+            <p>Sentiment analysis, extracci&oacute;n de entidades, resumen, clasificaci&oacute;n de texto y detecci&oacute;n de PII para proteger informaci&oacute;n sensible.</p>
+          </article>
+          <article class="card">
+            <h3>Speech to Text / Text to Speech</h3>
+            <p>Transcripci&oacute;n autom&aacute;tica, subtitulado, asistencias por voz y experiencias conversacionales con voces neuronales.</p>
+          </article>
+          <article class="card">
+            <h3>Orquestaci&oacute;n Conversacional</h3>
+            <p>Integraci&oacute;n con bots y aplicaciones empresariales para automatizar soporte, ventas y autoservicio omnicanal.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="genai" class="panel">
+        <h2>5) Azure OpenAI Service e incorporaci&oacute;n de RAG</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Azure OpenAI Service</h3>
+            <ul>
+              <li>Acceso empresarial a modelos avanzados con controles de seguridad y cumplimiento.</li>
+              <li>Casos: copilotos internos, asistentes de conocimiento, automatizaci&oacute;n documental.</li>
+              <li>Integraci&oacute;n con redes privadas, identidad corporativa y observabilidad.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>RAG (Retrieval-Augmented Generation)</h3>
+            <ul>
+              <li>Conecta LLMs con fuentes internas para respuestas contextualizadas.</li>
+              <li>Patr&oacute;n habitual: ingesta + indexaci&oacute;n + b&uacute;squeda (sem&aacute;ntica/vectorial) + generaci&oacute;n.</li>
+              <li>Reduce alucinaciones y mejora trazabilidad en dominios regulados.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="mlops" class="panel">
+        <h2>6) Machine Learning Studio y ciclo de vida de modelos</h2>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Datos y Etiquetado</h3>
+            <p>Registro y versionado de datasets, pipelines de preparaci&oacute;n y procesos de etiquetado para casos supervisados.</p>
+          </article>
+          <article class="card">
+            <h3>Entrenamiento y Evaluaci&oacute;n</h3>
+            <p>Experimentos reproducibles, tuning de hiperpar&aacute;metros, comparaci&oacute;n de m&eacute;tricas y trazabilidad de modelos.</p>
+          </article>
+          <article class="card">
+            <h3>Despliegue y Operaci&oacute;n</h3>
+            <p>Publicaci&oacute;n en endpoints, escalado, monitoreo continuo, alertas y estrategia de reentrenamiento.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
