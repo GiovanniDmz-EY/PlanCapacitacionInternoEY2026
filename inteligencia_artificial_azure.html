@@ -198,7 +198,15 @@
         <article class="card" style="margin-top:14px;">
           <span class="pill">Responsible AI</span>
           <h3>Principios de IA Responsable (Microsoft)</h3>
-          <p>Dise&ntilde;o y operaci&oacute;n de soluciones de IA bajo seis principios: <strong>equidad</strong>, <strong>confiabilidad y seguridad</strong>, <strong>privacidad y seguridad de datos</strong>, <strong>inclusi&oacute;n</strong>, <strong>transparencia</strong> y <strong>responsabilidad</strong>.</p>
+          <p>Dise&ntilde;o y operaci&oacute;n de soluciones de IA bajo seis principios que gu&iacute;an todo el ciclo de vida del modelo:</p>
+          <ul>
+            <li><strong>Equidad:</strong> reducir sesgos injustificados y evaluar impactos en distintos grupos de usuarios.</li>
+            <li><strong>Confiabilidad y seguridad:</strong> asegurar funcionamiento consistente, robusto y seguro ante errores o uso indebido.</li>
+            <li><strong>Privacidad y seguridad de datos:</strong> proteger la informaci&oacute;n personal y aplicar controles de acceso y gobierno de datos.</li>
+            <li><strong>Inclusi&oacute;n:</strong> dise&ntilde;ar experiencias que contemplen diversidad de contextos, capacidades y perfiles.</li>
+            <li><strong>Transparencia:</strong> comunicar qu&eacute; hace el sistema, sus alcances, limitaciones y criterios de decisi&oacute;n.</li>
+            <li><strong>Responsabilidad:</strong> definir responsables, procesos de supervisi&oacute;n y mecanismos de correcci&oacute;n continua.</li>
+          </ul>
         </article>
       </section>
 
@@ -221,25 +229,62 @@
             <p>Gobierno del ciclo completo en <strong>Azure Machine Learning</strong>: datasets, etiquetado, entrenamiento, evaluaci&oacute;n, despliegue, monitoreo y versionado.</p>
           </article>
         </div>
+
+        <h3 style="margin-top: 18px;">Modalidades de ejecuci&oacute;n: nube vs local/edge</h3>
+        <div class="grid-2">
+          <article class="card">
+            <span class="pill">Ejecuci&oacute;n en nube</span>
+            <h3>Escalabilidad y servicios administrados</h3>
+            <ul>
+              <li>La mayor&iacute;a de servicios de Azure AI se consumen directamente en la nube con administraci&oacute;n completa del servicio.</li>
+              <li>Permite escalar demanda, acelerar despliegues y reducir carga operativa de infraestructura.</li>
+              <li>El esquema de costos depende del consumo, tipo de modelo, capacidad y regi&oacute;n.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <span class="pill">Ejecuci&oacute;n local / edge</span>
+            <h3>Dos rutas principales para operar local</h3>
+            <ul>
+              <li><strong>Ruta A - Contenedor oficial de Azure AI:</strong> se ejecuta localmente (Docker/Kubernetes), pero reporta metrado de uso para facturaci&oacute;n.</li>
+              <li>En el esquema est&aacute;ndar de contenedores, el host debe tener conectividad a internet para comunicarse con Azure y enviar datos de medici&oacute;n.</li>
+              <li><strong>Ruta B - Exportaci&oacute;n de modelo para edge:</strong> se exporta el modelo entrenado para inferencia local en dispositivo, sin correr el contenedor administrado del servicio.</li>
+              <li>En ambos casos aplican restricciones de hardware (CPU/GPU, memoria, almacenamiento y aceleradores disponibles).</li>
+              <li>Siempre se debe validar costos: consumo cloud, costos de contenedor/uso y costos operativos de infraestructura local.</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:14px;">
+          <span class="pill">Precisi&oacute;n importante</span>
+          <h3>Conectividad, modalidad desconectada y ejemplo</h3>
+          <ul>
+            <li>Los contenedores de Azure AI requieren red para metering en el modelo est&aacute;ndar.</li>
+            <li>Existe modalidad de <strong>contenedores desconectados</strong> para algunos servicios, sujeta a aprobaci&oacute;n y esquema de precios por compromiso.</li>
+            <li>Ejemplo: en <strong>Custom Vision</strong> se puede elegir tipo de modelo orientado a exportaci&oacute;n, pensado para correr en dispositivos edge seg&uacute;n el escenario.</li>
+          </ul>
+        </article>
       </section>
 
       <section id="vision" class="panel">
         <h2>3) Computer Vision y documentos</h2>
+        <p>La visi&oacute;n artificial permite que los sistemas interpreten im&aacute;genes o video para extraer informaci&oacute;n accionable. En Azure, se combina uso de modelos preentrenados con opciones de personalizaci&oacute;n para escenarios de negocio.</p>
         <div class="grid-2">
           <article class="card">
             <h3>Azure AI Vision y Custom Vision</h3>
             <ul>
-              <li>Clasificaci&oacute;n de im&aacute;genes, detecci&oacute;n de objetos y OCR.</li>
-              <li>Escenarios de inspecci&oacute;n visual, compliance y automatizaci&oacute;n operativa.</li>
-              <li><strong>Custom Vision:</strong> entrenamiento de modelos para dominios espec&iacute;ficos.</li>
+              <li><strong>Casos de uso principales:</strong> clasificaci&oacute;n de im&aacute;genes, detecci&oacute;n de objetos, segmentaci&oacute;n sem&aacute;ntica y detecci&oacute;n de rostros.</li>
+              <li><strong>Capacidades complementarias:</strong> OCR, descripci&oacute;n de im&aacute;genes y detecci&oacute;n de elementos visuales como marcas o logos (seg&uacute;n modelo y versi&oacute;n del servicio).</li>
+              <li><strong>An&aacute;lisis de rostro (descriptivo):</strong> describe rasgos visuales generales para enriquecer contexto (por ejemplo, presencia de lentes, orientaci&oacute;n del rostro o calidad de captura).</li>
+              <li><strong>Identificaci&oacute;n de personas por rostro (biom&eacute;trica):</strong> compara rostros contra una base autorizada para escenarios como control de acceso de empleados, con requisitos de cumplimiento y gobierno.</li>
+              <li><strong>Custom Vision:</strong> entrenamiento de modelos para dominios espec&iacute;ficos y despliegues ajustados al caso de uso.</li>
             </ul>
           </article>
           <article class="card">
             <h3>Form Recognizer / Document Intelligence</h3>
             <ul>
-              <li>Extracci&oacute;n de texto, tablas, claves y valores desde formularios.</li>
-              <li>Modelos preconstruidos (facturas, identificaciones) y modelos custom.</li>
-              <li>Aplicaci&oacute;n en onboarding, KYC, backoffice y procesamiento masivo.</li>
+              <li>Extracci&oacute;n de texto, tablas, claves y valores desde formularios y documentos escaneados.</li>
+              <li>Modelos preconstruidos (facturas, identificaciones) y modelos custom para formatos internos.</li>
+              <li>Aplicaci&oacute;n en onboarding, KYC, backoffice y procesamiento documental masivo.</li>
             </ul>
           </article>
         </div>

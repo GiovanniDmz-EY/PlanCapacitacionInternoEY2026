@@ -203,6 +203,7 @@
         <li><a href="#s4">4. Datos y almacenamiento</a></li>
         <li><a href="#s5">5. Seguridad y cumplimiento</a></li>
         <li><a href="#s6">6. Monitoreo y operaci&oacute;n</a></li>
+        <li><a href="#s7">7. Oferta de servicios Azure e IA</a></li>
       </ul>
     </nav>
 
@@ -640,6 +641,48 @@
 
         <div class="note">
           <strong>Idea pr&aacute;ctica:</strong> este glosario no sustituye las sesiones tem&aacute;ticas. Su funci&oacute;n es dar una definici&oacute;n corta para ubicar cada concepto dentro de la arquitectura de Azure.
+        </div>
+      </section>
+
+      <section class="section" id="s7">
+        <h2>7. Oferta de servicios Azure e IA</h2>
+        <div class="grid-2">
+          <article class="term">
+            <h3>Servicios listos para usar</h3>
+            <p>Servicios que ya entregan una capacidad de IA o anal&iacute;tica sin entrenar un modelo desde cero. Normalmente se consumen por API, SDK o conectores y se enfocan en resolver tareas concretas como visi&oacute;n, lenguaje, b&uacute;squeda, voz o extracci&oacute;n de informaci&oacute;n.</p>
+          </article>
+          <article class="term">
+            <h3>Servicios para personalizaci&oacute;n</h3>
+            <p>Servicios que permiten adaptar modelos o capacidades existentes con datos propios, configuraci&oacute;n o entrenamiento guiado. Se usan cuando la capacidad base existe, pero necesita ajustarse al dominio, vocabulario, im&aacute;genes, documentos o reglas del negocio.</p>
+          </article>
+          <article class="term">
+            <h3>Ciclo de vida completo del modelo</h3>
+            <p>Plataformas orientadas a administrar todo el flujo de un modelo: preparaci&oacute;n de datasets, almacenamiento, entrenamiento, evaluaci&oacute;n, validaci&oacute;n, despliegue, monitoreo y publicaci&oacute;n para consumo de aplicaciones.</p>
+          </article>
+          <article class="term">
+            <h3>Cloud-first</h3>
+            <p>Modelo donde el servicio corre principalmente en Azure. Permite aprovechar escalabilidad, servicios administrados, integraci&oacute;n con seguridad, monitoreo y facturaci&oacute;n por consumo o capacidad contratada.</p>
+          </article>
+          <article class="term">
+            <h3>Ejecuci&oacute;n local o edge</h3>
+            <p>Algunos servicios o modelos pueden ejecutarse localmente, en contenedores o en dispositivos edge, dependiendo del servicio y del tipo de modelo. Es &uacute;til cuando se requiere baja latencia, operaci&oacute;n con conectividad limitada, procesamiento cercano al dato o restricciones de residencia.</p>
+          </article>
+          <article class="term">
+            <h3>Restricciones de hardware</h3>
+            <p>Al llevar modelos fuera de la nube, la capacidad del equipo importa: CPU, GPU, memoria, almacenamiento, sistema operativo y aceleradores disponibles pueden limitar el tama&ntilde;o del modelo, la velocidad de inferencia y la cantidad de solicitudes simult&aacute;neas.</p>
+          </article>
+          <article class="term">
+            <h3>Costos y tarifas</h3>
+            <p>El esquema de costos cambia seg&uacute;n si se usa un servicio administrado en Azure, una capacidad reservada, un contenedor, un modelo exportado o infraestructura propia. Siempre debe validarse el precio, licenciamiento, consumo, soporte y costo del hardware requerido.</p>
+          </article>
+          <article class="term">
+            <h3>Custom Vision y modelos exportables</h3>
+            <p>En escenarios como Custom Vision, al entrenar puede elegirse un tipo de modelo pensado para exportaci&oacute;n y ejecuci&oacute;n en dispositivos edge. Esta opci&oacute;n depende del tipo de proyecto y debe validarse contra el dispositivo destino y sus capacidades.</p>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Criterio de selecci&oacute;n:</strong> antes de elegir entre nube, local o edge, conviene revisar necesidad funcional, latencia, conectividad, privacidad, volumen, costo total, capacidad de hardware y disponibilidad real de versi&oacute;n exportable o contenedorizada.
         </div>
       </section>
     </main>
