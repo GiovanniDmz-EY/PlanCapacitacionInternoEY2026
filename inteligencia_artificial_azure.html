@@ -129,6 +129,40 @@
 
     ul { margin: 8px 0 0; padding-left: 20px; }
 
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 12px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface-strong);
+      box-shadow: 0 12px 24px rgba(18, 32, 51, 0.07);
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 680px;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      vertical-align: top;
+    }
+
+    .compare-table th {
+      background: var(--primary-soft);
+      color: var(--primary-deep);
+      font-size: 0.92rem;
+    }
+
+    .compare-table tr:last-child td {
+      border-bottom: none;
+    }
+
     .pill {
       display: inline-block;
       padding: 5px 9px;
@@ -161,6 +195,7 @@
 
     <nav>
       <ul>
+        <li><a href="#certificaciones">Certificaciones AI</a></li>
         <li><a href="#fundamentos">Fundamentos</a></li>
         <li><a href="#oferta">Oferta Azure AI</a></li>
         <li><a href="#vision">Computer Vision</a></li>
@@ -171,6 +206,35 @@
     </nav>
 
     <main>
+      <section id="certificaciones" class="panel">
+        <h2>0) Actualizaci&oacute;n de certificaciones de IA en Azure</h2>
+        <p>Debido a cambios recientes en el mapa de certificaciones, este plan considera dos rutas de estudio complementarias para mantener una base s&oacute;lida y, al mismo tiempo, incorporar el nuevo enfoque en soluciones con agentes.</p>
+
+        <div class="grid-2">
+          <article class="card">
+            <span class="pill">Ruta Base</span>
+            <h3>AI-900 (fundamentos tradicionales)</h3>
+            <ul>
+              <li><strong>Enfoque principal:</strong> conceptos base de IA, ML y servicios de Azure AI a nivel introductorio.</li>
+              <li><strong>Ventana de vigencia:</strong> se comunica su retiro a partir del <strong>30 de junio</strong>, por lo que conviene acelerar su preparaci&oacute;n para quien desee presentarla.</li>
+              <li><strong>Valor para el equipo:</strong> consolida lenguaje com&uacute;n y entendimiento transversal antes de pasar a dise&ntilde;os m&aacute;s avanzados.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="pill">Ruta Nueva</span>
+            <h3>AI-901 (nuevo enfoque)</h3>
+            <ul>
+              <li><strong>Enfoque principal:</strong> mayor prioridad a escenarios de IA aplicada y soluciones orientadas a agentes.</li>
+              <li><strong>Cambio de contenido:</strong> algunos servicios y temas fueron remapeados para enfatizar arquitecturas modernas de IA.</li>
+              <li><strong>Valor para el equipo:</strong> alinea capacidades con casos actuales de automatizaci&oacute;n, copilotos y experiencias conversacionales.</li>
+            </ul>
+          </article>
+        </div>
+
+
+      </section>
+
       <section id="fundamentos" class="panel">
         <h2>1) Fundamentos de Inteligencia Artificial</h2>
         <div class="grid-2">
@@ -266,65 +330,188 @@
       </section>
 
       <section id="vision" class="panel">
-        <h2>3) Computer Vision y documentos</h2>
-        <p>La visi&oacute;n artificial permite que los sistemas interpreten im&aacute;genes o video para extraer informaci&oacute;n accionable. En Azure, se combina uso de modelos preentrenados con opciones de personalizaci&oacute;n para escenarios de negocio.</p>
-        <div class="grid-2">
+        <h2>3) Azure AI Vision y Document Intelligence</h2>
+        <p>Este bloque se divide en tres piezas: <strong>Azure AI Vision</strong> para capacidades visuales generales, <strong>Custom Vision</strong> para entrenamiento de modelos propios y <strong>Document Intelligence</strong> para extracci&oacute;n documental avanzada.</p>
+        <div class="grid-3">
           <article class="card">
-            <h3>Azure AI Vision y Custom Vision</h3>
+            <h3>Azure AI Vision (el sentido de la vista)</h3>
             <ul>
-              <li><strong>Casos de uso principales:</strong> clasificaci&oacute;n de im&aacute;genes, detecci&oacute;n de objetos, segmentaci&oacute;n sem&aacute;ntica y detecci&oacute;n de rostros.</li>
-              <li><strong>Capacidades complementarias:</strong> OCR, descripci&oacute;n de im&aacute;genes y detecci&oacute;n de elementos visuales como marcas o logos (seg&uacute;n modelo y versi&oacute;n del servicio).</li>
-              <li><strong>An&aacute;lisis de rostro (descriptivo):</strong> describe rasgos visuales generales para enriquecer contexto (por ejemplo, presencia de lentes, orientaci&oacute;n del rostro o calidad de captura).</li>
-              <li><strong>Identificaci&oacute;n de personas por rostro (biom&eacute;trica):</strong> compara rostros contra una base autorizada para escenarios como control de acceso de empleados, con requisitos de cumplimiento y gobierno.</li>
-              <li><strong>Custom Vision:</strong> entrenamiento de modelos para dominios espec&iacute;ficos y despliegues ajustados al caso de uso.</li>
+              <li><strong>Capacidades out-of-the-box:</strong> image analysis para clasificaci&oacute;n, detecci&oacute;n de objetos comunes, descripci&oacute;n de im&aacute;genes y detecci&oacute;n de marcas/logos.</li>
+              <li><strong>OCR:</strong> extracci&oacute;n de texto simple desde fotos, capturas o documentos visuales.</li>
+              <li><strong>Capacidades avanzadas (Face Service):</strong> reconocimiento facial, verificaci&oacute;n de identidad y liveness detection para distinguir una persona real de una imagen.</li>
+              <li><strong>Capacidades avanzadas (Spatial Analysis):</strong> anal&iacute;tica de video en tiempo real para conteo de personas, tiempos de permanencia y detecci&oacute;n de ingresos a zonas restringidas.</li>
+              <li><strong>Cambio clave:</strong> para clientes nuevos, los modelos personalizados ya no se entrenan dentro de este servicio; se gestionan en <strong>Custom Vision</strong>.</li>
             </ul>
           </article>
+
           <article class="card">
-            <h3>Form Recognizer / Document Intelligence</h3>
+            <h3>Custom Vision (modelos personalizados)</h3>
             <ul>
-              <li>Extracci&oacute;n de texto, tablas, claves y valores desde formularios y documentos escaneados.</li>
-              <li>Modelos preconstruidos (facturas, identificaciones) y modelos custom para formatos internos.</li>
-              <li>Aplicaci&oacute;n en onboarding, KYC, backoffice y procesamiento documental masivo.</li>
+              <li><strong>Alcance:</strong> entrenamiento de modelos de <strong>clasificaci&oacute;n</strong> y <strong>detecci&oacute;n de objetos</strong> con datos de negocio.</li>
+              <li><strong>Nota de plataforma (desde 2025):</strong> el entrenamiento custom se centraliza aqu&iacute;; en esquemas anteriores puede existir soporte solo para implementaciones ya existentes.</li>
+              <li><strong>Flujo de datos:</strong> carga de im&aacute;genes/video, etiquetado y validaci&oacute;n previa al entrenamiento.</li>
+              <li><strong>Criterios de etiquetado:</strong> definir reglas consistentes (objeto parcial/completo, borroso/n&iacute;tido, borde de caja y regi&oacute;n anotada).</li>
+              <li><strong>Balance de clases:</strong> evitar distribuciones extremas (por ejemplo, pocas muestras en una clase y muchas en otra) para reducir sesgo y mejorar aprendizaje.</li>
+              <li><strong>Auto-etiquetado:</strong> acelera trabajo, pero exige revisi&oacute;n humana para verificar calidad y coherencia con el criterio del equipo.</li>
+              <li><strong>Entrenamiento y predicci&oacute;n:</strong> se configuran recursos para train/predict seg&uacute;n carga y costo computacional.</li>
+              <li><strong>Iteraciones y publicaci&oacute;n:</strong> una iteraci&oacute;n entrenada no queda disponible en producci&oacute;n hasta <strong>publicarla</strong>.</li>
+              <li><strong>Versionado:</strong> la publicaci&oacute;n genera una versi&oacute;n; si cambia la versi&oacute;n activa, la aplicaci&oacute;n consumidora debe actualizar referencia/configuraci&oacute;n.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Azure AI Document Intelligence</h3>
+            <ul>
+              <li><strong>Modelos pre-built:</strong> facturas, recibos, IDs y otros documentos frecuentes para extracci&oacute;n inmediata.</li>
+              <li><strong>Layout (estructura y estilo):</strong> identifica tablas complejas, p&aacute;rrafos, c&oacute;digos de barras y atributos de formato como fuente, tama&ntilde;o, color y estilos (negrita/it&aacute;lica).</li>
+              <li><strong>Modelos custom:</strong> entrenamiento para formularios internos o documentos propios de la empresa.</li>
+              <li><strong>Clasificaci&oacute;n documental:</strong> decide autom&aacute;ticamente el tipo de documento antes de leerlo, reduciendo errores de procesamiento.</li>
+              <li><strong>Valor de negocio:</strong> conecta papel/PDF con plataformas de BI para acelerar operaciones de onboarding, KYC y backoffice.</li>
             </ul>
           </article>
         </div>
+
+        <article class="card" style="margin-top:14px;">
+          <span class="pill">Arquitectura y Gobierno de Datos</span>
+          <h3>Auditor&iacute;a, trazabilidad y retenci&oacute;n: dise&ntilde;o fuera del servicio</h3>
+          <ul>
+            <li><strong>Punto clave:</strong> servicios como Vision, Document Intelligence y Custom Vision exponen resultados y m&eacute;tricas operativas, pero no sustituyen una estrategia empresarial de almacenamiento/auditor&iacute;a.</li>
+            <li><strong>Implicaci&oacute;n arquitect&oacute;nica:</strong> si se requiere evidencia, reentrenamiento o trazabilidad, el proyecto debe almacenar de forma expl&iacute;cita entradas (im&aacute;genes/documentos) y salidas (JSON/respuestas) en su propio repositorio de datos.</li>
+            <li><strong>Patrones recomendados:</strong> Data Lake/Blob para archivos fuente, base documental o tablas para respuestas estructuradas, y repositorios de embeddings/vectoriales cuando aplique b&uacute;squeda sem&aacute;ntica.</li>
+            <li><strong>Decisiones con cliente:</strong> definir qu&eacute; datos se guardan, cu&aacute;les no, periodo de retenci&oacute;n, controles de acceso, cifrado, anonimizado y costo total de almacenamiento.</li>
+            <li><strong>Planeaci&oacute;n de modelos custom:</strong> sin datos suficientes y balanceados por clase, entrenar no es viable ni costo-efectivo; se debe contemplar esta preparaci&oacute;n en cronograma y expectativas del proyecto.</li>
+            <li><strong>Regla pr&aacute;ctica:</strong> para Custom Vision suele recomendarse un m&iacute;nimo operativo por categor&iacute;a (com&uacute;nmente del orden de decenas, por ejemplo 50+) antes de esperar resultados estables.</li>
+          </ul>
+        </article>
       </section>
 
       <section id="lenguaje" class="panel">
         <h2>4) Lenguaje, NLP y Speech</h2>
+        <p>Esta capa cubre el entendimiento de texto, voz e intenci&oacute;n. El servicio "entienda", primero normaliza, descompone y ordena la informaci&oacute;n para poder interpretarla correctamente.</p>
         <div class="grid-3">
           <article class="card">
-            <h3>Azure AI Language (NLP)</h3>
-            <p>Sentiment analysis, extracci&oacute;n de entidades, resumen, clasificaci&oacute;n de texto y detecci&oacute;n de PII para proteger informaci&oacute;n sensible.</p>
-          </article>
-          <article class="card">
-            <h3>Speech to Text / Text to Speech</h3>
-            <p>Transcripci&oacute;n autom&aacute;tica, subtitulado, asistencias por voz y experiencias conversacionales con voces neuronales.</p>
-          </article>
-          <article class="card">
-            <h3>Orquestaci&oacute;n Conversacional</h3>
-            <p>Integraci&oacute;n con bots y aplicaciones empresariales para automatizar soporte, ventas y autoservicio omnicanal.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="genai" class="panel">
-        <h2>5) Azure OpenAI Service e incorporaci&oacute;n de RAG</h2>
-        <div class="grid-2">
-          <article class="card">
-            <h3>Azure OpenAI Service</h3>
+            <h3>Procesamiento de texto: limpieza y orden</h3>
             <ul>
-              <li>Acceso empresarial a modelos avanzados con controles de seguridad y cumplimiento.</li>
-              <li>Casos: copilotos internos, asistentes de conocimiento, automatizaci&oacute;n documental.</li>
-              <li>Integraci&oacute;n con redes privadas, identidad corporativa y observabilidad.</li>
+              <li><strong>Normalizaci&oacute;n:</strong> prepara el texto para reducir ruido y manejar variantes comunes. En espa&ntilde;ol, el contexto ayuda a distinguir casos donde una tilde cambia el sentido.</li>
+              <li><strong>Lematizaci&oacute;n:</strong> lleva palabras como "corriendo", "corri&oacute;" o "correremos" a su forma base para evitar entrenar decenas de variantes del mismo verbo.</li>
+              <li><strong>Tokenizaci&oacute;n:</strong> divide el texto en piezas m&aacute;s peque&ntilde;as para que el sistema pueda tolerar errores de dedo y reconocer patrones parciales.</li>
+              <li><strong>Capacidades de Azure AI Language:</strong> sentimiento, resumen, extracci&oacute;n de entidades, clasificaci&oacute;n y detecci&oacute;n de PII.</li>
+              <li><strong>Custom NER:</strong> entrenamiento de entidades de negocio (productos, c&oacute;digos internos, terminolog&iacute;a t&eacute;cnica).</li>
             </ul>
           </article>
           <article class="card">
-            <h3>RAG (Retrieval-Augmented Generation)</h3>
+            <h3>L&oacute;gica NLU: intenciones y entidades</h3>
             <ul>
-              <li>Conecta LLMs con fuentes internas para respuestas contextualizadas.</li>
-              <li>Patr&oacute;n habitual: ingesta + indexaci&oacute;n + b&uacute;squeda (sem&aacute;ntica/vectorial) + generaci&oacute;n.</li>
-              <li>Reduce alucinaciones y mejora trazabilidad en dominios regulados.</li>
+              <li><strong>Intenci&oacute;n:</strong> representa lo que el usuario quiere hacer. Ejemplo: "Quiero comprar un boleto" se interpreta como una acci&oacute;n tipo comprar ticket.</li>
+              <li><strong>Entidad:</strong> aporta el detalle sobre el que recae la acci&oacute;n, como ciudad, fecha, producto o persona.</li>
+              <li><strong>CLU:</strong> Conversational Language Understanding es la capacidad para modelar intenciones y entidades en experiencias conversacionales.</li>
+              <li><strong>Variaciones regionales:</strong> el servicio contempla diferencias como tuteo y voseo para mapear peticiones equivalentes con distinta expresi&oacute;n ling&uuml;&iacute;stica.</li>
+              <li><strong>Evoluci&oacute;n de plataforma:</strong> CLU reemplaza escenarios cl&aacute;sicos previamente asociados con LUIS.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Procesamiento de voz: de ondas a datos</h3>
+            <ul>
+              <li><strong>Speech to Text:</strong> aplica normalizaci&oacute;n de audio para reducir ruido, estabilizar volumen y enfocarse en la voz humana.</li>
+              <li><strong>Identificaci&oacute;n de idioma:</strong> puede detectar idioma autom&aacute;ticamente, pero en proyectos se recomienda fijarlo cuando sea posible (por ejemplo, es-MX) para mejorar precisi&oacute;n.</li>
+              <li><strong>Text to Speech:</strong> usa voces neuronales que generan entonaci&oacute;n m&aacute;s natural que los enfoques cl&aacute;sicos de fragmentos grabados.</li>
+              <li><strong>SSML:</strong> permite controlar pausas, tono, velocidad e intenci&oacute;n expresiva de la voz sintetizada.</li>
+              <li><strong>Custom Neural Voice:</strong> personalizaci&oacute;n de voz para construir identidad sonora de marca, sujeto a gobierno y aprobaciones.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="grid-2" style="margin-top:14px;">
+          <article class="card">
+            <span class="pill">Mundo Real</span>
+            <h3>&iquest;Por qu&eacute; falla la IA de lenguaje o voz?</h3>
+            <ul>
+              <li><strong>Falta de contexto:</strong> frases demasiado cortas como "s&iacute;" no ofrecen suficientes tokens para interpretar la intenci&oacute;n real.</li>
+              <li><strong>Ambig&uuml;edad:</strong> la polisemia del espa&ntilde;ol exige ejemplos suficientes para separar significados distintos de una misma palabra.</li>
+              <li><strong>Mala calidad de audio:</strong> eco, m&uacute;sica de fondo o ruido extremo empujan la normalizaci&oacute;n ac&uacute;stica a su l&iacute;mite.</li>
+              <li><strong>Dise&ntilde;o de entrenamiento pobre:</strong> ejemplos poco variados o entidades mal definidas afectan directamente la precisi&oacute;n del modelo.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="pill">Enfoque de Consultor&iacute;a</span>
+            <h3>Qu&eacute; conviene explicar al cliente o al equipo</h3>
+            <ul>
+              <li><strong>Language:</strong> se usa cuando la meta es entender texto, detectar patrones o extraer estructura sem&aacute;ntica.</li>
+              <li><strong>Speech:</strong> se usa cuando el desaf&iacute;o principal es capturar o generar voz con calidad operacional.</li>
+              <li><strong>Dise&ntilde;o correcto:</strong> antes de hablar de modelos, hay que fijar idioma, contexto de uso, ejemplos representativos y criterios de calidad del audio o texto.</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:14px;">
+          <span class="pill">Comparativa R&aacute;pida</span>
+          <h3>Servicios de lenguaje vs. voz</h3>
+          <div class="table-wrap">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th>Si quieres que la IA...</th>
+                  <th>Usa este servicio</th>
+                  <th>Concepto clave</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Entienda una orden o petici&oacute;n</td>
+                  <td>Azure AI Language (CLU)</td>
+                  <td>Intenciones y entidades</td>
+                </tr>
+                <tr>
+                  <td>Transcriba una reuni&oacute;n o llamada</td>
+                  <td>Azure AI Speech (STT)</td>
+                  <td>Normalizaci&oacute;n de audio</td>
+                </tr>
+                <tr>
+                  <td>Lea un texto o libro en voz alta</td>
+                  <td>Azure AI Speech (TTS)</td>
+                  <td>SSML y entonaci&oacute;n</td>
+                </tr>
+                <tr>
+                  <td>Detecte datos sensibles en un texto</td>
+                  <td>Azure AI Language (PII)</td>
+                  <td>Reconocimiento de patrones</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card" style="margin-top:14px;">
+          <span class="pill">Seguridad de Contenido</span>
+          <h3>Azure AI Content Safety</h3>
+          <ul>
+            <li><strong>Prop&oacute;sito:</strong> analizar contenido expl&iacute;cito, agresiones, odio, violencia o autolesi&oacute;n en texto e interacciones digitales.</li>
+            <li><strong>Enfoque:</strong> no depende solo de listas negras de palabras; usa modelos para interpretar contexto, tono e intenci&oacute;n del mensaje.</li>
+            <li><strong>Categor&iacute;as principales:</strong> <strong>Hate</strong>, <strong>Self-harm</strong>, <strong>Sexual</strong> y <strong>Violence</strong>.</li>
+            <li><strong>Severidad:</strong> devuelve niveles de riesgo para que la soluci&oacute;n decida c&oacute;mo responder seg&uacute;n la pol&iacute;tica del negocio.</li>
+            <li><strong>Uso pr&aacute;ctico:</strong> en un bot o transcripci&oacute;n bancaria se puede detectar un insulto y elegir entre detener la conversaci&oacute;n, escalar a un agente humano o enmascarar la groser&iacute;a en el log de auditor&iacute;a.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="genai" class="panel">
+        <h2>5) Azure OpenAI y Foundry (razonamiento generativo)</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Modelos generativos</h3>
+            <ul>
+              <li><strong>Azure OpenAI:</strong> acceso empresarial a modelos como GPT-4o y otros LLMs con controles de seguridad y cumplimiento.</li>
+              <li><strong>Capacidad multimodal:</strong> generaci&oacute;n y comprensi&oacute;n de texto/imagen seg&uacute;n el modelo (por ejemplo, DALL-E para imagen).</li>
+              <li><strong>Casos de uso:</strong> copilotos internos, asistentes de conocimiento y automatizaci&oacute;n de procesos cognitivos.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Personalizaci&oacute;n con RAG y agentes</h3>
+            <ul>
+              <li><strong>RAG:</strong> conecta el modelo a fuentes internas (manuales, pol&iacute;ticas, bases de datos) para responder con la "verdad" de la empresa.</li>
+              <li><strong>Azure AI Search:</strong> capa de indexaci&oacute;n y recuperaci&oacute;n sem&aacute;ntica/vectorial para sustentar respuestas confiables.</li>
+              <li><strong>Agentes:</strong> componentes que no solo responden, sino que ejecutan tareas como consultar stock, crear tickets o agendar citas.</li>
             </ul>
           </article>
         </div>
@@ -332,18 +519,19 @@
 
       <section id="mlops" class="panel">
         <h2>6) Machine Learning Studio y ciclo de vida de modelos</h2>
+        <p>Esta capa aplica cuando se necesita propiedad total del modelo o cuando los servicios preentrenados no cubren el caso: regresiones, clustering, clasificaci&oacute;n estad&iacute;stica u otros modelos matem&aacute;ticos de negocio.</p>
         <div class="grid-3">
           <article class="card">
-            <h3>Datos y Etiquetado</h3>
-            <p>Registro y versionado de datasets, pipelines de preparaci&oacute;n y procesos de etiquetado para casos supervisados.</p>
+            <h3>Preparaci&oacute;n de datos</h3>
+            <p>Ingesta, limpieza, etiquetado y versionado de datasets para garantizar calidad y trazabilidad desde el inicio.</p>
           </article>
           <article class="card">
-            <h3>Entrenamiento y Evaluaci&oacute;n</h3>
-            <p>Experimentos reproducibles, tuning de hiperpar&aacute;metros, comparaci&oacute;n de m&eacute;tricas y trazabilidad de modelos.</p>
+            <h3>Entrenamiento</h3>
+            <p>Desarrollo en Notebooks (Python) o con AutoML para encontrar el mejor enfoque algor&iacute;tmico con evaluaciones reproducibles.</p>
           </article>
           <article class="card">
-            <h3>Despliegue y Operaci&oacute;n</h3>
-            <p>Publicaci&oacute;n en endpoints, escalado, monitoreo continuo, alertas y estrategia de reentrenamiento.</p>
+            <h3>Despliegue y operaci&oacute;n</h3>
+            <p>Publicaci&oacute;n en endpoints, control de versiones, monitoreo de deriva/desempe&ntilde;o y gobierno de reentrenamiento en producci&oacute;n.</p>
           </article>
         </div>
       </section>
